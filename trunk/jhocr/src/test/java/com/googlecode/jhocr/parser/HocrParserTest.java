@@ -16,7 +16,7 @@ public class HocrParserTest extends TestCase {
 
     public void testParser() throws Exception {
 
-    	InputStream hocrInputStream = this.getClass().getResourceAsStream("../img.png.html");
+    	InputStream hocrInputStream = this.getClass().getResourceAsStream("../phototest.tif.html");
         
         HocrParser parser = new HocrParser(hocrInputStream);
 

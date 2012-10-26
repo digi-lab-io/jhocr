@@ -18,12 +18,12 @@ public class HocrToPdfTest extends TestCase {
         HocrToPdf hocrToPdf = new HocrToPdf(os);        
 
         hocrToPdf.addHocrDocument(
-            getClass().getResourceAsStream("../img.png.html"),
-            getClass().getResourceAsStream("../img.png")
+            getClass().getResourceAsStream("../phototest.tif.html"),
+            getClass().getResourceAsStream("../phototest.tif")
         );
         hocrToPdf.addHocrDocument(
-            getClass().getResourceAsStream("../img.png.html"),
-            getClass().getResourceAsStream("../img.png")
+            getClass().getResourceAsStream("../eurotext.tif.html"),
+            getClass().getResourceAsStream("../eurotext.tif")
         );
         
         HashMap<String, Object> bookmark1 = new HashMap<String, Object>();
