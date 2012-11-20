@@ -1,13 +1,6 @@
 package com.googlecode.jhocr.parser;
 
 
-import java.io.InputStream;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import net.htmlparser.jericho.Element;
-import net.htmlparser.jericho.Source;
-import net.htmlparser.jericho.StartTag;
 import com.googlecode.jhocr.attribute.BBox;
 import com.googlecode.jhocr.attribute.ParagraphDirection;
 import com.googlecode.jhocr.element.HocrCarea;
@@ -16,6 +9,13 @@ import com.googlecode.jhocr.element.HocrLine;
 import com.googlecode.jhocr.element.HocrPage;
 import com.googlecode.jhocr.element.HocrParagraph;
 import com.googlecode.jhocr.element.HocrWord;
+import java.io.InputStream;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import net.htmlparser.jericho.Element;
+import net.htmlparser.jericho.Source;
+import net.htmlparser.jericho.StartTag;
 
 /**
  *
@@ -122,10 +122,10 @@ public class HocrParser {
         Element element = paragraphTag.getElement();
             
         String id = element.getAttributeValue(ATTRIBUTE_ID);
-        String dir = element.getAttributeValue(ATTRIBUTE_DIR);
+        String dir = element.getAttributeValue(ATTRIBUTE_DIR);        
         BBox bbox = parseAttributeBBox(element);
                 
-        HocrParagraph paragraph = new HocrParagraph(id, bbox, ParagraphDirection.valueOf(dir.toUpperCase()));
+        HocrParagraph paragraph = new HocrParagraph(id, bbox, (dir != null ? ParagraphDirection.valueOf(dir.toUpperCase()) : ParagraphDirection.LTR));
         
         List<StartTag> lineTags = element.getAllStartTagsByClass(HocrLine.CLASSNAME);
         
@@ -171,8 +171,14 @@ public class HocrParser {
     }
     
     private BBox parseAttributeBBox(Element element) throws Exception {
-
-        Matcher bboxMatcher = PATTERN_BBOX.matcher(element.getAttributeValue("title"));
+        
+        String attributeTitleValue = element.getAttributeValue("title");
+        
+        if (attributeTitleValue == null) {        
+            return null;
+        }
+        
+        Matcher bboxMatcher = PATTERN_BBOX.matcher(attributeTitleValue);
         
         if(!bboxMatcher.find()) {
             throw new Exception("Erro ao realizar o parser do arquivo HOCR, não foi possível encontrar o atributo bbox.");
