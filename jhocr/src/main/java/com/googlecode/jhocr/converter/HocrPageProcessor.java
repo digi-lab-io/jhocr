@@ -4,6 +4,9 @@
  */
 package com.googlecode.jhocr.converter;
 
+import com.googlecode.jhocr.element.HocrLine;
+import com.googlecode.jhocr.element.HocrPage;
+import com.googlecode.jhocr.element.HocrWord;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
@@ -12,16 +15,15 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.InputStream;
-import com.googlecode.jhocr.element.HocrLine;
-import com.googlecode.jhocr.element.HocrPage;
-import com.googlecode.jhocr.element.HocrWord;
+import org.apache.log4j.Logger;
 
 /**
  * @author pablo-moreira
  */
 public class HocrPageProcessor {
     
-    private static final int DPI_DEFAULT = 200;
+    private static final int DPI_DEFAULT = 300;
+    private static Logger log = Logger.getLogger(HocrPageProcessor.class);
     
     private HocrPage hocrPage;
     private float dotsPerPointX;
@@ -29,9 +31,11 @@ public class HocrPageProcessor {
     private BaseFont font;
     private Image image;
     private Rectangle imageRectangle;
+    private boolean useImageDpi;
 
-    public HocrPageProcessor(HocrPage hocrPage, InputStream imageInputStream) throws Exception {
+    public HocrPageProcessor(HocrPage hocrPage, InputStream imageInputStream, boolean useImageDpi) throws Exception {
         this.hocrPage = hocrPage;
+        this.useImageDpi = useImageDpi;
         init(imageInputStream);        
     }
 
@@ -45,19 +49,27 @@ public class HocrPageProcessor {
         
         this.image = Image.getInstance(bytes);
         
-        int dpiX = getImage().getDpiX();
-        if (dpiX == 0) { 
-            dpiX = DPI_DEFAULT;
+        int dpiX,dpiY;
+        
+        if (useImageDpi) {
+            dpiX = getImage().getDpiX();
+            if (dpiX == 0) {
+                dpiX = DPI_DEFAULT;
+            }
+            dpiY = getImage().getDpiY();
+            if (dpiY == 0) {
+                dpiY = DPI_DEFAULT;
+            }
         }
-        int dpiY = getImage().getDpiY();
-        if (dpiY == 0) { 
-            dpiY = DPI_DEFAULT;
+        else {
+            dpiX = DPI_DEFAULT;
+            dpiY = DPI_DEFAULT;            
         }
         
         this.dotsPerPointX = dpiX / HocrToPdf.POINTS_PER_INCH;
-        this.dotsPerPointY = dpiY / HocrToPdf.POINTS_PER_INCH;        
+        this.dotsPerPointY = dpiY / HocrToPdf.POINTS_PER_INCH;  
         
-        this.imageRectangle = new Rectangle(getImage().getWidth() / getDotsPerPointX(), getImage().getHeight() / getDotsPerPointY());
+        this.imageRectangle = new Rectangle(getHocrPage().getBbox().getWidth() / getDotsPerPointX(), getHocrPage().getBbox().getHeight() / getDotsPerPointY());
     }
     
     public HocrPage getHocrPage() {
@@ -104,16 +116,16 @@ public class HocrPageProcessor {
     }
     
     @SuppressWarnings("unused")
-	private static void processHocrWordCharacterSpacing(PdfContentByte cb, HocrWord hocrWord, float wordWidthPt) {
+    private static void processHocrWordCharacterSpacing(PdfContentByte cb, HocrWord hocrWord, float wordWidthPt) {
 
         float charSpacing = 0;
         cb.setCharacterSpacing(charSpacing);
-
-        //System.out.println("hocrWord: " + hocrWord.getId());
-        //System.out.println("box width: " + wordWidthPt);
-        //System.out.println("text width: " + textWidthPt);
         
         float textWidthPt = cb.getEffectiveStringWidth(hocrWord.getText(), false);
+        
+        log.debug("hocrWord: " + hocrWord.getId());
+        log.debug("box width: " + wordWidthPt);
+        log.debug("text width: " + textWidthPt);
 
         if (textWidthPt > wordWidthPt) {
             while (textWidthPt > wordWidthPt) {
@@ -157,10 +169,10 @@ public class HocrPageProcessor {
 
             float lineHeightPt = hocrLine.getBbox().getHeight() / getDotsPerPointY();
 
-            int fontSize = Math.round(lineHeightPt) - 1; // Coloquei menos um para o limite de erro
+            float fontSize = Math.round(lineHeightPt) - 0.8f; // Coloquei para o limite de erro
 
             if (fontSize == 0) {
-                fontSize = 6;
+                fontSize = 1;
             }
 
             cb.beginText();                    
@@ -175,23 +187,12 @@ public class HocrPageProcessor {
 
                 float wordWidthPt = hocrWord.getBbox().getWidth() / getDotsPerPointX();
 
-                // Nao melhorou muito
-                //processHocrWordCharacterSpacing(cb, hocrWord, wordWidthPt);
+                processHocrWordCharacterSpacing(cb, hocrWord, wordWidthPt);
 
-                float y = (getImage().getHeight() + (lineHeightPt / 2) - hocrLine.getBbox().getBottom()) / dotsPerPointY;
+                float y = (getHocrPage().getBbox().getHeight() + (lineHeightPt / 2) - hocrLine.getBbox().getBottom()) / dotsPerPointY;
+                float x = hocrWord.getBbox().getLeft() / getDotsPerPointX();
                 
-                if (i==0 && t > 1) {
-                    float x = hocrWord.getBbox().getLeft() / getDotsPerPointX();
-                    cb.showTextAligned(PdfContentByte.ALIGN_LEFT, hocrWord.getText(), x, y, 0);
-                }
-                else if (i+1 == t && t > 1) {
-                    float x = hocrWord.getBbox().getRight() / getDotsPerPointX();
-                    cb.showTextAligned(PdfContentByte.ALIGN_RIGHT, hocrWord.getText(), x, y, 0);
-                }
-                else {
-                    float x = (hocrWord.getBbox().getLeft() / getDotsPerPointX()) + (wordWidthPt / 2);
-                    cb.showTextAligned(PdfContentByte.ALIGN_CENTER, hocrWord.getText(), x, y, 0);
-                }
+                cb.showTextAligned(PdfContentByte.ALIGN_LEFT, hocrWord.getText(), x, y, 0);
             }
             cb.endText();
         }
