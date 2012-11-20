@@ -1,5 +1,8 @@
 package com.googlecode.jhocr.converter;
 
+import com.googlecode.jhocr.element.HocrDocument;
+import com.googlecode.jhocr.element.HocrPage;
+import com.googlecode.jhocr.parser.HocrParser;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.InputStream;
@@ -7,9 +10,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import com.googlecode.jhocr.element.HocrDocument;
-import com.googlecode.jhocr.element.HocrPage;
-import com.googlecode.jhocr.parser.HocrParser;
 
 public class HocrToPdf {
 	
@@ -18,6 +18,7 @@ public class HocrToPdf {
     private OutputStream outputStream;
     private List<HocrDocumentItem> items = new ArrayList<HocrDocumentItem>();
     private List<HashMap<String, Object>> outlines = new ArrayList<HashMap<String, Object>>();
+    private boolean useImageDpi = true;
 
     public HocrToPdf(OutputStream outputStream) {
         this.outputStream = outputStream;
@@ -52,7 +53,7 @@ public class HocrToPdf {
             }
             
             for (HocrPage hocrPage : hocrDocument.getPages()) {
-                HocrPageProcessor pageProcessor = new HocrPageProcessor(hocrPage, item.getImageInputStream());
+                HocrPageProcessor pageProcessor = new HocrPageProcessor(hocrPage, item.getImageInputStream(), isUseImageDpi());
                 pageProcessor.process(pdfDocument, pdfWriter);
             }
         }
@@ -78,5 +79,13 @@ public class HocrToPdf {
     
     public void addOutline(HashMap<String, Object> outline) {
         getOutlines().add(outline);
+    }
+
+    public boolean isUseImageDpi() {
+        return useImageDpi;
+    }
+
+    public void setUseImageDpi(boolean useImageDpi) {
+        this.useImageDpi = useImageDpi;
     }
 }
