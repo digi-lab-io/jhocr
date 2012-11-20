@@ -172,7 +172,7 @@ public class HocrPageProcessor {
             float fontSize = Math.round(lineHeightPt) - 0.8f; // Coloquei para o limite de erro
 
             if (fontSize == 0) {
-                fontSize = 1;
+                fontSize = 0.5f;
             }
 
             cb.beginText();                    
