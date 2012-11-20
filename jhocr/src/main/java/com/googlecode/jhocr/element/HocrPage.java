@@ -4,9 +4,9 @@
  */
 package com.googlecode.jhocr.element;
 
+import com.googlecode.jhocr.attribute.BBox;
 import java.util.ArrayList;
 import java.util.List;
-import com.googlecode.jhocr.attribute.BBox;
 
 /**
  *
