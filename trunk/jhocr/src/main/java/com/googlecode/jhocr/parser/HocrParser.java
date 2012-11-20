@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -23,6 +24,8 @@ import net.htmlparser.jericho.StartTag;
  */
 public class HocrParser {
 
+     private static Logger log = Logger.getLogger(HocrParser.class);
+    
     private static String ATTRIBUTE_ID = "id";
     private static String ATTRIBUTE_CLASS = "class";
     private static String ATTRIBUTE_TITLE = "title";
@@ -30,8 +33,8 @@ public class HocrParser {
     private static String TAG_STRONG = "strong";
     
     private Pattern PATTERN_IMAGE = Pattern.compile("image\\s+([^;]+)");
-    private Pattern PATTERN_BBOX = Pattern.compile("bbox(\\s+\\d+){4}");
-    private Pattern PATTERN_BBOX_COORDINATE = Pattern.compile("(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)");
+    private Pattern PATTERN_BBOX = Pattern.compile("bbox(\\s+-?\\d+){4}");
+    private Pattern PATTERN_BBOX_COORDINATE = Pattern.compile("(-?\\d+)\\s+(-?\\d+)\\s+(-?\\d+)\\s+(-?\\d+)");
     
     private InputStream inputStream;
     
@@ -181,15 +184,19 @@ public class HocrParser {
         Matcher bboxMatcher = PATTERN_BBOX.matcher(attributeTitleValue);
         
         if(!bboxMatcher.find()) {
-            throw new Exception("Erro ao realizar o parser do arquivo HOCR, não foi possível encontrar o atributo bbox.");
+            String msg = "Erro ao realizar o parser do arquivo HOCR, não foi possível encontrar o atributo bbox.";
+            log.error(msg);
+            throw new Exception(msg);
         }
 
         Matcher bboxCoordinateMatcher = PATTERN_BBOX_COORDINATE.matcher(bboxMatcher.group());
 
         if (!bboxCoordinateMatcher.find()) {
-            throw new Exception("Erro ao realizar o parser do arquivo HOCR, não foi possível realizar o parse do atributo bbox.");
+            String msg = "Erro ao realizar o parser do arquivo HOCR, não foi possível realizar o parse do atributo bbox.";
+            log.error(msg);
+            throw new Exception(msg);
         }
-
+        
         return new BBox(
             Integer.parseInt((bboxCoordinateMatcher.group(1))),
             Integer.parseInt((bboxCoordinateMatcher.group(2))),
