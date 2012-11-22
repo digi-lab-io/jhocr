@@ -4,6 +4,10 @@
  */
 package com.googlecode.jhocr.converter;
 
+import java.io.InputStream;
+
+import org.apache.log4j.Logger;
+
 import com.googlecode.jhocr.element.HocrLine;
 import com.googlecode.jhocr.element.HocrPage;
 import com.googlecode.jhocr.element.HocrWord;
@@ -14,8 +18,6 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
-import java.io.InputStream;
-import org.apache.log4j.Logger;
 
 /**
  * @author pablo-moreira
@@ -115,7 +117,6 @@ public class HocrPageProcessor {
         }
     }
     
-    @SuppressWarnings("unused")
     private static void processHocrWordCharacterSpacing(PdfContentByte cb, HocrWord hocrWord, float wordWidthPt) {
 
         float charSpacing = 0;
