@@ -141,7 +141,8 @@ public class HocrPageProcessor {
                     textWidthPt = newTextWidthPt;
                 }
             }
-        }       
+        }
+        /*
         else {          
             while (wordWidthPt > textWidthPt) {
                 charSpacing += 0.1f;
@@ -155,7 +156,7 @@ public class HocrPageProcessor {
                     textWidthPt = newTextWidthPt;
                 }
             }
-        }
+        }*/
     }
 
     public BaseFont getFont() {
