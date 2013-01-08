@@ -10,13 +10,14 @@ import com.googlecode.jhocr.element.HocrLine;
 import com.googlecode.jhocr.element.HocrPage;
 import com.googlecode.jhocr.element.HocrParagraph;
 import com.googlecode.jhocr.element.HocrWord;
+import java.io.FileInputStream;
 
 
-public class HocrParserTest extends TestCase {
+public class HocrParserTest  {
 
-    public void testParser() throws Exception {
-
-    	InputStream hocrInputStream = this.getClass().getResourceAsStream("../phototest.tif.html");
+   public static void main(String args[]) throws Exception {
+       
+    	InputStream hocrInputStream = new FileInputStream(System.getProperty("user.home") + "/Desktop/img.jpg.html");
         
         HocrParser parser = new HocrParser(hocrInputStream);
 
@@ -41,7 +42,5 @@ public class HocrParserTest extends TestCase {
                 }
             }
         }
-        
-        assertTrue( true );
     }
 }

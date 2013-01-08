@@ -1,29 +1,23 @@
 package com.googlecode.jhocr.converter;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.HashMap;
 
-import junit.framework.TestCase;
+public class HocrToPdfTest {
 
-
-public class HocrToPdfTest extends TestCase {
-
-    public void testParser() throws Exception {
+     public static void main(String args[]) throws Exception {
     	
-        File pdf = new File(System.getProperty("user.home"), "hocr.pdf");
+        File pdf = new File(System.getProperty("user.home") + "/Desktop/", "hocr.pdf");
         
         FileOutputStream os = new FileOutputStream(pdf);
         
         HocrToPdf hocrToPdf = new HocrToPdf(os);        
 
         hocrToPdf.addHocrDocument(
-            getClass().getResourceAsStream("../phototest.tif.html"),
-            getClass().getResourceAsStream("../phototest.tif")
-        );
-        hocrToPdf.addHocrDocument(
-            getClass().getResourceAsStream("../eurotext.tif.html"),
-            getClass().getResourceAsStream("../eurotext.tif")
+            new FileInputStream(System.getProperty("user.home") + "/Desktop/img.jpg.html"),
+            new FileInputStream(System.getProperty("user.home") + "/Desktop/img.jpg")
         );
         
         HashMap<String, Object> bookmark1 = new HashMap<String, Object>();
@@ -33,19 +27,9 @@ public class HocrToPdfTest extends TestCase {
         bookmark1.put("Page", String.format("%d Fit", 1));
         
         hocrToPdf.addOutline(bookmark1);
-        
-        HashMap<String, Object> bookmark2 = new HashMap<String, Object>();
-
-        bookmark2.put("Title", "Bookmark 2");
-        bookmark2.put("Action", "GoTo");
-        bookmark2.put("Page", String.format("%d Fit", 2));
-        
-        hocrToPdf.addOutline(bookmark2);
-        
+                
         hocrToPdf.convert();
         
         os.close();
-        
-        assertTrue( true );
     }
 }
