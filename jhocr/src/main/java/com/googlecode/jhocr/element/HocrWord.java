@@ -14,6 +14,7 @@ public class HocrWord extends HocrElement {
 
     public static final String TAGNAME = "span";
     public static final String CLASSNAME = "ocr_word";
+    public static final String CLASSNAME_X = "ocrx_word";
     
     private boolean strong;
     private HocrLine line;
