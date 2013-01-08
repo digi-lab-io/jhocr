@@ -13,6 +13,9 @@ import java.util.List;
  */
 public class HocrDocument {
     
+    public static final String TESSERACT_VERSION_3_02 = "tesseract 3.02";
+    public static final String TESSERACT_VERSION_3_01 = "tesseract";
+    
     private String contentType;
     private String ocrSystem;
     
@@ -50,5 +53,13 @@ public class HocrDocument {
     @Override
     public String toString() {
         return "HocrDocument{" + "contentType=" + contentType + ", ocrSystem=" + ocrSystem + ", pages=" + pages.size() + '}';
+    }
+
+    public boolean isOcrSystemTesseract3_01() {
+        return TESSERACT_VERSION_3_01.equals(getOcrSystem());
+    }
+    
+    public boolean isOcrSystemTesseract3_02() {
+        return TESSERACT_VERSION_3_02.equals(getOcrSystem());
     }
 }
