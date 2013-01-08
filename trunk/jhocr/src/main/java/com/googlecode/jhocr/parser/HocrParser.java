@@ -37,11 +37,12 @@ public class HocrParser {
     private Pattern PATTERN_BBOX_COORDINATE = Pattern.compile("(-?\\d+)\\s+(-?\\d+)\\s+(-?\\d+)\\s+(-?\\d+)");
     
     private InputStream inputStream;
-    
+    private HocrDocument document;
+
     public HocrParser(InputStream inputStream) {
         this.inputStream = inputStream;
     }
-    
+
     public HocrDocument parse() throws Exception {
 
         // Faz parser do HTML
@@ -49,13 +50,13 @@ public class HocrParser {
          
         List<Element> allElements = source.getAllElements("meta");
         
-        HocrDocument document = new HocrDocument();
+        document = new HocrDocument();
         
         for (Element elem : allElements) {
             
             String attrHttp = elem.getAttributeValue("http-equiv");
             
-            if (attrHttp != null && attrHttp.equals("ContentType")) {
+            if (attrHttp != null && attrHttp.equals("Content-Type")) {
                 document.setContentType(elem.getAttributeValue("content"));
                 continue;
             }
@@ -148,7 +149,14 @@ public class HocrParser {
                 
         HocrLine line = new HocrLine(id, bbox);
         
-        List<StartTag> wordTags = element.getAllStartTagsByClass(HocrWord.CLASSNAME);
+        List<StartTag> wordTags;
+        
+        if (document.isOcrSystemTesseract3_02()) {
+            wordTags = element.getAllStartTagsByClass(HocrWord.CLASSNAME_X);
+        }
+        else {
+            wordTags = element.getAllStartTagsByClass(HocrWord.CLASSNAME);
+        }
         
         for (StartTag wordTag : wordTags) {
             line.addWord(parseWordTag(wordTag));
