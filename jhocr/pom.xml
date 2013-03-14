@@ -51,4 +51,16 @@
             </plugin>
         </plugins>
     </build>
+	<distributionManagement>
+		<repository>
+			<id>nexus</id>
+		    <name>Repositorio de Releases</name>
+		    <url>http://172.22.11.62:8888/nexus/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus</id>
+			<name>Repositorios de Snapshots</name>
+			<url>http://172.22.11.62:8888/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
