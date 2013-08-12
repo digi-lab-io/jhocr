@@ -39,6 +39,7 @@ public class HocrToPdf {
         }
         
         Document pdfDocument = new Document();
+        pdfDocument.setMargins(0, 0, 0, 0);
 
         PdfWriter pdfWriter = PdfWriter.getInstance(pdfDocument, getOutputStream());
         
