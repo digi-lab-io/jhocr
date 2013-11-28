@@ -1,0 +1,16 @@
+#summary One-sentence summary of this page.
+#labels Phase-Implementation
+
+= Introduction =
+
+Download jhocr and start right now.
+
+
+= Details =
+
+Be sure to check your code before checking the code.  Only working code and formatted code:
+  * Use our eclipse-code-formatter-profile.xml see r24
+
+
+
+to be continued ...
