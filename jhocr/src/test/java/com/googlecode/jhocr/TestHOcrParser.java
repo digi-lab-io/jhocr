@@ -21,7 +21,7 @@ public class TestHOcrParser {
 	public void setUp() throws Exception {
 
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
-		InputStream hocrInputStream = loader.getResourceAsStream("testdata/img.jpg.html");
+		InputStream hocrInputStream = loader.getResourceAsStream("test-data/eurotext.tif.html");
 
 		HocrParser parser = new HocrParser(hocrInputStream);
 

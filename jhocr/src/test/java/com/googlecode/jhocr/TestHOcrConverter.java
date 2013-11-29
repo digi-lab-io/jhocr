@@ -19,7 +19,7 @@ public class TestHOcrConverter {
 
 		loader = Thread.currentThread().getContextClassLoader();
 		String packageFolder = "src/test/resources/test-results";
-		String fileName = "jhocr.pdf";
+		String fileName = "tess4j-jhocr-pdf.pdf";
 
 		pdf = new File(String.format("%s/%s", packageFolder, fileName));
 	}
