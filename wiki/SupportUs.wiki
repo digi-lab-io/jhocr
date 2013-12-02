@@ -3,6 +3,8 @@
 
 = Introduction =
 
+http://jhocr.googlecode.com/svn/wiki/resources/design/com.googlecode.jhocr_logo_mid_v01.png
+
 Download jhocr and start right now.
 
 
