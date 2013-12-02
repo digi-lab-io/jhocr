@@ -5,14 +5,21 @@
 
 http://jhocr.googlecode.com/svn/wiki/resources/design/com.googlecode.jhocr_logo_mid_v01.png
 
-Download jhocr and start right now.
+= Contribution =
+
+There are many ways you can help us to improve this project.
+
+* You can like the [JavaHOCR] page.
+* Twitt about: 
 
 
-= Details =
+== Tell us your problem ==
+
+By submitting an issue you can help us to improve: https://code.google.com/p/jhocr/issues/list
+
+
+
+== Code Format == 
 
 Be sure to check your code before checking the code.  Only working code and formatted code:
   * Use our eclipse-code-formatter-profile.xml see r24
-
-
-
-to be continued ...
