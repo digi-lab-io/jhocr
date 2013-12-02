@@ -1,0 +1,24 @@
+#summary Maven artifact information.
+
+= Introduction =
+
+http://jhocr.googlecode.com/svn/wiki/resources/design/com.googlecode.jhocr_logo_mid_v01.png
+
+
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
+
+# Maven Artifact on maven central:
+{{{
+<dependency>
+  <groupId>com.googlecode</groupId>
+  <artifactId>jhocr</artifactId>
+  <version>0.0.4</version>
+</dependency>
+}}}
