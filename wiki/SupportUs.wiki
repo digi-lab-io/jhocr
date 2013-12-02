@@ -3,23 +3,21 @@
 
 = Introduction =
 
-http://jhocr.googlecode.com/svn/wiki/resources/design/com.googlecode.jhocr_logo_mid_v01.png
+http://jhocr.googlecode.com/svn/wiki/resources/design/com.googlecode.jhocr_logo_v01.png
 
 = Contribution =
 
 There are many ways you can help us to improve this project.
 
-* You can like the [JavaHOCR] page.
-* Twitt about: 
-
-
-== Tell us your problem ==
-
-By submitting an issue you can help us to improve: https://code.google.com/p/jhocr/issues/list
+  * Use this project to convert your documents.
+  * By submitting an issue and describing your problem or giving us feedback: https://code.google.com/p/jhocr/issues/list
+  * By adopting this project and helping to improve with your java skills, just contact us.
+  * You can like the [JavaHOCR] page &/ spread the word about this project.
 
 
 
 == Code Format == 
 
-Be sure to check your code before checking the code.  Only working code and formatted code:
+Be sure to check your code before checking the code. Only functional code and formatted code:
   * Use our eclipse-code-formatter-profile.xml see r24
+  * When to commit? Commit only when you have successfully unit tested the given function/module/functionality and you are reasonably assured that it is ready for integration or system testing. See:  http://programmers.stackexchange.com/questions/83837/when-to-commit-code
