@@ -1,6 +1,6 @@
 #summary Maven artifact information.
 #labels Phase-Deploy,Phase-Implementation
-<g:plusone size="large"></g:plusone>
+#sidebar TableOfContents
 
 = Java hOCR =
 
