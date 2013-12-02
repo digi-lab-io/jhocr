@@ -1,10 +1,6 @@
 #summary Infos on how you can contribute and support us.
 #labels Phase-Implementation
 
-#summary
-#labels
-#sidebar
-
 http://jhocr.googlecode.com/svn/wiki/resources/design/com.googlecode.jhocr_logo_v01.png
 
 = Contribution =
