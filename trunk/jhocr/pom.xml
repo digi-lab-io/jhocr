@@ -2,13 +2,57 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.googlecode</groupId>
 	<artifactId>jhocr</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.2</version>
 	<packaging>jar</packaging>
-	<name>jhocr</name>
-	<description>Library to perform parser and conversion to pdf.</description>
+	<name>com.googlecode.jhocr</name>
+	<description>Library to parse and perform conversion from hocr files to pdf, merging the image files and mapping the hocr data into one document..</description>
 	<url>http://code.google.com/p/jhocr/</url>
+
+	<scm>
+		<url>http://svn.apache.org/viewcvs.cgi/maven</url>
+		<connection>http://svn.apache.org/viewcvs.cgi/maven</connection>
+	</scm>
+
+	<licenses>
+		<license>
+			<name>GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007</name>
+			<url>http://www.gnu.org/licenses/gpl-3.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>pablo.filetti</id>
+			<name>Pablo Filetti Moreira</name>
+			<email>pablo.filetti@gmail.com</email>
+			<roles>
+				<role>owner</role>
+				<role>developer</role>
+			</roles>
+			<timezone>-6</timezone>
+		</developer>
+	</developers>
+
+	<contributors>
+		<contributor>
+			<name>O.J. Sousa Rodrigues</name>
+			<email>osoriojaques@gmail.com</email>
+			<roles>
+				<role>developer</role>
+				<role>contributor</role>
+			</roles>
+			<timezone>+1</timezone>
+		</contributor>
+	</contributors>
+
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<picUrl>http://jhocr.googlecode.com/svn/wiki/resources/design/com.googlecode.jhocr_logo_mid_v01.png</picUrl>
+		<organization>Googlecode Java HOCR</organization>
+		<organizationUrl>http://code.google.com/p/jhocr</organizationUrl>
 	</properties>
 
 	<dependencies>
@@ -23,7 +67,7 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.16</version>
 		</dependency>
-		
+
 		<!-- Parser HTML -->
 		<dependency>
 			<groupId>net.htmlparser.jericho</groupId>
@@ -41,9 +85,18 @@
 			<version>3.0.9</version>
 		</dependency>
 	</dependencies>
+
 	<build>
-		<finalName>jhocr</finalName>
+
 		<plugins>
+			<plugin>
+				<groupId>com.soebes.maven.plugins.mlv</groupId>
+				<artifactId>maven-license-verifier-plugin</artifactId>
+				<version>0.4</version>
+				<goals>
+					<goal>verify</goal>
+				</goals>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -54,18 +107,73 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
+
+			<!-- Attaching sources artifact -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Attaching javadoc artifact -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+
 		</plugins>
+
 	</build>
-	<distributionManagement>
-		<repository>
-			<id>nexus</id>
-			<name>Nexus Release Repository</name>
-			<url>http://172.22.11.62:8888/nexus/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>nexus</id>
-			<name>Nexus Snapshot Repository</name>
-			<url>http://172.22.11.62:8888/nexus/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
+
+
+	<!-- will run and need the private-key only when deploying releases -->
+	<profiles>
+		<profile>
+			<id>release-sign-artifacts</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.1</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<issueManagement>
+		<url>http://code.google.com/p/jhocr/issues/list</url>
+	</issueManagement>
 </project>
