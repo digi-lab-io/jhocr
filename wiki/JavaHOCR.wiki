@@ -9,11 +9,8 @@ http://jhocr.googlecode.com/svn/wiki/resources/design/com.googlecode.jhocr_logo_
 
 ----
 
-<wiki:toc max_depth="1" />
 
-
-
-<g:plusone size="large"></g:plusone>
+Like us and spread the word: <g:plusone size="large"></g:plusone>
 
 
 ...
