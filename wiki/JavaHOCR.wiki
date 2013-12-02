@@ -1,5 +1,6 @@
 #summary One-sentence summary of this page.
-#sidebar TableOfContents
+
+<wiki:toc max_depth="1" />
 
 
 
@@ -7,4 +8,3 @@
 
 
 ...
-
