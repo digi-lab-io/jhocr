@@ -5,7 +5,7 @@
 	<version>0.0.5-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>com.googlecode.jhocr</name>
-	<description>Library to parse and perform conversion from hocr files to pdf, merging the image files and mapping the hocr data into one document..</description>
+	<description>Library to parse and perform conversion from hocr files to pdf, merging the image files and mapping the hocr data into one document.</description>
 	<url>http://code.google.com/p/jhocr/</url>
 
 	<parent>
