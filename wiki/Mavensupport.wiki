@@ -1,12 +1,13 @@
 #summary Maven artifact information.
 #labels Phase-Deploy,Phase-Implementation
-#sidebar TableOfContents
 
 = Java hOCR =
 
 Library to parse and perform conversion from hocr files to pdf, merging the image file and mapping the hocr data into one document.
 
 http://jhocr.googlecode.com/svn/wiki/resources/design/com.googlecode.jhocr_logo_v01.png
+
+----
 
 
 
