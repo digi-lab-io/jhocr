@@ -8,11 +8,6 @@
 	<description>Library to parse and perform conversion from hocr files to pdf, merging the image files and mapping the hocr data into one document..</description>
 	<url>http://code.google.com/p/jhocr/</url>
 
-	<!-- <scm> -->
-	<!-- <url>http://svn.apache.org/viewcvs.cgi/maven</url> -->
-	<!-- <connection>http://svn.apache.org/viewcvs.cgi/maven</connection> -->
-	<!-- </scm> -->
-
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
 		<artifactId>oss-parent</artifactId>
@@ -164,6 +159,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
 				<configuration>
 					<quiet>true</quiet>
 					<nonavbar>true</nonavbar>
@@ -184,6 +180,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.4</version>
 				<executions>
 					<execution>
 						<id>sign-artifacts</id>
@@ -259,8 +256,7 @@
 	<issueManagement>
 		<url>http://code.google.com/p/jhocr/issues/list</url>
 	</issueManagement>
-
-
+  
 
   <scm>
     <connection>scm:svn:http://svn.sonatype.org/spice/tags/jhocr-0.0.2</connection>
