@@ -1,5 +1,14 @@
 #summary One-sentence summary of this page.
 
+
+= Java hOCR =
+
+Library to parse and perform conversion from hocr files to pdf, merging the image file and mapping the hocr data into one document.
+
+http://jhocr.googlecode.com/svn/wiki/resources/design/com.googlecode.jhocr_logo_v01.png
+
+----
+
 <wiki:toc max_depth="1" />
 
 
