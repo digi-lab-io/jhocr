@@ -256,11 +256,11 @@
 	<issueManagement>
 		<url>http://code.google.com/p/jhocr/issues/list</url>
 	</issueManagement>
-  
 
-  <scm>
-    <connection>scm:svn:http://svn.sonatype.org/spice/tags/jhocr-0.0.2</connection>
-    <developerConnection>scm:svn:https://svn.sonatype.org/spice/tags/jhocr-0.0.2</developerConnection>
-    <url>http://svn.sonatype.org/spice/tags/jhocr-0.0.2</url>
-  </scm>
+
+	<scm>
+		<connection>scm:svn:http://svn.sonatype.org/nexus/tags/jhocr-0.0.2</connection>
+		<developerConnection>scm:svn:https://svn.sonatype.org/nexus/tags/jhocr-0.0.2</developerConnection>
+		<url>http://svn.sonatype.org/nexus/tags/jhocr-0.0.2</url>
+	</scm>
 </project>
