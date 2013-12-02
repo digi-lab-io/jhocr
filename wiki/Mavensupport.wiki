@@ -1,20 +1,16 @@
 #summary Maven artifact information.
+#labels Phase-Deploy,Phase-Implementation
 
-= Introduction =
+= Java hOCR =
+
+Library to parse and perform conversion from hocr files to pdf, merging the image file and mapping the hocr data into one document.
 
 http://jhocr.googlecode.com/svn/wiki/resources/design/com.googlecode.jhocr_logo_mid_v01.png
 
 
 
+= Maven Support =
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
-
-# Maven Artifact on maven central:
 {{{
 <dependency>
   <groupId>com.googlecode</groupId>
