@@ -16,6 +16,8 @@ http://jhocr.googlecode.com/svn/wiki/resources/design/com.googlecode.jhocr_logo.
     * [HowItWorks How hocr works]
 ----
 
+
+
 <wiki:toc />
 
 
