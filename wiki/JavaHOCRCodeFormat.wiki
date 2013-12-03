@@ -1,10 +1,6 @@
 #summary Codeformat profile for eclipse.
 #sidebar TableOfContents
 
-
-<wiki:toc />
-
-
 {{{
 Library to parse and perform conversion from hocr
 files to pdf, merging the image file and mapping the
@@ -20,7 +16,7 @@ http://jhocr.googlecode.com/svn/wiki/resources/design/com.googlecode.jhocr_logo.
     * [HowItWorks How hocr works]
 ----
 
-
+<wiki:toc />
 
 
 = Code Format =
