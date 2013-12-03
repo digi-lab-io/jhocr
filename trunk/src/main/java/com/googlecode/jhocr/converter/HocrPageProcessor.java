@@ -17,6 +17,7 @@
 
 package com.googlecode.jhocr.converter;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.log4j.Logger;
@@ -36,6 +37,7 @@ import com.itextpdf.text.pdf.PdfWriter;
  * TODO add documentation
  * 
  */
+
 public class HocrPageProcessor {
 
 	/**
@@ -51,6 +53,7 @@ public class HocrPageProcessor {
 	private Image				image;
 	private Rectangle			imageRectangle;
 	private boolean				useImageDpi;
+	private volatile boolean	initialized	= false;
 
 	/**
 	 * TODO add documentation
@@ -58,21 +61,37 @@ public class HocrPageProcessor {
 	 * @param hocrPage
 	 * @param imageInputStream
 	 * @param useImageDpi
+	 * @throws IOException
+	 * @throws DocumentException
 	 * @throws Exception
 	 */
-	public HocrPageProcessor(HocrPage hocrPage, InputStream imageInputStream, boolean useImageDpi) throws Exception {
+	public HocrPageProcessor(HocrPage hocrPage, InputStream imageInputStream, boolean useImageDpi) {
 		this.hocrPage = hocrPage;
 		this.useImageDpi = useImageDpi;
-		init(imageInputStream);
+
+		try {
+			init(imageInputStream);
+			/**
+			 * object construction successful
+			 */
+			this.initialized = true;
+
+		} catch (DocumentException e) {
+			log.error("object construction unsuccessful.", e);
+		} catch (IOException e) {
+			log.error("object construction unsuccessful.", e);
+		}
 	}
 
 	/**
 	 * TODO add documentation
 	 * 
 	 * @param iis
+	 * @throws IOException
+	 * @throws DocumentException
 	 * @throws Exception
 	 */
-	private void init(InputStream iis) throws Exception {
+	private void init(InputStream iis) throws DocumentException, IOException {
 
 		font = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.EMBEDDED);
 
@@ -157,33 +176,42 @@ public class HocrPageProcessor {
 	}
 
 	/**
-	 * TODO add documentation
+	 * This method will process the document fitting the image into the documents page.
 	 * 
 	 * @param document
 	 * @param pdfWriter
-	 * @throws DocumentException
 	 */
-	public void process(Document document, PdfWriter pdfWriter) throws DocumentException {
+	public boolean process(Document document, PdfWriter pdfWriter) {
+		try {
 
-		document.setPageSize(getImageRectangle());
+			if (initialized) {
+				document.setPageSize(getImageRectangle());
 
-		if (!document.isOpen()) {
-			document.open();
-		} else {
-			document.newPage();
-		}
+				if (!document.isOpen()) {
+					document.open();
+				} else {
+					document.newPage();
+				}
 
-		PdfContentByte cb = pdfWriter.getDirectContentUnder();
+				PdfContentByte cb = pdfWriter.getDirectContentUnder();
 
-		/**
-		 * TODO add documentation
-		 */
-		getImage().scaleToFit(getImageRectangle().getWidth(), getImageRectangle().getHeight());
-		getImage().setAbsolutePosition(0, 0);
+				/**
+				 * This will fit the image into the documents page using the width and height from the image and fitting it into x0 and y0 of the page.
+				 */
+				getImage().scaleToFit(getImageRectangle().getWidth(), getImageRectangle().getHeight());
+				getImage().setAbsolutePosition(0, 0);
 
-		pdfWriter.getDirectContent().addImage(getImage());
-		for (HocrLine hocrLine : getHocrPage().getLines()) {
-			processHocrLine(cb, hocrLine);
+				pdfWriter.getDirectContent().addImage(getImage());
+
+				for (HocrLine hocrLine : getHocrPage().getLines()) {
+					processHocrLine(cb, hocrLine);
+				}
+			}
+
+			return true;
+		} catch (DocumentException e) {
+			log.error("Document could not be processed.", e);
+			return false;
 		}
 	}
 
@@ -293,5 +321,15 @@ public class HocrPageProcessor {
 			}
 			cb.endText();
 		}
+	}
+
+	/**
+	 * Compliant Solution (initialized flag): https://www.securecoding.cert.org/confluence/display/java/OBJ11-J.+Be+wary+of+letting+constructors+throw+exceptions <br>
+	 * Will return true if this class was initialised successfully.
+	 * 
+	 * @return
+	 */
+	public synchronized boolean isInitialized() {
+		return initialized;
 	}
 }

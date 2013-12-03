@@ -17,6 +17,7 @@
 
 package com.googlecode.jhocr.parser;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -77,51 +78,58 @@ public class HocrParser {
 	 * @return
 	 * @throws Exception
 	 */
-	public HocrDocument parse() throws Exception {
+	public HocrDocument parse() {
 
-		Source source = new Source(inputStream);
+		try {
 
-		List<Element> allElements = source.getAllElements("meta");
+			Source source = new Source(inputStream);
 
-		document = new HocrDocument();
+			List<Element> allElements = source.getAllElements("meta");
 
-		/**
-		 * Iterate all meta data found in the html file and pass relavant information to the <code>HocrDocument</code> obj.
-		 * TODO improve this iteration to be either static using such variables or dynamic making it configurable.
-		 */
-		for (Element elem : allElements) {
-
-			String attrHttp = elem.getAttributeValue("http-equiv");
+			document = new HocrDocument();
 
 			/**
-			 * Set content type.
+			 * Iterate all meta data found in the html file and pass relavant information to the <code>HocrDocument</code> obj.
+			 * TODO improve this iteration to be either static using such variables or dynamic making it configurable.
 			 */
-			if (attrHttp != null && attrHttp.equals("Content-Type")) {
-				document.setContentType(elem.getAttributeValue("content"));
-				continue;
+			for (Element elem : allElements) {
+
+				String attrHttp = elem.getAttributeValue("http-equiv");
+
+				/**
+				 * Set content type.
+				 */
+				if (attrHttp != null && attrHttp.equals("Content-Type")) {
+					document.setContentType(elem.getAttributeValue("content"));
+					continue;
+				}
+
+				String attrName = elem.getAttributeValue("name");
+
+				/**
+				 * Set ocr system.
+				 */
+				if (attrName != null && attrName.equals("ocr-system")) {
+					document.setOcrSystem(elem.getAttributeValue("content"));
+				}
 			}
 
-			String attrName = elem.getAttributeValue("name");
+			StartTag pageTag = source.getNextStartTag(0, ATTRIBUTE_CLASS, HocrPage.CLASSNAME, false);
 
 			/**
-			 * Set ocr system.
+			 * TODO add documentation
 			 */
-			if (attrName != null && attrName.equals("ocr-system")) {
-				document.setOcrSystem(elem.getAttributeValue("content"));
+			while (pageTag != null) {
+				document.addPage(parsePageTag(pageTag));
+				pageTag = source.getNextStartTag(pageTag.getEnd(), ATTRIBUTE_CLASS, HocrPage.CLASSNAME, false);
 			}
+
+			return document;
+
+		} catch (IOException e) {
+			log.error("It was not possible to convert the document, returning null.", e);
+			return null;
 		}
-
-		StartTag pageTag = source.getNextStartTag(0, ATTRIBUTE_CLASS, HocrPage.CLASSNAME, false);
-
-		/**
-		 * TODO add documentation
-		 */
-		while (pageTag != null) {
-			document.addPage(parsePageTag(pageTag));
-			pageTag = source.getNextStartTag(pageTag.getEnd(), ATTRIBUTE_CLASS, HocrPage.CLASSNAME, false);
-		}
-
-		return document;
 	}
 
 	/**
@@ -133,14 +141,14 @@ public class HocrParser {
 	 * @return
 	 * @throws Exception
 	 */
-	private HocrPage parsePageTag(StartTag pageTag) throws Exception {
+	private HocrPage parsePageTag(StartTag pageTag) {
 
 		Element element = pageTag.getElement();
 
 		Matcher imageMatcher = PATTERN_IMAGE.matcher(element.getAttributeValue(ATTRIBUTE_TITLE));
 
 		if (!imageMatcher.find()) {
-			throw new Exception("Erro ao realizar o parser do arquivo HOCR, não foi possível encontrar o atributo image.");
+
 		}
 
 		String id = element.getAttributeValue(ATTRIBUTE_ID);
@@ -165,7 +173,7 @@ public class HocrParser {
 	 * @return
 	 * @throws Exception
 	 */
-	private HocrCarea parseCareaTag(StartTag careaTag) throws Exception {
+	private HocrCarea parseCareaTag(StartTag careaTag) {
 
 		Element element = careaTag.getElement();
 
@@ -190,7 +198,7 @@ public class HocrParser {
 	 * @return
 	 * @throws Exception
 	 */
-	private HocrParagraph parseParagraphTag(StartTag paragraphTag) throws Exception {
+	private HocrParagraph parseParagraphTag(StartTag paragraphTag) {
 
 		Element element = paragraphTag.getElement();
 
@@ -216,7 +224,7 @@ public class HocrParser {
 	 * @return
 	 * @throws Exception
 	 */
-	private HocrLine parseLineTag(StartTag lineTag) throws Exception {
+	private HocrLine parseLineTag(StartTag lineTag) {
 
 		Element element = lineTag.getElement();
 
@@ -250,7 +258,7 @@ public class HocrParser {
 	 * @return
 	 * @throws Exception
 	 */
-	private HocrWord parseWordTag(StartTag wordTag) throws Exception {
+	private HocrWord parseWordTag(StartTag wordTag) {
 
 		Element element = wordTag.getElement();
 
@@ -274,36 +282,40 @@ public class HocrParser {
 	 * @return
 	 * @throws Exception
 	 */
-	private BBox parseAttributeBBox(Element element) throws Exception {
+	private BBox parseAttributeBBox(Element element) {
 
-		String attributeTitleValue = element.getAttributeValue("title");
+		try {
 
-		if (attributeTitleValue == null) {
+			String attributeTitleValue = element.getAttributeValue("title");
+
+			if (attributeTitleValue == null) {
+				return null;
+			}
+
+			Matcher bboxMatcher = PATTERN_BBOX.matcher(attributeTitleValue);
+
+			/**
+			 * TODO add documentation
+			 */
+			if (!bboxMatcher.find()) {
+				throw new Exception();
+			}
+
+			Matcher bboxCoordinateMatcher = PATTERN_BBOX_COORDINATE.matcher(bboxMatcher.group());
+
+			/**
+			 * TODO add documentation
+			 */
+			if (!bboxCoordinateMatcher.find()) {
+				throw new Exception();
+			}
+
+			return new BBox(Integer.parseInt((bboxCoordinateMatcher.group(1))), Integer.parseInt((bboxCoordinateMatcher.group(2))), Integer.parseInt((bboxCoordinateMatcher.group(3))), Integer.parseInt((bboxCoordinateMatcher.group(4))));
+
+		} catch (Exception e) {
+			log.error("Erro ao realizar o parser do arquivo HOCR, não foi possível realizar o parse do atributo bbox.");
 			return null;
 		}
 
-		Matcher bboxMatcher = PATTERN_BBOX.matcher(attributeTitleValue);
-
-		/**
-		 * TODO add documentation
-		 */
-		if (!bboxMatcher.find()) {
-			String msg = "Erro ao realizar o parser do arquivo HOCR, não foi possível encontrar o atributo bbox.";
-			log.error(msg);
-			throw new Exception(msg);
-		}
-
-		Matcher bboxCoordinateMatcher = PATTERN_BBOX_COORDINATE.matcher(bboxMatcher.group());
-
-		/**
-		 * TODO add documentation
-		 */
-		if (!bboxCoordinateMatcher.find()) {
-			String msg = "Erro ao realizar o parser do arquivo HOCR, não foi possível realizar o parse do atributo bbox.";
-			log.error(msg);
-			throw new Exception(msg);
-		}
-
-		return new BBox(Integer.parseInt((bboxCoordinateMatcher.group(1))), Integer.parseInt((bboxCoordinateMatcher.group(2))), Integer.parseInt((bboxCoordinateMatcher.group(3))), Integer.parseInt((bboxCoordinateMatcher.group(4))));
 	}
 }
