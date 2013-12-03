@@ -1,6 +1,10 @@
 #summary Codeformat profile for eclipse.
 #sidebar TableOfContents
 
+
+<wiki:toc />
+
+
 {{{
 Library to parse and perform conversion from hocr
 files to pdf, merging the image file and mapping the
