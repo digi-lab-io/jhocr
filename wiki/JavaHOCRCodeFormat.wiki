@@ -28,6 +28,6 @@ Be sure to check your code before checking the code. Only functional code and fo
 
 == Java Best Practices== 
 
-Worth reading and practcing: 
+Worth reading and practicing: 
 
   * [https://www.securecoding.cert.org/confluence/display/java/OBJ11-J.+Be+wary+of+letting+constructors+throw+exceptions Be wary of letting constructors throw exceptions]
