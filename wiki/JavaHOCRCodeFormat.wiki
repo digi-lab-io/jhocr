@@ -22,4 +22,5 @@ http://jhocr.googlecode.com/svn/wiki/resources/design/com.googlecode.jhocr_logo.
 
 Be sure to check your code before checking the code. Only functional code and formatted code:
   * Use our eclipse-code-formatter-profile.xml see r24
-  * When to commit? Commit only when you have successfully unit tested the given function/module/functionality and you are reasonably assured that it is ready for integration or system testing. See:  http://programmers.stackexchange.com/questions/83837/when-to-commit-code
+  * No @author tag needed, see [http://www.theinquirer.net/inquirer/news/1037207/apache-enforces-the-removal-of-author-tags Apache removes author tag] and [http://stackoverflow.com/questions/17269843/javadoc-author-tag-good-practices Javadoc @author tag good practices]
+  * When to commit? Commit only when you have successfully unit tested the given function/module/functionality and you are reasonably assured that it is ready for integration or system testing, see:  [http://programmers.stackexchange.com/questions/83837/when-to-commit-code When to commit code?]
