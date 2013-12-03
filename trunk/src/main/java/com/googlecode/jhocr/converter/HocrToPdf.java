@@ -1,7 +1,4 @@
 /**
- * TODO: describe: <one line to give the program's name and a brief idea of what it does.>
- * 
- * <br>
  * Copyright (©) 2013 Pablo Filetti Moreira
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -32,54 +29,87 @@ import com.googlecode.jhocr.parser.HocrParser;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.pdf.PdfWriter;
 
+/**
+ * TODO add documentation
+ * 
+ */
 public class HocrToPdf {
 
+	/**
+	 * TODO add documentation, for example why exactly 72.0f
+	 */
 	public static float						POINTS_PER_INCH	= 72.0f;
-
 	private OutputStream					outputStream;
 	private List<HocrDocumentItem>			items			= new ArrayList<HocrDocumentItem>();
 	private List<HashMap<String, Object>>	outlines		= new ArrayList<HashMap<String, Object>>();
 	private boolean							useImageDpi		= true;
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param outputStream
+	 */
 	public HocrToPdf(OutputStream outputStream) {
 		this.outputStream = outputStream;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public OutputStream getOutputStream() {
 		return outputStream;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public List<HocrDocumentItem> getItems() {
 		return items;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @throws Exception
+	 */
 	public void convert() throws Exception {
 
 		if (getItems().isEmpty()) {
 			return;
 		}
 
-		Document pdfDocument = new Document();
-		pdfDocument.setMargins(0, 0, 0, 0);
+		Document document = new Document();
+		document.setMargins(0, 0, 0, 0);
 
-		PdfWriter pdfWriter = PdfWriter.getInstance(pdfDocument, getOutputStream());
+		PdfWriter pdfWriter = PdfWriter.getInstance(document, getOutputStream());
 
+		/**
+		 * TODO add documentation
+		 */
 		for (HocrDocumentItem item : getItems()) {
 
 			HocrParser parser = new HocrParser(item.getHocrInputStream());
 
 			HocrDocument hocrDocument = parser.parse();
 
-			/*
+			/**
+			 * TODO add documentation
 			 * TODO add multipage image support
 			 */
 			if (hocrDocument.getPages().size() > 1) {
 				throw new Exception("Não foi implementado!");
 			}
 
+			/**
+			 * TODO add documentation
+			 */
 			for (HocrPage hocrPage : hocrDocument.getPages()) {
 				HocrPageProcessor pageProcessor = new HocrPageProcessor(hocrPage, item.getImageInputStream(), isUseImageDpi());
-				pageProcessor.process(pdfDocument, pdfWriter);
+				pageProcessor.process(document, pdfWriter);
 			}
 		}
 
@@ -87,29 +117,65 @@ public class HocrToPdf {
 			pdfWriter.setOutlines(outlines);
 		}
 
-		pdfDocument.close();
+		/**
+		 * Closing the document body stream.
+		 */
+		document.close();
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param hocrInputStream
+	 *            Html-OCR (HOCR) InputStream
+	 * @param imgInputStream
+	 *            Image InputStream, this image will be used to create the pdf searchable
+	 */
 	public void addHocrDocument(InputStream hocrInputStream, InputStream imgInputStream) {
 		this.items.add(new HocrDocumentItem(hocrInputStream, imgInputStream));
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public List<HashMap<String, Object>> getOutlines() {
 		return outlines;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param outlines
+	 */
 	public void setOutlines(List<HashMap<String, Object>> outlines) {
 		this.outlines = outlines;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param outline
+	 */
 	public void addOutline(HashMap<String, Object> outline) {
 		getOutlines().add(outline);
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public boolean isUseImageDpi() {
 		return useImageDpi;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param useImageDpi
+	 */
 	public void setUseImageDpi(boolean useImageDpi) {
 		this.useImageDpi = useImageDpi;
 	}

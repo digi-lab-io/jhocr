@@ -1,7 +1,4 @@
 /**
- * TODO: describe: <one line to give the program's name and a brief idea of what it does.>
- * 
- * <br>
  * Copyright (©) 2013 Pablo Filetti Moreira
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -22,28 +19,56 @@ package com.googlecode.jhocr.converter;
 
 import java.io.InputStream;
 
+/**
+ * TODO add documentation
+ * 
+ */
 public class HocrDocumentItem {
 
 	private InputStream	hocrInputStream;
 	private InputStream	imageInputStream;
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param hocrInputStream
+	 * @param imageInputStream
+	 */
 	public HocrDocumentItem(InputStream hocrInputStream, InputStream imageInputStream) {
 		this.hocrInputStream = hocrInputStream;
 		this.imageInputStream = imageInputStream;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public InputStream getHocrInputStream() {
 		return hocrInputStream;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param hocrInputStream
+	 */
 	public void setHocrInputStream(InputStream hocrInputStream) {
 		this.hocrInputStream = hocrInputStream;
 	}
 
+	/**
+	 * TODO add documentation
+	 */
 	public InputStream getImageInputStream() {
 		return imageInputStream;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param imageInputStream
+	 */
 	public void setImageInputStream(InputStream imageInputStream) {
 		this.imageInputStream = imageInputStream;
 	}

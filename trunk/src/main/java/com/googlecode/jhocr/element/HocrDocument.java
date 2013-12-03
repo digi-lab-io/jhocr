@@ -1,7 +1,4 @@
 /**
- * TODO: describe: <one line to give the program's name and a brief idea of what it does.>
- * 
- * <br>
  * Copyright (©) 2013 Pablo Filetti Moreira
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -23,6 +20,10 @@ package com.googlecode.jhocr.element;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * TODO add documentation
+ * 
+ */
 public class HocrDocument {
 
 	public static final String	TESSERACT_VERSION_3_02	= "tesseract 3.02";
@@ -33,44 +34,90 @@ public class HocrDocument {
 
 	private List<HocrPage>		pages					= new ArrayList<HocrPage>();
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public String getContentType() {
 		return contentType;
 	}
 
+	/**
+	 * TODO add documentation
+	 */
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public String getOcrSystem() {
 		return ocrSystem;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param ocrSystem
+	 */
 	public void setOcrSystem(String ocrSystem) {
 		this.ocrSystem = ocrSystem;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public List<HocrPage> getPages() {
 		return pages;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param pages
+	 */
 	public void setPages(List<HocrPage> pages) {
 		this.pages = pages;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param page
+	 */
 	public void addPage(HocrPage page) {
 		page.setDocument(this);
 		getPages().add(page);
 	}
 
+	/**
+	 * TODO add documentation
+	 */
 	@Override
 	public String toString() {
 		return "HocrDocument{" + "contentType=" + contentType + ", ocrSystem=" + ocrSystem + ", pages=" + pages.size() + '}';
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public boolean isOcrSystemTesseract3_01() {
 		return TESSERACT_VERSION_3_01.equals(getOcrSystem());
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public boolean isOcrSystemTesseract3_02() {
 		return TESSERACT_VERSION_3_02.equals(getOcrSystem());
 	}

@@ -1,7 +1,4 @@
 /**
- * TODO: describe: <one line to give the program's name and a brief idea of what it does.>
- * 
- * <br>
  * Copyright (©) 2013 Pablo Filetti Moreira
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -22,6 +19,10 @@ package com.googlecode.jhocr.element;
 
 import com.googlecode.jhocr.attribute.BBox;
 
+/**
+ * TODO add documentation
+ * 
+ */
 public class HocrWord extends HocrElement {
 
 	public static final String	TAGNAME		= "span";
@@ -32,46 +33,93 @@ public class HocrWord extends HocrElement {
 	private HocrLine			line;
 	private String				text;
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param id
+	 * @param bbox
+	 * @param text
+	 * @param strong
+	 */
 	public HocrWord(String id, BBox bbox, String text, boolean strong) {
 		super(id, bbox);
 		this.text = text;
 		this.strong = strong;
 	}
 
+	/**
+	 * TODO add documentation
+	 */
 	@Override
 	public String getClassName() {
 		return TAGNAME;
 	}
 
+	/**
+	 * TODO add documentation
+	 */
 	@Override
 	public String getTagName() {
 		return CLASSNAME;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public boolean isStrong() {
 		return strong;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param strong
+	 */
 	public void setStrong(boolean strong) {
 		this.strong = strong;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public HocrLine getLine() {
 		return line;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param line
+	 */
 	public void setLine(HocrLine line) {
 		this.line = line;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public String getText() {
 		return text;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param text
+	 */
 	public void setText(String text) {
 		this.text = text;
 	}
 
+	/**
+	 * TODO add documentation
+	 */
 	@Override
 	public String toString() {
 		return "HocrWord{" + super.toString() + ", strong=" + strong + ", text=" + text + '}';

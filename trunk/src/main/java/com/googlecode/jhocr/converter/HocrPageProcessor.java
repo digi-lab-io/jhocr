@@ -1,7 +1,4 @@
 /**
- * TODO: describe: <one line to give the program's name and a brief idea of what it does.>
- * 
- * <br>
  * Copyright (©) 2013 Pablo Filetti Moreira
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -35,8 +32,15 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 
+/**
+ * TODO add documentation
+ * 
+ */
 public class HocrPageProcessor {
 
+	/**
+	 * TODO add documentation, for example why exactly 300
+	 */
 	private static final int	DPI_DEFAULT	= 300;
 	private static Logger		log			= Logger.getLogger(HocrPageProcessor.class);
 
@@ -48,12 +52,26 @@ public class HocrPageProcessor {
 	private Rectangle			imageRectangle;
 	private boolean				useImageDpi;
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param hocrPage
+	 * @param imageInputStream
+	 * @param useImageDpi
+	 * @throws Exception
+	 */
 	public HocrPageProcessor(HocrPage hocrPage, InputStream imageInputStream, boolean useImageDpi) throws Exception {
 		this.hocrPage = hocrPage;
 		this.useImageDpi = useImageDpi;
 		init(imageInputStream);
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param iis
+	 * @throws Exception
+	 */
 	private void init(InputStream iis) throws Exception {
 
 		font = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.EMBEDDED);
@@ -66,6 +84,9 @@ public class HocrPageProcessor {
 
 		int dpiX, dpiY;
 
+		/**
+		 * TODO add documentation, for example what if and what else
+		 */
 		if (useImageDpi) {
 			dpiX = getImage().getDpiX();
 			if (dpiX == 0) {
@@ -75,6 +96,7 @@ public class HocrPageProcessor {
 			if (dpiY == 0) {
 				dpiY = DPI_DEFAULT;
 			}
+
 		} else {
 			dpiX = DPI_DEFAULT;
 			dpiY = DPI_DEFAULT;
@@ -83,29 +105,64 @@ public class HocrPageProcessor {
 		this.dotsPerPointX = dpiX / HocrToPdf.POINTS_PER_INCH;
 		this.dotsPerPointY = dpiY / HocrToPdf.POINTS_PER_INCH;
 
+		/**
+		 * TODO add documentation
+		 */
 		this.imageRectangle = new Rectangle(getHocrPage().getBbox().getWidth() / getDotsPerPointX(), getHocrPage().getBbox().getHeight() / getDotsPerPointY());
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public HocrPage getHocrPage() {
 		return hocrPage;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public Image getImage() {
 		return image;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public float getDotsPerPointX() {
 		return dotsPerPointX;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public float getDotsPerPointY() {
 		return dotsPerPointY;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public Rectangle getImageRectangle() {
 		return imageRectangle;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param document
+	 * @param pdfWriter
+	 * @throws DocumentException
+	 */
 	public void process(Document document, PdfWriter pdfWriter) throws DocumentException {
 
 		document.setPageSize(getImageRectangle());
@@ -118,16 +175,25 @@ public class HocrPageProcessor {
 
 		PdfContentByte cb = pdfWriter.getDirectContentUnder();
 
+		/**
+		 * TODO add documentation
+		 */
 		getImage().scaleToFit(getImageRectangle().getWidth(), getImageRectangle().getHeight());
 		getImage().setAbsolutePosition(0, 0);
 
 		pdfWriter.getDirectContent().addImage(getImage());
-
 		for (HocrLine hocrLine : getHocrPage().getLines()) {
 			processHocrLine(cb, hocrLine);
 		}
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param cb
+	 * @param hocrWord
+	 * @param wordWidthPt
+	 */
 	private static void processHocrWordCharacterSpacing(PdfContentByte cb, HocrWord hocrWord, float wordWidthPt) {
 
 		float charSpacing = 0;
@@ -152,6 +218,7 @@ public class HocrPageProcessor {
 				}
 			}
 		}
+
 		/*
 		 * else {
 		 * while (wordWidthPt > textWidthPt) {
@@ -170,14 +237,28 @@ public class HocrPageProcessor {
 		 */
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public BaseFont getFont() {
 		return font;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param cb
+	 * @param hocrLine
+	 */
 	private void processHocrLine(PdfContentByte cb, HocrLine hocrLine) {
 
 		String lineText = hocrLine.getText();
 
+		/**
+		 * TODO add documentation
+		 */
 		if (!lineText.isEmpty()) {
 
 			float lineHeightPt = hocrLine.getBbox().getHeight() / getDotsPerPointY();
@@ -194,6 +275,9 @@ public class HocrPageProcessor {
 
 			int t = hocrLine.getWords().size();
 
+			/**
+			 * TODO add documentation
+			 */
 			for (int i = 0; i < t; i++) {
 
 				HocrWord hocrWord = hocrLine.getWords().get(i);

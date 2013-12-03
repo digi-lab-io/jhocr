@@ -1,7 +1,4 @@
 /**
- * TODO: describe: <one line to give the program's name and a brief idea of what it does.>
- * 
- * <br>
  * Copyright (©) 2013 Pablo Filetti Moreira
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -25,6 +22,10 @@ import java.util.List;
 
 import com.googlecode.jhocr.attribute.BBox;
 
+/**
+ * TODO add documentation
+ * 
+ */
 public class HocrPage extends HocrElement {
 
 	public static final String	TAGNAME		= "div";
@@ -34,42 +35,85 @@ public class HocrPage extends HocrElement {
 	private String				image;
 	private List<HocrCarea>		careas		= new ArrayList<HocrCarea>();
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param id
+	 * @param bbox
+	 * @param image
+	 */
 	public HocrPage(String id, BBox bbox, String image) {
 		super(id, bbox);
 		this.image = image;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public String getImage() {
 		return image;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param image
+	 */
 	public void setImage(String image) {
 		this.image = image;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public List<HocrCarea> getCareas() {
 		return careas;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param careas
+	 */
 	public void setCareas(List<HocrCarea> careas) {
 		this.careas = careas;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param carea
+	 */
 	public void addCarea(HocrCarea carea) {
 		carea.setPage(this);
 		getCareas().add(carea);
 	}
 
+	/**
+	 * TODO add documentation
+	 */
 	@Override
 	public String getClassName() {
 		return CLASSNAME;
 	}
 
+	/**
+	 * TODO add documentation
+	 */
 	@Override
 	public String getTagName() {
 		return TAGNAME;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public List<HocrParagraph> getParagraphs() {
 
 		List<HocrParagraph> paragraphs = new ArrayList<HocrParagraph>();
@@ -81,6 +125,11 @@ public class HocrPage extends HocrElement {
 		return paragraphs;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public List<HocrLine> getLines() {
 
 		List<HocrLine> lines = new ArrayList<HocrLine>();
@@ -92,6 +141,11 @@ public class HocrPage extends HocrElement {
 		return lines;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public List<HocrWord> getWords() {
 
 		List<HocrWord> words = new ArrayList<HocrWord>();
@@ -103,14 +157,27 @@ public class HocrPage extends HocrElement {
 		return words;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param document
+	 */
 	public void setDocument(HocrDocument document) {
 		this.document = document;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public HocrDocument getDocument() {
 		return document;
 	}
 
+	/**
+	 * TODO add documentation
+	 */
 	@Override
 	public String toString() {
 		return "HocrPage{" + super.toString() + ", image=" + image + ", careas=" + careas.size() + '}';
