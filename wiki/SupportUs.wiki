@@ -1,5 +1,4 @@
 #summary Infos on how you can contribute and support us.
-#labels Phase-Implementation
 #sidebar TableOfContents
 
 {{{
@@ -13,7 +12,9 @@ http://jhocr.googlecode.com/svn/wiki/resources/design/com.googlecode.jhocr_logo.
     * [Mavensupport Maven support]
     * [SupportUs Help us improve]
       * [JavaHOCRCodeFormat Use our Codeformat]
+    * [HowItWorks How hocr works]
 ----
+
 
 = Contribution =
 

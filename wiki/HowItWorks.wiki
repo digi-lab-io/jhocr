@@ -1,4 +1,4 @@
-#summary Maven artifact information.
+#summary Explaining how hocr works.
 #sidebar TableOfContents
 
 {{{
@@ -15,14 +15,8 @@ http://jhocr.googlecode.com/svn/wiki/resources/design/com.googlecode.jhocr_logo.
     * [HowItWorks How hocr works]
 ----
 
+= How it works =
 
+http://jhocr.googlecode.com/svn/wiki/resources/documentation/searchable-pdf-explained_01.png
 
-= Maven Support =
-
-{{{
-<dependency>
-  <groupId>com.googlecode</groupId>
-  <artifactId>jhocr</artifactId>
-  <version>0.0.4</version>
-</dependency>
-}}}
+txt to be added soon ...
