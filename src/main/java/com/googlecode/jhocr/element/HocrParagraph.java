@@ -1,7 +1,4 @@
 /**
- * TODO: describe: <one line to give the program's name and a brief idea of what it does.>
- * 
- * <br>
  * Copyright (©) 2013 Pablo Filetti Moreira
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -26,6 +23,10 @@ import java.util.List;
 import com.googlecode.jhocr.attribute.BBox;
 import com.googlecode.jhocr.attribute.ParagraphDirection;
 
+/**
+ * TODO add documentation
+ * 
+ */
 public class HocrParagraph extends HocrElement {
 
 	public static final String	TAGNAME		= "p";
@@ -35,50 +36,101 @@ public class HocrParagraph extends HocrElement {
 	private ParagraphDirection	direction	= ParagraphDirection.LTR;
 	private List<HocrLine>		lines		= new ArrayList<HocrLine>();
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param id
+	 * @param bbox
+	 * @param direction
+	 */
 	public HocrParagraph(String id, BBox bbox, ParagraphDirection direction) {
 		super(id, bbox);
 		this.direction = direction;
 	}
 
+	/**
+	 * TODO add documentation
+	 */
 	@Override
 	public String getClassName() {
 		return TAGNAME;
 	}
 
+	/**
+	 * TODO add documentation
+	 */
 	@Override
 	public String getTagName() {
 		return CLASSNAME;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public List<HocrLine> getLines() {
 		return lines;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param lines
+	 */
 	public void setLines(List<HocrLine> lines) {
 		this.lines = lines;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param line
+	 */
 	public void addLine(HocrLine line) {
 		line.setParagraph(this);
 		getLines().add(line);
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public HocrCarea getCarea() {
 		return carea;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param carea
+	 */
 	public void setCarea(HocrCarea carea) {
 		this.carea = carea;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public ParagraphDirection getDirection() {
 		return direction;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param direction
+	 */
 	public void setDirection(ParagraphDirection direction) {
 		this.direction = direction;
 	}
 
+	/**
+	 * TODO add documentation
+	 */
 	@Override
 	public String toString() {
 		return "HocrParagraph{" + super.toString() + ", direction=" + direction + ", lines=" + lines.size() + '}';

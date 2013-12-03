@@ -1,7 +1,4 @@
 /**
- * TODO: describe: <one line to give the program's name and a brief idea of what it does.>
- * 
- * <br>
  * Copyright (©) 2013 Pablo Filetti Moreira
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -20,6 +17,10 @@
 
 package com.googlecode.jhocr.attribute;
 
+/**
+ * TODO add documentation
+ * 
+ */
 public class BBox {
 
 	private Integer	left;
@@ -27,6 +28,14 @@ public class BBox {
 	private Integer	right;
 	private Integer	bottom;
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param left
+	 * @param top
+	 * @param right
+	 * @param bottom
+	 */
 	public BBox(Integer left, Integer top, Integer right, Integer bottom) {
 		this.left = left;
 		this.top = top;
@@ -34,30 +43,63 @@ public class BBox {
 		this.bottom = bottom;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public Integer getLeft() {
 		return left;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public Integer getTop() {
 		return top;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public Integer getRight() {
 		return right;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public Integer getBottom() {
 		return bottom;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public Integer getWidth() {
 		return getRight() - getLeft();
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public Integer getHeight() {
 		return getBottom() - getTop();
 	}
 
+	/**
+	 * TODO add documentation
+	 */
 	@Override
 	public String toString() {
 		return "BBox{" + "l=" + left + ", t=" + top + ", r=" + right + ", b=" + bottom + '}';

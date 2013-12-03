@@ -1,7 +1,4 @@
 /**
- * TODO: describe: <one line to give the program's name and a brief idea of what it does.>
- * 
- * <br>
  * Copyright (©) 2013 Pablo Filetti Moreira
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -22,6 +19,10 @@ package com.googlecode.jhocr.element;
 
 import com.googlecode.jhocr.attribute.BBox;
 
+/**
+ * TODO add documentation
+ * 
+ */
 abstract public class HocrElement {
 
 	private String	id;
@@ -30,31 +31,70 @@ abstract public class HocrElement {
 	public HocrElement() {
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param id
+	 * @param bbox
+	 */
 	public HocrElement(String id, BBox bbox) {
 		this.id = id;
 		this.bbox = bbox;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public String getId() {
 		return id;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param id
+	 */
 	public void setId(String id) {
 		this.id = id;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	public BBox getBbox() {
 		return bbox;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param bbox
+	 */
 	public void setBbox(BBox bbox) {
 		this.bbox = bbox;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	abstract public String getClassName();
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 */
 	abstract public String getTagName();
 
+	/**
+	 * TODO add documentation
+	 */
 	@Override
 	public String toString() {
 		return "id=" + id + ", bbox=" + bbox;

@@ -1,7 +1,4 @@
 /**
- * TODO: describe: <one line to give the program's name and a brief idea of what it does.>
- * 
- * <br>
  * Copyright (©) 2013 Pablo Filetti Moreira
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -40,6 +37,10 @@ import com.googlecode.jhocr.element.HocrPage;
 import com.googlecode.jhocr.element.HocrParagraph;
 import com.googlecode.jhocr.element.HocrWord;
 
+/**
+ * TODO add documentation
+ * 
+ */
 public class HocrParser {
 
 	private static Logger	log						= Logger.getLogger(HocrParser.class);
@@ -50,6 +51,10 @@ public class HocrParser {
 	private static String	ATTRIBUTE_DIR			= "dir";
 	private static String	TAG_STRONG				= "strong";
 
+	/**
+	 * TODO implement unit tests for the patterns
+	 * TODO add documentation
+	 */
 	private Pattern			PATTERN_IMAGE			= Pattern.compile("image\\s+([^;]+)");
 	private Pattern			PATTERN_BBOX			= Pattern.compile("bbox(\\s+-?\\d+){4}");
 	private Pattern			PATTERN_BBOX_COORDINATE	= Pattern.compile("(-?\\d+)\\s+(-?\\d+)\\s+(-?\\d+)\\s+(-?\\d+)");
@@ -57,23 +62,40 @@ public class HocrParser {
 	private InputStream		inputStream;
 	private HocrDocument	document;
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param inputStream
+	 */
 	public HocrParser(InputStream inputStream) {
 		this.inputStream = inputStream;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	public HocrDocument parse() throws Exception {
 
-		// Faz parser do HTML
 		Source source = new Source(inputStream);
 
 		List<Element> allElements = source.getAllElements("meta");
 
 		document = new HocrDocument();
 
+		/**
+		 * Iterate all meta data found in the html file and pass relavant information to the <code>HocrDocument</code> obj.
+		 * TODO improve this iteration to be either static using such variables or dynamic making it configurable.
+		 */
 		for (Element elem : allElements) {
 
 			String attrHttp = elem.getAttributeValue("http-equiv");
 
+			/**
+			 * Set content type.
+			 */
 			if (attrHttp != null && attrHttp.equals("Content-Type")) {
 				document.setContentType(elem.getAttributeValue("content"));
 				continue;
@@ -81,6 +103,9 @@ public class HocrParser {
 
 			String attrName = elem.getAttributeValue("name");
 
+			/**
+			 * Set ocr system.
+			 */
 			if (attrName != null && attrName.equals("ocr-system")) {
 				document.setOcrSystem(elem.getAttributeValue("content"));
 			}
@@ -88,6 +113,9 @@ public class HocrParser {
 
 		StartTag pageTag = source.getNextStartTag(0, ATTRIBUTE_CLASS, HocrPage.CLASSNAME, false);
 
+		/**
+		 * TODO add documentation
+		 */
 		while (pageTag != null) {
 			document.addPage(parsePageTag(pageTag));
 			pageTag = source.getNextStartTag(pageTag.getEnd(), ATTRIBUTE_CLASS, HocrPage.CLASSNAME, false);
@@ -96,6 +124,15 @@ public class HocrParser {
 		return document;
 	}
 
+	/**
+	 * TODO add documentation
+	 * TODO add better logging
+	 * TODO catch exception and return null if any thrown
+	 * 
+	 * @param pageTag
+	 * @return
+	 * @throws Exception
+	 */
 	private HocrPage parsePageTag(StartTag pageTag) throws Exception {
 
 		Element element = pageTag.getElement();
@@ -121,6 +158,13 @@ public class HocrParser {
 		return page;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param careaTag
+	 * @return
+	 * @throws Exception
+	 */
 	private HocrCarea parseCareaTag(StartTag careaTag) throws Exception {
 
 		Element element = careaTag.getElement();
@@ -139,6 +183,13 @@ public class HocrParser {
 		return carea;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param paragraphTag
+	 * @return
+	 * @throws Exception
+	 */
 	private HocrParagraph parseParagraphTag(StartTag paragraphTag) throws Exception {
 
 		Element element = paragraphTag.getElement();
@@ -158,6 +209,13 @@ public class HocrParser {
 		return paragraph;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param lineTag
+	 * @return
+	 * @throws Exception
+	 */
 	private HocrLine parseLineTag(StartTag lineTag) throws Exception {
 
 		Element element = lineTag.getElement();
@@ -169,6 +227,9 @@ public class HocrParser {
 
 		List<StartTag> wordTags;
 
+		/**
+		 * TODO add documentation
+		 */
 		if (document.isOcrSystemTesseract3_02()) {
 			wordTags = element.getAllStartTagsByClass(HocrWord.CLASSNAME_X);
 		} else {
@@ -182,6 +243,13 @@ public class HocrParser {
 		return line;
 	}
 
+	/**
+	 * TODO add documentation
+	 * 
+	 * @param wordTag
+	 * @return
+	 * @throws Exception
+	 */
 	private HocrWord parseWordTag(StartTag wordTag) throws Exception {
 
 		Element element = wordTag.getElement();
@@ -198,6 +266,14 @@ public class HocrParser {
 		return new HocrWord(id, bbox, text, strong);
 	}
 
+	/**
+	 * TODO add documentation
+	 * TODO translate logging
+	 * 
+	 * @param element
+	 * @return
+	 * @throws Exception
+	 */
 	private BBox parseAttributeBBox(Element element) throws Exception {
 
 		String attributeTitleValue = element.getAttributeValue("title");
@@ -208,6 +284,9 @@ public class HocrParser {
 
 		Matcher bboxMatcher = PATTERN_BBOX.matcher(attributeTitleValue);
 
+		/**
+		 * TODO add documentation
+		 */
 		if (!bboxMatcher.find()) {
 			String msg = "Erro ao realizar o parser do arquivo HOCR, não foi possível encontrar o atributo bbox.";
 			log.error(msg);
@@ -216,6 +295,9 @@ public class HocrParser {
 
 		Matcher bboxCoordinateMatcher = PATTERN_BBOX_COORDINATE.matcher(bboxMatcher.group());
 
+		/**
+		 * TODO add documentation
+		 */
 		if (!bboxCoordinateMatcher.find()) {
 			String msg = "Erro ao realizar o parser do arquivo HOCR, não foi possível realizar o parse do atributo bbox.";
 			log.error(msg);
