@@ -24,3 +24,4 @@ There are many ways you can help us to improve this project.
   * By submitting an issue and describing your problem or giving us feedback: https://code.google.com/p/jhocr/issues/list
   * By adopting this project and helping to improve with your java skills, just contact us.
   * You can like the [JavaHOCR] page &/ spread the word about this project.
+  * [http://code.google.com/p/support/wiki/GettingStarted#Contributing_Open_Source_Code Contributing Open Source Code]
