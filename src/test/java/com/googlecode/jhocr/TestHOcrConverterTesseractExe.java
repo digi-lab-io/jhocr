@@ -1,5 +1,5 @@
 /**
- * Copyright (Â©) 2013 Pablo Filetti Moreira
+ * Copyright (©) 2013 Pablo Filetti Moreira
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,17 +17,26 @@
 
 package com.googlecode.jhocr;
 
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.googlecode.jhocr.converter.HocrToPdf;
+import com.googlecode.jhocr.util.FExt;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
+import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
+import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
 
 /**
- * Convert html-ocr and image files into a searchable pdf.
+ * Convert html-ocr files generated in with the tesseract.exe version 3.02 and
+ * image files into a searchable pdf document.
  * 
  */
 public class TestHOcrConverterTesseractExe {
@@ -37,19 +46,14 @@ public class TestHOcrConverterTesseractExe {
 	private static String	testFileResultsPath		= "src/test/resources/test-results";
 	private static String	testFileName			= "eurotext_tesseract-exe";
 
-	private static String	htmlOcrFileExtension	= "html";
-	private static String	htmlOcrRelFileName		= String.format("%s%s.%s", testFileResourcesPath, testFileName, htmlOcrFileExtension);
+	private static String	htmlOcrRelFileName		= String.format("%s%s.%s", testFileResourcesPath, testFileName, FExt.HTML);
+	private static String	imageRelFileName		= String.format("%s%s.%s", testFileResourcesPath, testFileName, FExt.TIF);
+	private static String	pdfFileName				= String.format("%s.%s", testFileName, FExt.PDF);
 
-	private static String	imageFileExtension		= "tif";
-	private static String	imageRelFileName		= String.format("%s%s.%s", testFileResourcesPath, testFileName, imageFileExtension);
-
-	private static String	pdfFileExtension		= "pdf";
-	private static String	pdfFileName				= String.format("%s.%s", testFileName, pdfFileExtension);
-
-	private File			testResultFileName		= null;
+	private File			testResultFileName		= new File(String.format("%s/%s", testFileResultsPath, pdfFileName));		;
 
 	/**
-	 * TODO add documentation
+	 * Test setup and preparation.
 	 * 
 	 */
 	@Before
@@ -57,15 +61,12 @@ public class TestHOcrConverterTesseractExe {
 
 		loader = Thread.currentThread().getContextClassLoader();
 
-		testResultFileName = new File(String.format("%s/%s", testFileResultsPath, pdfFileName));
 	}
 
 	/**
-	 * TODO add documentation
+	 * This will map the ocr html file (hocr) and image into one pdf.
 	 * 
-	 * @throws IOException
-	 * 
-	 * @throws Throwable
+	 * @return true if the test passed.
 	 */
 	@Test
 	public void testConvertionFromHOCRToPDF() {
@@ -81,12 +82,40 @@ public class TestHOcrConverterTesseractExe {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	/**
-	 * TODO implement test if the converted pdf contains know text from the image.
+	 * TODO improve test accuracy. This test should find out if the converted
+	 * pdf is searchable.
+	 * 
 	 */
 	@Test
 	public void testConvertedPDF() {
+		ArrayList<String> pagesTextResult = new ArrayList<String>();
+
+		try {
+
+			PdfReader reader = new PdfReader(testResultFileName.getPath());
+			PdfReaderContentParser parser = new PdfReaderContentParser(reader);
+			TextExtractionStrategy strategy;
+
+			for (int i = 1; i <= reader.getNumberOfPages(); i++) {
+				strategy = parser.processContent(i, new SimpleTextExtractionStrategy());
+				pagesTextResult.add(strategy.getResultantText());
+			}
+
+			reader.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+
+		}
+
+		for (String page : pagesTextResult) {
+			if (!page.contains("a")) {
+				fail("The char 'a' could not be found, it's looks like the pdf is not searchable at all.");
+			}
+		}
 	}
 }
