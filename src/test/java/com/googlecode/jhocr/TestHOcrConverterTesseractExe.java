@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (©) 2013 Pablo Filetti Moreira
  * 
  * This program is free software: you can redistribute it and/or modify
