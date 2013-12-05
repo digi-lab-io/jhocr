@@ -20,10 +20,13 @@ http://jhocr.googlecode.com/svn/wiki/resources/design/com.googlecode.jhocr_logo.
 
 = Maven Support =
 
+[http://search.maven.org/#search|ga|1|jhocr Maven Central Search]
+
+ * Maven dependency:
 {{{
 <dependency>
-  <groupId>com.googlecode</groupId>
+  <groupId>com.googlecode.jhocr</groupId>
   <artifactId>jhocr</artifactId>
-  <version>0.0.4</version>
+  <version>0.0.5</version>
 </dependency>
 }}}
