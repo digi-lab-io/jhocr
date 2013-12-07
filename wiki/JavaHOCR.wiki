@@ -1,11 +1,6 @@
 #summary Main wiki page of the java hocr project.
 #sidebar TableOfContents
 
-{{{
-Library to parse and perform conversion from hocr
-files to pdf, merging the image file and mapping the
-hocr data into one document.
-}}} 
 http://jhocr.googlecode.com/svn/wiki/resources/design/com.googlecode.jhocr_logo.png
 
   * [JavaHOCR Java HOCR Wiki]
