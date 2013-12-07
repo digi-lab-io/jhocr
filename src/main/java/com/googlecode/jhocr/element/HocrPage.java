@@ -39,7 +39,7 @@ public class HocrPage extends HocrElement {
 	 * 
 	 * @param id Set the id of element.
 	 * @param bbox Sets the coordinates of element.
-	 * @param image Set the image name of element.
+	 * @param image Set the name of image of element.
 	 */
 	public HocrPage(String id, BBox bbox, String image) {
 		super(id, bbox);
@@ -47,71 +47,58 @@ public class HocrPage extends HocrElement {
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The name of image.
 	 */
 	public String getImage() {
 		return image;
 	}
 
 	/**
-	 * TODO add documentation
+	 * Set the name of image.
 	 * 
-	 * @param image
+	 * @param image The name of image.
 	 */
 	public void setImage(String image) {
 		this.image = image;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The children <code>HocrCarea</code> of this.
 	 */
 	public List<HocrCarea> getCareas() {
 		return careas;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @param careas
+	 * Set the children <code>HocrCarea</code> of this.
+	 * @param careas The children <code>HocrCarea</code> of this.
 	 */
 	public void setCareas(List<HocrCarea> careas) {
 		this.careas = careas;
 	}
 
 	/**
-	 * TODO add documentation
+	 * Add new carea. 
 	 * 
-	 * @param carea
+	 * @param carea The new carea.
 	 */
 	public void addCarea(HocrCarea carea) {
 		carea.setPage(this);
 		getCareas().add(carea);
 	}
 
-	/**
-	 * TODO add documentation
-	 */
 	@Override
 	public String getClassName() {
 		return CLASSNAME;
 	}
 
-	/**
-	 * TODO add documentation
-	 */
 	@Override
 	public String getTagName() {
 		return TAGNAME;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The children <code>HocrParagraph</code> of this.
 	 */
 	public List<HocrParagraph> getParagraphs() {
 
@@ -125,9 +112,7 @@ public class HocrPage extends HocrElement {
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The children <code>HocrLine</code> of this.
 	 */
 	public List<HocrLine> getLines() {
 
@@ -141,9 +126,7 @@ public class HocrPage extends HocrElement {
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The children <code>HocrWord</code> of this.
 	 */
 	public List<HocrWord> getWords() {
 
@@ -157,23 +140,19 @@ public class HocrPage extends HocrElement {
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @param document
+	 * Set the parent <code>HocrDocument</code> of this.
+	 * @param page The parent <code>HocrDocument</code> of this.
 	 */
 	public void setDocument(HocrDocument document) {
 		this.document = document;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The parent <code>HocrDocument</code> of this.
 	 */
 	public HocrDocument getDocument() {
 		return document;
 	}
-
 
 	/**
 	 * Returns the informations of this element as a <code>String</code>.

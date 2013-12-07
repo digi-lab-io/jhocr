@@ -18,9 +18,12 @@
 package com.googlecode.jhocr.attribute;
 
 /**
- * Enum used to store the type of paragraph. 
+ * Enum used to store the text direction of paragraph.<br/>
+ * <ul>
+ * 	<li>LTR - Left to Right</li>
+ *  <li>RTL - Right to Left</li>
+ * </ul> 
  */
 public enum ParagraphDirection {	
-	LTR, // Left to Right  
-	RTL; // Right to Left
+	LTR, RTL; 
 }

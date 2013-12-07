@@ -44,71 +44,57 @@ public class HocrCarea extends HocrElement {
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The children <code>HocrParagraph</code> of this.
 	 */
 	public List<HocrParagraph> getParagraphs() {
 		return paragraphs;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @param paragraphs
+	 * Set the children <code>HocrParagraph</code> of this.
+	 * @param paragraphs The children <code>HocrParagraph</code> of this.
 	 */
 	public void setParagraphs(List<HocrParagraph> paragraphs) {
 		this.paragraphs = paragraphs;
 	}
 
 	/**
-	 * TODO add documentation
+	 * Add new paragraph. 
 	 * 
-	 * @param paragraph
+	 * @param paragraph The new paragraph.
 	 */
 	public void addParagraph(HocrParagraph paragraph) {
 		paragraph.setCarea(this);
 		getParagraphs().add(paragraph);
 	}
 
-	/**
-	 * TODO add documentation
-	 */
 	@Override
 	public String getClassName() {
 		return CLASSNAME;
 	}
 
-	/**
-	 * TODO add documentation
-	 */
 	@Override
 	public String getTagName() {
 		return TAGNAME;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The parent <code>HocrPage</code> of this.
 	 */
 	public HocrPage getPage() {
 		return page;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @param page
+	 * Set the parent <code>HocrPage</code> of this.
+	 * @param page The parent <code>HocrPage</code> of this.
 	 */
 	public void setPage(HocrPage page) {
 		this.page = page;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The children <code>HocrLine</code> of this.
 	 */
 	public List<HocrLine> getLines() {
 
@@ -122,9 +108,7 @@ public class HocrCarea extends HocrElement {
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The children <code>HocrWord</code> of this.
 	 */
 	public List<HocrWord> getWords() {
 

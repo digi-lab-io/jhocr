@@ -47,44 +47,35 @@ public class HocrParagraph extends HocrElement {
 		this.direction = direction;
 	}
 
-	/**
-	 * TODO add documentation
-	 */
 	@Override
 	public String getClassName() {
+		return CLASSNAME;
+	}
+
+	@Override
+	public String getTagName() {
 		return TAGNAME;
 	}
 
 	/**
-	 * TODO add documentation
-	 */
-	@Override
-	public String getTagName() {
-		return CLASSNAME;
-	}
-
-	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The children <code>HocrLine</code> of this.
 	 */
 	public List<HocrLine> getLines() {
 		return lines;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @param lines
+	 * Set the children <code>HocrLine</code> of this.
+	 * @param lines The children <code>HocrLine</code> of this.
 	 */
 	public void setLines(List<HocrLine> lines) {
 		this.lines = lines;
 	}
 
 	/**
-	 * TODO add documentation
+	 * Add new line. 
 	 * 
-	 * @param line
+	 * @param line The new line.
 	 */
 	public void addLine(HocrLine line) {
 		line.setParagraph(this);
@@ -92,36 +83,33 @@ public class HocrParagraph extends HocrElement {
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The parent <code>HocrCarea</code> of this.
 	 */
 	public HocrCarea getCarea() {
 		return carea;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @param carea
+	 * Set the parent <code>HocrCarea</code> of this.
+	 * @param page The parent <code>HocrCarea</code> of this.
 	 */
 	public void setCarea(HocrCarea carea) {
 		this.carea = carea;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The text of paragraph direction
+	 * @see ParagraphDirection
 	 */
 	public ParagraphDirection getDirection() {
 		return direction;
 	}
 
 	/**
-	 * TODO add documentation
+	 * Set the text of paragraph direction
 	 * 
-	 * @param direction
+	 * @see ParagraphDirection
+	 * @param direction The text direction
 	 */
 	public void setDirection(ParagraphDirection direction) {
 		this.direction = direction;
