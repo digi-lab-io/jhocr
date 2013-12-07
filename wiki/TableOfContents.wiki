@@ -7,4 +7,5 @@ http://jhocr.googlecode.com/svn/wiki/resources/design/com.googlecode.jhocr_logo.
     * [SupportUs Help us improve]
       * [JavaHOCRCodeFormat Use our Codeformat]
       * [JavaHOCRJavaDoc Use Javadoc]
-    * [HowItWorks How hocr works]
+    * [HowItWorks How java hocr works]
+      * [HowToUse How to use it]
