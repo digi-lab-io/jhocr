@@ -41,50 +41,44 @@ abstract public class HocrElement {
 	}
 
 	/**
-	 * @return Id of element
+	 * @return The id attribute of tag
 	 */
 	public String getId() {
 		return id;
 	}
 
 	/**
-	 * TODO add documentation
+	 * Set the id of element
 	 * 
-	 * @param id
+	 * @param id value of id
 	 */
 	public void setId(String id) {
 		this.id = id;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The coordinates of element 
 	 */
 	public BBox getBbox() {
 		return bbox;
 	}
 
 	/**
-	 * TODO add documentation
+	 * Set the coordinates of element
 	 * 
-	 * @param bbox
+	 * @param bbox the coordinates of element
 	 */
 	public void setBbox(BBox bbox) {
 		this.bbox = bbox;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The class name attribute of tag.
 	 */
 	abstract public String getClassName();
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The name of tag.
 	 */
 	abstract public String getTagName();
 
