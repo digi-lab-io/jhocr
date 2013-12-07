@@ -279,7 +279,6 @@ public class HocrParser {
 	/**
 	 * 
 	 * TODO add documentation
-	 * TODO translate logging
 	 * 
 	 * @param element
 	 * @return an instance of {@link BBox}.
@@ -316,7 +315,7 @@ public class HocrParser {
 			return new BBox(Integer.parseInt((bboxCoordinateMatcher.group(1))), Integer.parseInt((bboxCoordinateMatcher.group(2))), Integer.parseInt((bboxCoordinateMatcher.group(3))), Integer.parseInt((bboxCoordinateMatcher.group(4))));
 
 		} catch (Exception e) {
-			log.error("Erro ao realizar o parser do arquivo HOCR, não foi possível realizar o parse do atributo bbox.");
+			log.error("Error when performing file parser hOCR, It was not possible to parse the bbox attribute");
 			return null;
 		}
 
