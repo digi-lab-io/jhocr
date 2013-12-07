@@ -1,5 +1,6 @@
 #summary How to use jhocr.
 #labels Phase-Implementation,Phase-QA
+#sidebar TableOfContents
 
 
 = How to use jhocr = 
@@ -11,7 +12,44 @@
 
 == On MacOSX ==
 
+=== MacOSX Part 1 ===
+
+Get home brew installed.
+
+  # check the [http://brew.sh/index_de.html home brew page] for newer howtos
+  # otherwise run on your terminal (don't run it as sudo): 
+{{{
+ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go/install)"
+}}}
+  # accept xcode install
+  # run on your terminal:
+{{{
+brew doctor
+}}}
+  # follow the steps an than run:
+{{{
+export PATH='/usr/local/bin:$PATH' >> ~/.bash_profile
+}}}
+
+=== MacOSX Part 2 ===
+
+  # run on your terminal: 
+{{{
+brew install tesseract
+}}}
+  # grab a bier
+  # wait untill finished and than test your installation with:
+{{{
+$ tesseract -v
+tesseract 3.02.02
+ leptonica-1.69
+  libjpeg 8d : libpng 1.5.17 : libtiff 4.0.3 : zlib 1.2.5
+}}}
+
+Sources used for this article: 
+  * [http://emop.tamu.edu/node/45 Installing Tesseract on a Mac]
+  * [http://brew.sh/index_de.html Home Brew]
+
 == On Windows ==
 
 == On Linux ==
-
