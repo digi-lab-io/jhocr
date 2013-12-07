@@ -24,6 +24,8 @@ import com.googlecode.jhocr.attribute.BBox;
 
 /**
  * Class used to store information "ocr_carea" element and its children.
+ * 
+ * Element example: {@code <div class='ocr_carea' id='block_1_1' title="bbox 36 90 619 363">} 
  */
 public class HocrCarea extends HocrElement {
 

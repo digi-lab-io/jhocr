@@ -24,6 +24,8 @@ import com.googlecode.jhocr.attribute.BBox;
 
 /**
  * Class used to store information "ocr_line" element and their children.
+ * 
+ * Element example: {@code <span class='ocr_line' id='line_4' title="bbox 36 194 585 225">}
  */
 public class HocrLine extends HocrElement {
 
