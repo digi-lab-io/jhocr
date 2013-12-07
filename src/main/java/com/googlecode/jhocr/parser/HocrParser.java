@@ -240,10 +240,10 @@ public class HocrParser {
 		 * Tesseract change class name of element HocrWord in version 3.02.
 		 * From: ocr_word, To: ocrx_word 
 		 */
-		if (document.isOcrSystemTesseract3_02()) {
-			wordTags = element.getAllStartTagsByClass(HocrWord.CLASSNAME_X);
-		} else {
+		if (document.isOcrSystemTesseract3_01()) {
 			wordTags = element.getAllStartTagsByClass(HocrWord.CLASSNAME);
+		} else {
+			wordTags = element.getAllStartTagsByClass(HocrWord.CLASSNAME_X);
 		}
 
 		for (StartTag wordTag : wordTags) {
