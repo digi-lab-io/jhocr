@@ -18,8 +18,7 @@
 package com.googlecode.jhocr.attribute;
 
 /**
- * TODO add documentation
- * 
+ * Class used to store information of attribute "bbox".
  */
 public class BBox {
 
@@ -29,12 +28,12 @@ public class BBox {
 	private Integer	bottom;
 
 	/**
-	 * TODO add documentation
+	 * Constructs an <code>BBox</code> with a coordinates left, top, right and bottom.
 	 * 
-	 * @param left
-	 * @param top
-	 * @param right
-	 * @param bottom
+	 * @param left Sets the left coordinate of the element.
+	 * @param top Sets the top coordinate of the element.
+	 * @param right Sets the right coordinate of the element.
+	 * @param bottom Sets the bottom coordinate of the element.
 	 */
 	public BBox(Integer left, Integer top, Integer right, Integer bottom) {
 		this.left = left;
@@ -43,65 +42,55 @@ public class BBox {
 		this.bottom = bottom;
 	}
 
-	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	/** 
+	 * @return The left coordinate of the element.
 	 */
 	public Integer getLeft() {
 		return left;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The top coordinate of the element.
 	 */
 	public Integer getTop() {
 		return top;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The right coordinate of the element.
 	 */
 	public Integer getRight() {
 		return right;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The bottom coordinate of the element.
 	 */
 	public Integer getBottom() {
 		return bottom;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The width used by the element.
 	 */
 	public Integer getWidth() {
 		return getRight() - getLeft();
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The height used by the element.
 	 */
 	public Integer getHeight() {
 		return getBottom() - getTop();
 	}
 
 	/**
-	 * TODO add documentation
+	 * Returns the informations of this element as a <code>String</code>.
+	 *
+	 * @return the informations of this element as a <code>String</code>.
 	 */
 	@Override
 	public String toString() {
-		return "BBox{" + "l=" + left + ", t=" + top + ", r=" + right + ", b=" + bottom + '}';
+		return "BBox{" + "l=" + left + ", t=" + top + ", r=" + right + ", b=" + bottom + "}";
 	}
 }
