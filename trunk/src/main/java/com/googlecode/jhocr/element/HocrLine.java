@@ -43,44 +43,35 @@ public class HocrLine extends HocrElement {
 		super(id, bbox);
 	}
 
-	/**
-	 * TODO add documentation
-	 */
 	@Override
 	public String getClassName() {
-		return TAGNAME;
-	}
-
-	/**
-	 * TODO add documentation
-	 */
-	@Override
-	public String getTagName() {
 		return CLASSNAME;
 	}
 
+	@Override
+	public String getTagName() {
+		return TAGNAME;
+	}
+	
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The children <code>HocrWord</code> of this.
 	 */
 	public List<HocrWord> getWords() {
 		return words;
 	}
-
+	
 	/**
-	 * TODO add documentation
-	 * 
-	 * @param words
+	 * Set the children <code>HocrWord</code> of this.
+	 * @param words The children <code>HocrWord</code> of this.
 	 */
 	public void setWords(List<HocrWord> words) {
 		this.words = words;
 	}
 
 	/**
-	 * TODO add documentation
+	 * Add new word. 
 	 * 
-	 * @param word
+	 * @param word The new word.
 	 */
 	public void addWord(HocrWord word) {
 		word.setLine(this);
@@ -88,27 +79,23 @@ public class HocrLine extends HocrElement {
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The parent <code>HocrParagraph</code> of this.
 	 */
 	public HocrParagraph getParagraph() {
 		return paragraph;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @param paragraph
+	 * Set the parent <code>HocrParagraph</code> of this.
+	 * @param paragraph The parent <code>HocrParagraph</code> of this.
 	 */
 	public void setParagraph(HocrParagraph paragraph) {
 		this.paragraph = paragraph;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * Build a <code>String</code> concatenating children words by space.
+	 * @return all words 
 	 */
 	public String getText() {
 
@@ -117,7 +104,7 @@ public class HocrLine extends HocrElement {
 		boolean first = true;
 
 		/**
-		 * TODO add documentation
+		 * Iterate all children words and build a <code>String</code> concatenating children words by space.
 		 */
 		for (HocrWord word : getWords()) {
 			if (first) {
@@ -126,7 +113,6 @@ public class HocrLine extends HocrElement {
 			} else {
 				text.append(" ").append(word.getText());
 			}
-
 		}
 
 		return text.toString();

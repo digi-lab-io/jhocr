@@ -47,12 +47,9 @@ public class HocrWord extends HocrElement {
 		this.strong = strong;
 	}
 
-	/**
-	 * @return The class name of element
-	 */
 	@Override
 	public String getClassName() {
-		return TAGNAME;
+		return CLASSNAME;
 	}
 
 	/**
@@ -60,20 +57,20 @@ public class HocrWord extends HocrElement {
 	 */
 	@Override
 	public String getTagName() {
-		return CLASSNAME;
+		return TAGNAME;
 	}
 
 	/**
-	 * TODO add documentation
+	 * If the text is strong or not
 	 * 
-	 * @return
+	 * @return If the text is strong or not
 	 */
 	public boolean isStrong() {
 		return strong;
 	}
 
 	/**
-	 * TODO add documentation
+	 * Set if the text is strong or not
 	 * 
 	 * @param strong
 	 */
@@ -82,36 +79,31 @@ public class HocrWord extends HocrElement {
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The parent <code>HocrLine</code> of this.
 	 */
 	public HocrLine getLine() {
 		return line;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @param line
+	 * Set the parent <code>HocrLine</code> of this.
+	 * @param line The parent <code>HocrLine</code> of this.
 	 */
 	public void setLine(HocrLine line) {
 		this.line = line;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The text of the word
 	 */
 	public String getText() {
 		return text;
 	}
 
 	/**
-	 * TODO add documentation
+	 * Set the text of the word
 	 * 
-	 * @param text
+	 * @param The text of the word
 	 */
 	public void setText(String text) {
 		this.text = text;
