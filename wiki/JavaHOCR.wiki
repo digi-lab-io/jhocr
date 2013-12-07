@@ -1,18 +1,9 @@
 #summary Main wiki page of the java hocr project.
 #sidebar TableOfContents
 
-http://jhocr.googlecode.com/svn/wiki/resources/design/com.googlecode.jhocr_logo.png
-
-  * [JavaHOCR Java HOCR Wiki]
-    * [Mavensupport Maven support]
-    * [SupportUs Help us improve]
-      * [JavaHOCRCodeFormat Use our Codeformat]
-      * [JavaHOCRJavaDoc Use Javadoc]
-    * [HowItWorks How hocr works]
-----
 
 
 Like us and spread the word: <g:plusone size="large"></g:plusone>
 
 
-...
+tbd ...
