@@ -5,6 +5,8 @@
 
 = How to use jhocr = 
 
+tbd ...
+
 
 == Embededd ==
 
