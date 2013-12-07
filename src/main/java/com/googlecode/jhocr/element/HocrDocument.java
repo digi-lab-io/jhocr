@@ -22,6 +22,27 @@ import java.util.List;
 
 /**
  * Class used to store information of document hocr.
+ * 
+ * Element Example: {@code 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<title/>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<meta name='ocr-system' content='tesseract'/>
+	</head>
+	<body>
+		<div class='ocr_page' id='page_1' title='image "phototest.tif"; bbox 0 0 640 480'>
+			<div class='ocr_carea' id='block_1_1' title="bbox 36 90 619 363">
+				<p class='ocr_par' dir='ltr' id='par_1' title="bbox 36 92 618 184">
+					<span class='ocr_line' id='line_1' title="bbox 36 92 580 122">
+						<span class='ocr_word' id='word_1' title="bbox 36 92 96 116">This</span>
+					</span>
+				</p>
+			</div>
+		</div>
+	</body>
+</html>}
  */
 public class HocrDocument {
 
@@ -33,62 +54,57 @@ public class HocrDocument {
 
 	private List<HocrPage>		pages					= new ArrayList<HocrPage>();
 
-	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	/** 
+	 * @return The content type of document
 	 */
 	public String getContentType() {
 		return contentType;
 	}
 
 	/**
-	 * TODO add documentation
+	 * Set the content type of document
+	 * @param The content type of document
 	 */
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The OCR system that generated the document hOCR 
 	 */
 	public String getOcrSystem() {
 		return ocrSystem;
 	}
 
 	/**
-	 * TODO add documentation
+	 * Set The OCR system that generated the document hOCR
 	 * 
-	 * @param ocrSystem
+	 * @param The OCR system that generated the document hOCR
 	 */
 	public void setOcrSystem(String ocrSystem) {
 		this.ocrSystem = ocrSystem;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return The children <code>HocrPage</code> of this.
 	 */
 	public List<HocrPage> getPages() {
 		return pages;
 	}
 
 	/**
-	 * TODO add documentation
+	 * Set the children <code>HocrPage</code> of this.
 	 * 
-	 * @param pages
+	 * @param pages The children <code>HocrPage</code> of this.
 	 */
 	public void setPages(List<HocrPage> pages) {
 		this.pages = pages;
 	}
 
 	/**
-	 * TODO add documentation
+	 * Add a new page
 	 * 
-	 * @param page
+	 * @param page The new page
 	 */
 	public void addPage(HocrPage page) {
 		page.setDocument(this);
@@ -106,18 +122,18 @@ public class HocrDocument {
 	}
 
 	/**
-	 * TODO add documentation
+	 * Validates if ocr system is version 3.01 of Tesseract
 	 * 
-	 * @return
+	 * @return Result of validation
 	 */
 	public boolean isOcrSystemTesseract3_01() {
 		return TESSERACT_VERSION_3_01.equals(getOcrSystem());
 	}
 
 	/**
-	 * TODO add documentation
+	 * Validates if ocr system is version 3.02 of Tesseract
 	 * 
-	 * @return
+	 * @return Result of validation 
 	 */
 	public boolean isOcrSystemTesseract3_02() {
 		return TESSERACT_VERSION_3_02.equals(getOcrSystem());
