@@ -117,7 +117,8 @@ public class HocrParser {
 			StartTag pageTag = source.getNextStartTag(0, ATTRIBUTE_CLASS, HocrPage.CLASSNAME, false);
 
 			/**
-			 * TODO add documentation
+			 * Iterate all "ocr_page" found in the html file and pass relavant information to the <code>HocrPage</code> obj.
+			 * Tiff images can store multiple pages in a single file.
 			 */
 			while (pageTag != null) {
 				document.addPage(parsePageTag(pageTag));
@@ -133,13 +134,13 @@ public class HocrParser {
 	}
 
 	/**
-	 * TODO add documentation
-	 * TODO add better logging
-	 * TODO catch exception and return null if any thrown
+	 * Performs parse "ocr_page" element and their children.<br/>
+	 * Element example: {@code <div class='ocr_page' id='page_1' title='image "phototest.tif"; bbox 0 0 640 480'>}
 	 * 
-	 * @param pageTag
-	 * @return
-	 * @throws Exception
+	 * TODO add better logging
+	 *   
+	 * @param pageTag The "ocr_page" tag 
+	 * @return an instance of {@link HocrPage}.
 	 */
 	private HocrPage parsePageTag(StartTag pageTag) {
 
@@ -167,11 +168,11 @@ public class HocrParser {
 	}
 
 	/**
-	 * TODO add documentation
+	 * Performs parse "ocr_carea" element and their children.<br/>
+	 * Element example: {@code <div class='ocr_carea' id='block_1_1' title="bbox 36 90 619 363">}
 	 * 
-	 * @param careaTag
-	 * @return
-	 * @throws Exception
+	 * @param careaTag The "ocr_carea" tag.
+	 * @return an instance of {@link HocrCarea}.
 	 */
 	private HocrCarea parseCareaTag(StartTag careaTag) {
 
@@ -192,11 +193,11 @@ public class HocrParser {
 	}
 
 	/**
-	 * TODO add documentation
+	 * Performs parse "ocr_par" element and their children.<br/>
+	 * Element example: {@code <p class='ocr_par' dir='ltr' id='par_1' title="bbox 36 92 618 184">}
 	 * 
-	 * @param paragraphTag
-	 * @return
-	 * @throws Exception
+	 * @param paragraphTag The "ocr_par" tag.
+	 * @return an instance of {@link HocrParagraph}.
 	 */
 	private HocrParagraph parseParagraphTag(StartTag paragraphTag) {
 
@@ -218,11 +219,11 @@ public class HocrParser {
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @param lineTag
-	 * @return
-	 * @throws Exception
+	 * Performs parse "ocr_line" element and their children.<br/>
+	 * Element example: {@code <span class='ocr_line' id='line_1' title="bbox 36 92 580 122">}
+	 *
+	 * @param lineTag The "ocr_line" tag.
+	 * @return an instance of {@link HocrLine}.
 	 */
 	private HocrLine parseLineTag(StartTag lineTag) {
 
@@ -236,7 +237,8 @@ public class HocrParser {
 		List<StartTag> wordTags;
 
 		/**
-		 * TODO add documentation
+		 * Tesseract change class name of element HocrWord in version 3.02.
+		 * From: ocr_word, To: ocrx_word 
 		 */
 		if (document.isOcrSystemTesseract3_02()) {
 			wordTags = element.getAllStartTagsByClass(HocrWord.CLASSNAME_X);
@@ -252,11 +254,11 @@ public class HocrParser {
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @param wordTag
-	 * @return
-	 * @throws Exception
+	 * Performs parse "ocr_word" element and their children.<br/>
+	 * Element example: {@code <span class='ocr_word' id='word_1' title="bbox 36 92 96 116">This</span>}
+	 *
+	 * @param lineTag The "ocr_word" tag.
+	 * @return an instance of {@link HocrWord}.
 	 */
 	private HocrWord parseWordTag(StartTag wordTag) {
 
@@ -275,11 +277,12 @@ public class HocrParser {
 	}
 
 	/**
+	 * 
 	 * TODO add documentation
 	 * TODO translate logging
 	 * 
 	 * @param element
-	 * @return
+	 * @return an instance of {@link BBox}.
 	 * @throws Exception
 	 */
 	private BBox parseAttributeBBox(Element element) {
