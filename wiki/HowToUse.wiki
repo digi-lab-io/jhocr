@@ -1,0 +1,17 @@
+#summary How to use jhocr.
+#labels Phase-Implementation,Phase-QA
+
+
+= How to use jhocr = 
+
+
+== Embededd ==
+
+---
+
+== On MacOSX ==
+
+== On Windows ==
+
+== On Linux ==
+
