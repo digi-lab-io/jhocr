@@ -6,14 +6,7 @@ Library to parse and perform conversion from hocr
 files to pdf, merging the image file and mapping the
 hocr data into one document.
 }}} 
-http://jhocr.googlecode.com/svn/wiki/resources/design/com.googlecode.jhocr_logo.png
 
-  * [JavaHOCR Java HOCR Wiki]
-    * [Mavensupport Maven support]
-    * [SupportUs Help us improve]
-      * [JavaHOCRCodeFormat Use our Codeformat]
-      * [JavaHOCRJavaDoc Use Javadoc]
-    * [HowItWorks How hocr works]
 ----
 
 = How it works =
