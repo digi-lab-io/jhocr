@@ -18,9 +18,9 @@
 package com.googlecode.jhocr.attribute;
 
 /**
- * TODO add documentation
- * 
+ * Enum used to store the type of paragraph. 
  */
-public enum ParagraphDirection {
-	LTR, RTL;
+public enum ParagraphDirection {	
+	LTR, // Left to Right  
+	RTL; // Right to Left
 }
