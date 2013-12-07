@@ -5,10 +5,13 @@
 
 = How to use jhocr = 
 
-tbd ...
-
+Create your searchable pdf from an image using the tesseract java api tess4j or the tesseract binaries installed on your system.
 
 == Embededd ==
+
+Create your searchable pdf from an image using the tesseract java api tess4j.
+
+tbd ...
 
 ---
 
@@ -54,4 +57,12 @@ Sources used for this article:
 
 == On Windows ==
 
+  # Next, Next, Next and Finish :)
+
+tbd ...
+
 == On Linux ==
+
+  # sudo apt-get install tesseract-ocr
+
+tbd ...
