@@ -23,8 +23,7 @@ import java.util.List;
 import com.googlecode.jhocr.attribute.BBox;
 
 /**
- * TODO add documentation
- * 
+ * Class used to store information "ocr_line" element and their children.
  */
 public class HocrLine extends HocrElement {
 
@@ -35,10 +34,10 @@ public class HocrLine extends HocrElement {
 	private List<HocrWord>		words		= new ArrayList<HocrWord>();
 
 	/**
-	 * TODO add documentation
+	 * Constructs an <code>HocrLine</code> with a unique id and a coordinates <code>BBox</code>.
 	 * 
-	 * @param id
-	 * @param bbox
+	 * @param id Set the id of element.
+	 * @param bbox Sets the coordinates of element.
 	 */
 	public HocrLine(String id, BBox bbox) {
 		super(id, bbox);
@@ -133,11 +132,14 @@ public class HocrLine extends HocrElement {
 		return text.toString();
 	}
 
+
 	/**
-	 * TODO add documentation
+	 * Returns the informations of this element as a <code>String</code>.
+	 *
+	 * @return the informations of this element as a <code>String</code>.
 	 */
 	@Override
 	public String toString() {
-		return "HocrLine{" + super.toString() + ", words=" + words.size() + '}';
+		return "HocrLine{" + super.toString() + ", words=" + words.size() + "}";
 	}
 }

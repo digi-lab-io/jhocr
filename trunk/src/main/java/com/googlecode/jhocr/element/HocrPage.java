@@ -23,8 +23,7 @@ import java.util.List;
 import com.googlecode.jhocr.attribute.BBox;
 
 /**
- * TODO add documentation
- * 
+ * Class used to store information "ocr_page" element and their children.
  */
 public class HocrPage extends HocrElement {
 
@@ -36,11 +35,11 @@ public class HocrPage extends HocrElement {
 	private List<HocrCarea>		careas		= new ArrayList<HocrCarea>();
 
 	/**
-	 * TODO add documentation
+	 * Constructs an <code>HocrPage</code> with a unique id and a coordinates <code>BBox</code>.
 	 * 
-	 * @param id
-	 * @param bbox
-	 * @param image
+	 * @param id Set the id of element.
+	 * @param bbox Sets the coordinates of element.
+	 * @param image Set the image name of element.
 	 */
 	public HocrPage(String id, BBox bbox, String image) {
 		super(id, bbox);
@@ -175,11 +174,14 @@ public class HocrPage extends HocrElement {
 		return document;
 	}
 
+
 	/**
-	 * TODO add documentation
+	 * Returns the informations of this element as a <code>String</code>.
+	 *
+	 * @return the informations of this element as a <code>String</code>.
 	 */
 	@Override
 	public String toString() {
-		return "HocrPage{" + super.toString() + ", image=" + image + ", careas=" + careas.size() + '}';
+		return "HocrPage{" + super.toString() + ", image=" + image + ", careas=" + careas.size() + "}";
 	}
 }

@@ -24,8 +24,7 @@ import com.googlecode.jhocr.attribute.BBox;
 import com.googlecode.jhocr.attribute.ParagraphDirection;
 
 /**
- * TODO add documentation
- * 
+ * Class used to store information "ocr_paragraph" element and their children.
  */
 public class HocrParagraph extends HocrElement {
 
@@ -37,11 +36,11 @@ public class HocrParagraph extends HocrElement {
 	private List<HocrLine>		lines		= new ArrayList<HocrLine>();
 
 	/**
-	 * TODO add documentation
+	 * Constructs an <code>HocrParagraph</code> with a unique id and a coordinates <code>BBox</code>.
 	 * 
-	 * @param id
-	 * @param bbox
-	 * @param direction
+	 * @param id Set the id of element.
+	 * @param bbox Sets the coordinates of element.
+	 * @param image Set the <code>ParagraphDirection</code> of element.
 	 */
 	public HocrParagraph(String id, BBox bbox, ParagraphDirection direction) {
 		super(id, bbox);
@@ -129,10 +128,12 @@ public class HocrParagraph extends HocrElement {
 	}
 
 	/**
-	 * TODO add documentation
+	 * Returns the informations of this element as a <code>String</code>.
+	 *
+	 * @return the informations of this element as a <code>String</code>.
 	 */
 	@Override
 	public String toString() {
-		return "HocrParagraph{" + super.toString() + ", direction=" + direction + ", lines=" + lines.size() + '}';
+		return "HocrParagraph{" + super.toString() + ", direction=" + direction + ", lines=" + lines.size() + "}";
 	}
 }
