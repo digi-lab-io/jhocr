@@ -21,6 +21,9 @@ import com.googlecode.jhocr.attribute.BBox;
 
 /**
  * Class used to store information "ocr_word" element.
+ * 
+ * Element example: {@code <span class='ocr_word' id='word_49' title="bbox 36 194 91 218">The</span>}
+ * Element example: {@code <span class='ocrx_word' id='word_49' title="bbox 36 194 91 218">The</span>} 
  */
 public class HocrWord extends HocrElement {
 

@@ -25,6 +25,8 @@ import com.googlecode.jhocr.attribute.ParagraphDirection;
 
 /**
  * Class used to store information "ocr_paragraph" element and their children.
+ * 
+ * Element example: {@code <p class='ocr_par' dir='ltr' id='par_2' title="bbox 36 194 597 361">}
  */
 public class HocrParagraph extends HocrElement {
 

@@ -24,6 +24,8 @@ import com.googlecode.jhocr.attribute.BBox;
 
 /**
  * Class used to store information "ocr_page" element and their children.
+ * 
+ * Element example: {@code <div class='ocr_page' id='page_1' title='image "phototest.tif"; bbox 0 0 640 480'>}
  */
 public class HocrPage extends HocrElement {
 
