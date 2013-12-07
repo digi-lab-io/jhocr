@@ -21,8 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO add documentation
- * 
+ * Class used to store information of document hocr.
  */
 public class HocrDocument {
 
@@ -97,11 +96,13 @@ public class HocrDocument {
 	}
 
 	/**
-	 * TODO add documentation
+	 * Returns the informations of this element as a <code>String</code>.
+	 *
+	 * @return the informations of this element as a <code>String</code>.
 	 */
 	@Override
 	public String toString() {
-		return "HocrDocument{" + "contentType=" + contentType + ", ocrSystem=" + ocrSystem + ", pages=" + pages.size() + '}';
+		return "HocrDocument{" + "contentType=" + contentType + ", ocrSystem=" + ocrSystem + ", pages=" + pages.size() + "}";
 	}
 
 	/**

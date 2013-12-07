@@ -23,8 +23,7 @@ import java.util.List;
 import com.googlecode.jhocr.attribute.BBox;
 
 /**
- * TODO add documentation
- * 
+ * Class used to store information "ocr_carea" element and its children.
  */
 public class HocrCarea extends HocrElement {
 
@@ -35,10 +34,10 @@ public class HocrCarea extends HocrElement {
 	private List<HocrParagraph>	paragraphs	= new ArrayList<HocrParagraph>();
 
 	/**
-	 * TODO add documentation
+	 * Constructs an <code>HocrCarea</code> with a unique id and a coordinates <code>BBox</code>.
 	 * 
-	 * @param id
-	 * @param bbox
+	 * @param id Set the id of element.
+	 * @param bbox Sets the coordinates of element.
 	 */
 	public HocrCarea(String id, BBox bbox) {
 		super(id, bbox);
@@ -139,10 +138,12 @@ public class HocrCarea extends HocrElement {
 	}
 
 	/**
-	 * TODO add documentation
+	 * Returns the informations of this element as a <code>String</code>.
+	 *
+	 * @return the informations of this element as a <code>String</code>.
 	 */
 	@Override
 	public String toString() {
-		return "HocrCarea{" + super.toString() + ", paragraphs=" + paragraphs.size() + '}';
+		return "HocrCarea{" + super.toString() + ", paragraphs=" + paragraphs.size() + "}";
 	}
 }

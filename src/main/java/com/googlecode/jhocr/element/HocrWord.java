@@ -20,8 +20,7 @@ package com.googlecode.jhocr.element;
 import com.googlecode.jhocr.attribute.BBox;
 
 /**
- * TODO add documentation
- * 
+ * Class used to store information "ocr_word" element.
  */
 public class HocrWord extends HocrElement {
 
@@ -29,17 +28,18 @@ public class HocrWord extends HocrElement {
 	public static final String	CLASSNAME	= "ocr_word";
 	public static final String	CLASSNAME_X	= "ocrx_word";
 
+	
 	private boolean				strong;
 	private HocrLine			line;
 	private String				text;
 
 	/**
-	 * TODO add documentation
+	 * Constructs an <code>HocrWord</code> with a unique id and a coordinates <code>BBox</code>.
 	 * 
-	 * @param id
-	 * @param bbox
-	 * @param text
-	 * @param strong
+	 * @param id Set the id of element
+	 * @param bbox Sets the coordinates of the element
+	 * @param text Set the text of element
+	 * @param strong Set the text is strong or not
 	 */
 	public HocrWord(String id, BBox bbox, String text, boolean strong) {
 		super(id, bbox);
@@ -48,7 +48,7 @@ public class HocrWord extends HocrElement {
 	}
 
 	/**
-	 * TODO add documentation
+	 * @return The class name of element
 	 */
 	@Override
 	public String getClassName() {
@@ -118,10 +118,12 @@ public class HocrWord extends HocrElement {
 	}
 
 	/**
-	 * TODO add documentation
+	 * Returns the informations of this element as a <code>String</code>.
+	 *
+	 * @return the informations of this element as a <code>String</code>.
 	 */
 	@Override
 	public String toString() {
-		return "HocrWord{" + super.toString() + ", strong=" + strong + ", text=" + text + '}';
+		return "HocrWord{" + super.toString() + ", strong=" + strong + ", text=" + text + "}";
 	}
 }

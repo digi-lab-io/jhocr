@@ -20,22 +20,20 @@ package com.googlecode.jhocr.element;
 import com.googlecode.jhocr.attribute.BBox;
 
 /**
- * TODO add documentation
- * 
+ * Class used to store information Element Hocr. 
  */
 abstract public class HocrElement {
 
 	private String	id;
 	private BBox	bbox;
 
-	public HocrElement() {
-	}
+	public HocrElement() {}
 
 	/**
-	 * TODO add documentation
+	 * Constructs an <code>HocrElement</code> with a unique id and a coordinates <code>BBox</code>.
 	 * 
-	 * @param id
-	 * @param bbox
+	 * @param id Set the id of element.
+	 * @param bbox Sets the coordinates of element.
 	 */
 	public HocrElement(String id, BBox bbox) {
 		this.id = id;
@@ -43,9 +41,7 @@ abstract public class HocrElement {
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return Id of element
 	 */
 	public String getId() {
 		return id;
@@ -92,8 +88,11 @@ abstract public class HocrElement {
 	 */
 	abstract public String getTagName();
 
+
 	/**
-	 * TODO add documentation
+	 * Returns the informations of this element as a <code>String</code>.
+	 *
+	 * @return the informations of this element as a <code>String</code>.
 	 */
 	@Override
 	public String toString() {
