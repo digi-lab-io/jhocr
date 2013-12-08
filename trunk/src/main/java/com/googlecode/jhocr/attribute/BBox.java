@@ -30,10 +30,14 @@ public class BBox {
 	/**
 	 * Constructs an <code>BBox</code> with a coordinates left, top, right and bottom.
 	 * 
-	 * @param left Sets the left coordinate of the element.
-	 * @param top Sets the top coordinate of the element.
-	 * @param right Sets the right coordinate of the element.
-	 * @param bottom Sets the bottom coordinate of the element.
+	 * @param left
+	 *            Sets the left coordinate of the element.
+	 * @param top
+	 *            Sets the top coordinate of the element.
+	 * @param right
+	 *            Sets the right coordinate of the element.
+	 * @param bottom
+	 *            Sets the bottom coordinate of the element.
 	 */
 	public BBox(Integer left, Integer top, Integer right, Integer bottom) {
 		this.left = left;
@@ -42,7 +46,7 @@ public class BBox {
 		this.bottom = bottom;
 	}
 
-	/** 
+	/**
 	 * @return The left coordinate of the element.
 	 */
 	public Integer getLeft() {
@@ -86,7 +90,7 @@ public class BBox {
 
 	/**
 	 * Returns the informations of this element as a <code>String</code>.
-	 *
+	 * 
 	 * @return the informations of this element as a <code>String</code>.
 	 */
 	@Override
