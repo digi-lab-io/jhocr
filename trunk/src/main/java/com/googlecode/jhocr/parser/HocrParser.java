@@ -233,18 +233,16 @@ public class HocrParser {
 		BBox bbox = parseAttributeBBox(element);
 
 		HocrLine line = new HocrLine(id, bbox);
-
-		List<StartTag> wordTags;
-
+		
 		/**
 		 * Tesseract change class name of element HocrWord in version 3.02.
 		 * From: ocr_word, To: ocrx_word 
 		 */
-		if (document.isOcrSystemTesseract3_01()) {
+		List<StartTag> wordTags = element.getAllStartTagsByClass(HocrWord.CLASSNAME_X);
+
+		if (wordTags == null || wordTags.isEmpty()) {
 			wordTags = element.getAllStartTagsByClass(HocrWord.CLASSNAME);
-		} else {
-			wordTags = element.getAllStartTagsByClass(HocrWord.CLASSNAME_X);
-		}
+		} 
 
 		for (StartTag wordTag : wordTags) {
 			line.addWord(parseWordTag(wordTag));
