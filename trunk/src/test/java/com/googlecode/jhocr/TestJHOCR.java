@@ -43,9 +43,10 @@ import org.slf4j.LoggerFactory;
 import com.googlecode.jhocr.converter.HocrToPdf;
 import com.googlecode.jhocr.element.HocrDocument;
 import com.googlecode.jhocr.parser.HocrParser;
-import com.googlecode.jhocr.util.FExt;
 import com.googlecode.jhocr.util.JHOCRUtil;
 import com.googlecode.jhocr.util.UtilRunCmd;
+import com.googlecode.jhocr.util.enums.FExt;
+import com.googlecode.jhocr.util.enums.PDFF;
 
 /**
  * TODO implement here all tests around jhocr and the tesseract binaries.
@@ -54,8 +55,6 @@ import com.googlecode.jhocr.util.UtilRunCmd;
  */
 @RunWith(value = Parameterized.class)
 public class TestJHOCR {
-
-	private String	testFileName	= "";
 
 	/**
 	 * 
@@ -66,12 +65,18 @@ public class TestJHOCR {
 		this.testFileName = testFileName;
 	}
 
+	/**
+	 * This will pass the constructor one value at a time for each test.
+	 * 
+	 * @return testFileName
+	 */
 	@Parameters
 	public static Collection<String[]> data() {
 		String[][] data = new String[][] { { "eurotext_tesseract_bin" }, { "eurotext" }, { "phototest" }, { "eurotext_tess4j" } };
 		return Arrays.asList(data);
 	}
 
+	private String				testFileName		= "";
 	private static String		testFileResultsPath	= "src/test/resources/test-results";
 	private static String		testFilesSrcPath	= "src/test/resources/test-data";
 
@@ -87,6 +92,9 @@ public class TestJHOCR {
 
 	}
 
+	/**
+	 * This method will be called whenever a test method is entered, helping to log the information and to know which test is currently running.
+	 */
 	@Rule
 	public MethodRule	watchman	= new TestWatchman() {
 										public void starting(FrameworkMethod method) {
@@ -183,6 +191,7 @@ public class TestJHOCR {
 
 			HocrToPdf hocrToPdf = new HocrToPdf(os);
 			hocrToPdf.addHocrDocument(new FileInputStream(htmlOcrAbsFileName), new FileInputStream(imageAbsFileName));
+			hocrToPdf.setPdfFormat(PDFF.PDF_A_3U);
 			hocrToPdf.convert();
 			os.close();
 
