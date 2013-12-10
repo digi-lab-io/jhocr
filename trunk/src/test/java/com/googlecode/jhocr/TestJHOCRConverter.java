@@ -30,7 +30,7 @@ import com.googlecode.jhocr.converter.HocrToPdf;
  * TODO add documentation
  * 
  */
-public class TestHOCRConverter {
+public class TestJHOCRConverter {
 
 	private File		pdf		= null;
 	private ClassLoader	loader	= null;
