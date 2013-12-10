@@ -27,9 +27,12 @@ import com.googlecode.jhocr.element.HocrPage;
 import com.googlecode.jhocr.element.HocrWord;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.CMYKColor;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -49,7 +52,7 @@ public class HocrPageProcessor {
 	private HocrPage			hocrPage;
 	private float				dotsPerPointX;
 	private float				dotsPerPointY;
-	private BaseFont			font;
+	private Font				font;
 	private Image				image;
 	private Rectangle			imageRectangle;
 	private boolean				useImageDpi;
@@ -93,7 +96,7 @@ public class HocrPageProcessor {
 	 */
 	private void init(InputStream iis) throws DocumentException, IOException {
 
-		font = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.EMBEDDED);
+		font = FontFactory.getFont("src//main/resources//fonts//Sansation_Regular.ttf", BaseFont.CP1252, BaseFont.EMBEDDED, Font.UNDEFINED, Font.UNDEFINED, new CMYKColor(255, 255, 0, 0));
 
 		byte[] bytes = new byte[iis.available()];
 
@@ -270,7 +273,7 @@ public class HocrPageProcessor {
 	 * 
 	 * @return
 	 */
-	public BaseFont getFont() {
+	public Font getFont() {
 		return font;
 	}
 
@@ -298,7 +301,7 @@ public class HocrPageProcessor {
 			}
 
 			cb.beginText();
-			cb.setFontAndSize(getFont(), fontSize);
+			cb.setFontAndSize(getFont().getBaseFont(), fontSize);
 			cb.setTextRenderingMode(PdfContentByte.TEXT_RENDER_MODE_INVISIBLE);
 
 			int t = hocrLine.getWords().size();
