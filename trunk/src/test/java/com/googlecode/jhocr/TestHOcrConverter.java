@@ -30,7 +30,7 @@ import com.googlecode.jhocr.converter.HocrToPdf;
  * TODO add documentation
  * 
  */
-public class TestHOcrConverter {
+public class TestHOCRConverter {
 
 	private File		pdf		= null;
 	private ClassLoader	loader	= null;
@@ -52,6 +52,7 @@ public class TestHOcrConverter {
 
 	/**
 	 * TODO add documentation
+	 * TODO re-implemt this test to not only create an PDF with metadata such as bookmarks, but also to test against it if those were really added to the PDF.
 	 * 
 	 * @throws Throwable
 	 */
