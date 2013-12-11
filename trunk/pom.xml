@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.googlecode.jhocr</groupId>
 	<artifactId>jhocr</artifactId>
-	<version>0.0.6</version>
+	<version>0.0.7-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>com.googlecode.jhocr</name>
 	<description>Library to parse and perform conversion from hocr files to pdf, merging the image files and mapping the hocr data into one document.</description>
@@ -15,9 +15,9 @@
 	</parent>
 
 	<scm>
-		<connection>scm:svn:https://jhocr.googlecode.com/svn/tags/jhocr-0.0.6</connection>
-		<developerConnection>scm:svn:https://jhocr.googlecode.com/svn/tags/jhocr-0.0.6</developerConnection>
-		<url>https://jhocr.googlecode.com/svn/tags/jhocr-0.0.6</url>
+		<connection>scm:svn:https://jhocr.googlecode.com/svn/trunk/</connection>
+		<developerConnection>scm:svn:https://jhocr.googlecode.com/svn/trunk/</developerConnection>
+		<url>https://jhocr.googlecode.com/svn/trunk/</url>
 	</scm>
 
 	<licenses>
