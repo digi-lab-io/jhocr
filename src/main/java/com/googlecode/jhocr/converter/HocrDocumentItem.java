@@ -1,5 +1,5 @@
 /**
- * Copyright (©) 2013 Pablo Filetti Moreira
+ * Copyright (©) 2013 Pablo Filetti Moreira & O.J. Sousa Rodrigues
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,9 @@ package com.googlecode.jhocr.converter;
 import java.io.InputStream;
 
 /**
- * TODO add documentation
+ * Contains the<br>
+ * hocr file {@link com.googlecode.jhocr.converter.HocrDocumentItem#hocrInputStream} and <br>
+ * the image {@link com.googlecode.jhocr.converter.HocrDocumentItem#imageInputStream}.
  * 
  */
 public class HocrDocumentItem {
@@ -29,10 +31,12 @@ public class HocrDocumentItem {
 	private InputStream	imageInputStream;
 
 	/**
-	 * TODO add documentation
+	 * Returns an {@link com.googlecode.jhocr.converter.HocrDocumentItem} object that can be used for the hocr to pdf conversion from example {@link com.googlecode.jhocr.converter.HocrToPdf}.
 	 * 
 	 * @param hocrInputStream
+	 *            is the input stream of the hocr file.
 	 * @param imageInputStream
+	 *            is the input stream of the image.
 	 */
 	public HocrDocumentItem(InputStream hocrInputStream, InputStream imageInputStream) {
 		this.hocrInputStream = hocrInputStream;
@@ -40,34 +44,34 @@ public class HocrDocumentItem {
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return the {@link #hocrInputStream} of the hocr file.
 	 */
 	public InputStream getHocrInputStream() {
 		return hocrInputStream;
 	}
 
 	/**
-	 * TODO add documentation
+	 * Sets the hocr file {@link #hocrInputStream}.
 	 * 
 	 * @param hocrInputStream
+	 *            will be set.
 	 */
 	public void setHocrInputStream(InputStream hocrInputStream) {
 		this.hocrInputStream = hocrInputStream;
 	}
 
 	/**
-	 * TODO add documentation
+	 * @return the {@link #imageInputStream} of the image.
 	 */
 	public InputStream getImageInputStream() {
 		return imageInputStream;
 	}
 
 	/**
-	 * TODO add documentation
+	 * Sets the image file {@link #imageInputStream} object.
 	 * 
 	 * @param imageInputStream
+	 *            will be set.
 	 */
 	public void setImageInputStream(InputStream imageInputStream) {
 		this.imageInputStream = imageInputStream;

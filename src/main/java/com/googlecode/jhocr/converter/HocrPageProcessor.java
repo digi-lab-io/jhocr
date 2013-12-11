@@ -38,9 +38,11 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 /**
  * TODO add documentation
+ * Compliant Solution (initialized flag)
+ * 
+ * @see "https://www.securecoding.cert.org/confluence/display/java/OBJ11-J.+Be+wary+of+letting+constructors+throw+exceptions"
  * 
  */
-
 public class HocrPageProcessor {
 
 	/**
@@ -59,130 +61,137 @@ public class HocrPageProcessor {
 	private volatile boolean	initialized	= false;
 
 	/**
-	 * TODO add documentation
 	 * 
 	 * @param hocrPage
+	 *            this object will be processed in this class.
 	 * @param imageInputStream
+	 *            of the image.
+	 * 
 	 * @param useImageDpi
-	 * @throws IOException
-	 * @throws DocumentException
-	 * @throws Exception
+	 *            determines if the dpi of the image should be used.
 	 */
 	public HocrPageProcessor(HocrPage hocrPage, InputStream imageInputStream, boolean useImageDpi) {
 		this.hocrPage = hocrPage;
 		this.useImageDpi = useImageDpi;
 
-		try {
-			init(imageInputStream);
+		if (init(imageInputStream)) {
 			/**
 			 * object construction successful
 			 */
 			this.initialized = true;
 
-		} catch (DocumentException e) {
-			log.error("object construction unsuccessful.", e);
-		} catch (IOException e) {
-			log.error("object construction unsuccessful.", e);
+		} else {
+
+			this.initialized = false;
 		}
+
 	}
 
 	/**
-	 * TODO add documentation
+	 * TODO describe this method.
 	 * 
-	 * @param iis
-	 * @throws IOException
-	 * @throws DocumentException
-	 * @throws Exception
+	 * @param imageInputStream
+	 *            of the image.
+	 * @return true if the initialisation was successful.
 	 */
-	private void init(InputStream iis) throws DocumentException, IOException {
+	private boolean init(InputStream imageInputStream) {
 
-		font = FontFactory.getFont("src//main/resources//fonts//Sansation_Regular.ttf", BaseFont.CP1252, BaseFont.EMBEDDED, Font.UNDEFINED, Font.UNDEFINED, new CMYKColor(255, 255, 0, 0));
+		boolean result = true;
 
-		byte[] bytes = new byte[iis.available()];
+		try {
+			font = FontFactory.getFont("src//main/resources//fonts//Sansation_Regular.ttf", BaseFont.CP1252, BaseFont.EMBEDDED, Font.UNDEFINED, Font.UNDEFINED, new CMYKColor(255, 255, 0, 0));
 
-		iis.read(bytes);
+			byte[] bytes = new byte[imageInputStream.available()];
 
-		this.image = Image.getInstance(bytes);
+			imageInputStream.read(bytes);
 
-		int dpiX, dpiY;
+			this.image = Image.getInstance(bytes);
 
-		/**
-		 * TODO add documentation, for example what if and what else
-		 */
-		if (useImageDpi) {
-			dpiX = getImage().getDpiX();
-			if (dpiX == 0) {
+			int dpiX, dpiY;
+
+			/**
+			 * TODO add documentation, for example what if and what else
+			 */
+			if (useImageDpi) {
+				dpiX = getImage().getDpiX();
+				if (dpiX == 0) {
+					dpiX = DPI_DEFAULT;
+				}
+				dpiY = getImage().getDpiY();
+				if (dpiY == 0) {
+					dpiY = DPI_DEFAULT;
+				}
+
+			} else {
 				dpiX = DPI_DEFAULT;
-			}
-			dpiY = getImage().getDpiY();
-			if (dpiY == 0) {
 				dpiY = DPI_DEFAULT;
 			}
 
-		} else {
-			dpiX = DPI_DEFAULT;
-			dpiY = DPI_DEFAULT;
+			this.dotsPerPointX = dpiX / HocrToPdf.POINTS_PER_INCH;
+			this.dotsPerPointY = dpiY / HocrToPdf.POINTS_PER_INCH;
+
+			/**
+			 * TODO add documentation
+			 * TODO simplify this line, too many arguments.
+			 */
+			this.imageRectangle = new Rectangle(getHocrPage().getBbox().getWidth() / getDotsPerPointX(), getHocrPage().getBbox().getHeight() / getDotsPerPointY());
+
+			return result;
+
+		} catch (DocumentException e) {
+			log.error("Error while processing the document, please check th elog for more information.", e);
+			return result;
+		} catch (IOException e) {
+			log.error("Error while processing the document, please check th elog for more information.", e);
+			return result;
 		}
 
-		this.dotsPerPointX = dpiX / HocrToPdf.POINTS_PER_INCH;
-		this.dotsPerPointY = dpiY / HocrToPdf.POINTS_PER_INCH;
-
-		/**
-		 * TODO add documentation
-		 */
-		this.imageRectangle = new Rectangle(getHocrPage().getBbox().getWidth() / getDotsPerPointX(), getHocrPage().getBbox().getHeight() / getDotsPerPointY());
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return the {@link #hocrPage} object.
 	 */
 	public HocrPage getHocrPage() {
 		return hocrPage;
 	}
 
 	/**
-	 * TODO add documentation
 	 * 
-	 * @return
+	 * @return the {@link #image} object.
 	 */
 	public Image getImage() {
 		return image;
 	}
 
 	/**
-	 * TODO add documentation
 	 * 
-	 * @return
+	 * @return the {@link #dotsPerPointX} value.
 	 */
 	public float getDotsPerPointX() {
 		return dotsPerPointX;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return the {@link #dotsPerPointY} value.
 	 */
 	public float getDotsPerPointY() {
 		return dotsPerPointY;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return the {@link #imageRectangle} object.
 	 */
 	public Rectangle getImageRectangle() {
 		return imageRectangle;
 	}
 
 	/**
-	 * This method will process the document fitting the image into the documents page.
+	 * This method will process the {@link com.itextpdf.text.Document} fitting the image into the documents page.
 	 * 
 	 * @param document
+	 *            will be processed.
 	 * @param pdfWriter
+	 *            will be used to process the {@link com.itextpdf.text.Document}
 	 */
 	public boolean process(Document document, PdfWriter pdfWriter) {
 		try {
@@ -212,6 +221,7 @@ public class HocrPageProcessor {
 			}
 
 			return true;
+
 		} catch (DocumentException e) {
 			log.error("Document could not be processed.", e);
 			return false;
@@ -219,11 +229,14 @@ public class HocrPageProcessor {
 	}
 
 	/**
-	 * TODO add documentation
+	 * TODO describe this method.
 	 * 
 	 * @param cb
+	 *            here the character spacing will be processed.
 	 * @param hocrWord
+	 *            will be used to process the {@link PdfContentByte}.
 	 * @param wordWidthPt
+	 *            will be used to process the {@link PdfContentByte}.
 	 */
 	private static void processHocrWordCharacterSpacing(PdfContentByte cb, HocrWord hocrWord, float wordWidthPt) {
 
@@ -242,6 +255,9 @@ public class HocrPageProcessor {
 				cb.setCharacterSpacing(charSpacing);
 				float newTextWidthPt = cb.getEffectiveStringWidth(hocrWord.getText(), false);
 				// !!! deadlock
+				/**
+				 * TODO {@author Pablo} please confirm &/ describe the bug (deadlock)
+				 */
 				if (newTextWidthPt == textWidthPt || charSpacing > -0.5f) {
 					break;
 				} else {
@@ -250,38 +266,23 @@ public class HocrPageProcessor {
 			}
 		}
 
-		/*
-		 * else {
-		 * while (wordWidthPt > textWidthPt) {
-		 * charSpacing += 0.1f;
-		 * cb.setCharacterSpacing(charSpacing);
-		 * float newTextWidthPt = cb.getEffectiveStringWidth(hocrWord.getText(), false);
-		 * // !!! deadlock
-		 * if (newTextWidthPt == textWidthPt || charSpacing > 0.5f) {
-		 * break;
-		 * }
-		 * else {
-		 * textWidthPt = newTextWidthPt;
-		 * }
-		 * }
-		 * }
-		 */
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return the {@link #font} object.
 	 */
 	public Font getFont() {
 		return font;
 	}
 
 	/**
-	 * TODO add documentation
+	 * TODO add documentation describing what this method does actually do.
 	 * 
+	 * @see https://code.google.com/p/jhocr/issues/detail?id=4
 	 * @param cb
+	 *            TODO describe this parameter &/ it's purpose.
 	 * @param hocrLine
+	 *            is used to process the {@link com.itextpdf.text.pdf.PdfContentByte}
 	 */
 	private void processHocrLine(PdfContentByte cb, HocrLine hocrLine) {
 
@@ -308,6 +309,8 @@ public class HocrPageProcessor {
 
 			/**
 			 * TODO add documentation
+			 * 
+			 * @see <a>https://code.google.com/p/jhocr/issues/detail?id=4</a>
 			 */
 			for (int i = 0; i < t; i++) {
 
@@ -322,15 +325,14 @@ public class HocrPageProcessor {
 
 				cb.showTextAligned(PdfContentByte.ALIGN_LEFT, hocrWord.getText(), x, y, 0);
 			}
+
 			cb.endText();
 		}
 	}
 
 	/**
-	 * Compliant Solution (initialized flag): https://www.securecoding.cert.org/confluence/display/java/OBJ11-J.+Be+wary+of+letting+constructors+throw+exceptions <br>
-	 * Will return true if this class was initialised successfully.
 	 * 
-	 * @return
+	 * @return {@link #initialized} (true) if this class was initialised successfully.
 	 */
 	public synchronized boolean isInitialized() {
 		return initialized;
