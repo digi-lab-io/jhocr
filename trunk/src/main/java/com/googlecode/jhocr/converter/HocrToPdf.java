@@ -59,36 +59,34 @@ public class HocrToPdf {
 	private static final String				KEY_JHOCR_INFO_VALUE	= "This document were generated with jhocr, for more information visit: https://code.google.com/p/jhocr";
 
 	/**
-	 * TODO add documentation
-	 * 
 	 * @param outputStream
+	 *            of the PDF.
 	 */
 	public HocrToPdf(OutputStream outputStream) {
 		this.outputStream = outputStream;
 	}
 
 	/**
-	 * TODO add documentation
 	 * 
-	 * @return
+	 * @return the {@link #outputStream} object.
 	 */
 	public OutputStream getOutputStream() {
 		return outputStream;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return the {@link #items} collection.
 	 */
 	public List<HocrDocumentItem> getItems() {
 		return items;
 	}
 
 	/**
-	 * TODO add documentation
+	 * The {@link #pdfFormat} will determine which method will be called e.g. <br>
+	 * {@link #convertToPDFA(PdfAConformanceLevel)} or <br>
+	 * {@link #convertToPDFX(int)} etc.
 	 * 
-	 * @throws DocumentException
+	 * @return true if the conversion was successful.
 	 */
 	public boolean convert() {
 		boolean result = false;
@@ -119,6 +117,12 @@ public class HocrToPdf {
 
 	}
 
+	/**
+	 * This is the old <code>convert()</code> method, almost untouched.<br>
+	 * This method will be used if {@link #pdfFormat} is not set.
+	 * 
+	 * @return true if the conversion was successful.
+	 */
 	private boolean convertSimple() {
 		boolean result = false;
 
@@ -190,16 +194,17 @@ public class HocrToPdf {
 
 	/**
 	 * 
-	 * @param xConformance
-	 * @return
+	 * @param pdfXConformance
+	 *            determines into which format the PDF-X will be converted.
+	 * @return true if the conversion was successful.
 	 */
-	private boolean convertToPDFX(int xConformance) {
+	private boolean convertToPDFX(int pdfXConformance) {
 		boolean result = false;
 		Document document = new Document();
 
 		try {
 			PdfWriter writer = PdfWriter.getInstance(document, getOutputStream());
-			writer.setPDFXConformance(xConformance);
+			writer.setPDFXConformance(pdfXConformance);
 
 			document.open();
 			document.addHeader(KEY_JHOCR_INFO, KEY_JHOCR_INFO_VALUE);
@@ -264,11 +269,11 @@ public class HocrToPdf {
 	}
 
 	/**
-	 * 
-	 * @param pdff
-	 * @return
+	 * @param pdfConformanceLevel
+	 *            determines into which format the PDF-A&/B will be converted.
+	 * @return true if the conversion was successful.
 	 */
-	private boolean convertToPDFA(PdfAConformanceLevel pdff) {
+	private boolean convertToPDFA(PdfAConformanceLevel pdfConformanceLevel) {
 		boolean result = false;
 		Document document = new Document();
 		String profile = "src/main/resources/sRGB.profile";
@@ -315,7 +320,7 @@ public class HocrToPdf {
 			}
 
 			ICC_Profile icc = ICC_Profile.getInstance(new FileInputStream(profile));
-			writer.setOutputIntents("JHOCR", "", "http://www.color.org", "sRGB IEC61966-2.1", icc);
+			writer.setOutputIntents(KEY_JHOCR_INFO, KEY_JHOCR_INFO_VALUE, "http://www.color.org", "sRGB IEC61966-2.1", icc);
 
 			/**
 			 * Closing the document body stream.
@@ -347,7 +352,7 @@ public class HocrToPdf {
 	}
 
 	/**
-	 * TODO add documentation
+	 * Adds a new {@link com.googlecode.jhocr.converter.HocrDocumentItem} to the {@link #items} collection.
 	 * 
 	 * @param hocrInputStream
 	 *            Html-OCR (HOCR) InputStream
@@ -359,45 +364,39 @@ public class HocrToPdf {
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return the {@link #outlines} collection.
 	 */
 	public List<HashMap<String, Object>> getOutlines() {
 		return outlines;
 	}
 
 	/**
-	 * TODO add documentation
 	 * 
 	 * @param outlines
+	 *            will be set.
 	 */
 	public void setOutlines(List<HashMap<String, Object>> outlines) {
 		this.outlines = outlines;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
 	 * @param outline
+	 *            will be set.
 	 */
 	public void addOutline(HashMap<String, Object> outline) {
 		getOutlines().add(outline);
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
-	 * @return
+	 * @return the {@link #useImageDpi} value.
 	 */
 	public boolean isUseImageDpi() {
 		return useImageDpi;
 	}
 
 	/**
-	 * TODO add documentation
-	 * 
 	 * @param useImageDpi
+	 *            will be set.
 	 */
 	public void setUseImageDpi(boolean useImageDpi) {
 		this.useImageDpi = useImageDpi;
@@ -405,7 +404,7 @@ public class HocrToPdf {
 
 	/**
 	 * 
-	 * @return the PDF format that was set for the current document.
+	 * @return the {@link #pdfFormat} that was set for the current document.
 	 */
 	public PDFF getPdfFormat() {
 		return pdfFormat;

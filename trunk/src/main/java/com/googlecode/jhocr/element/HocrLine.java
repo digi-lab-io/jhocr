@@ -38,8 +38,10 @@ public class HocrLine extends HocrElement {
 	/**
 	 * Constructs an <code>HocrLine</code> with a unique id and a coordinates <code>BBox</code>.
 	 * 
-	 * @param id Set the id of element.
-	 * @param bbox Sets the coordinates of element.
+	 * @param id
+	 *            Set the id of element.
+	 * @param bbox
+	 *            Sets the coordinates of element.
 	 */
 	public HocrLine(String id, BBox bbox) {
 		super(id, bbox);
@@ -54,26 +56,29 @@ public class HocrLine extends HocrElement {
 	public String getTagName() {
 		return TAGNAME;
 	}
-	
+
 	/**
 	 * @return The children <code>HocrWord</code> of this.
 	 */
 	public List<HocrWord> getWords() {
 		return words;
 	}
-	
+
 	/**
 	 * Set the children <code>HocrWord</code> of this.
-	 * @param words The children <code>HocrWord</code> of this.
+	 * 
+	 * @param words
+	 *            The children <code>HocrWord</code> of this.
 	 */
 	public void setWords(List<HocrWord> words) {
 		this.words = words;
 	}
 
 	/**
-	 * Add new word. 
+	 * Add new word.
 	 * 
-	 * @param word The new word.
+	 * @param word
+	 *            The new word.
 	 */
 	public void addWord(HocrWord word) {
 		word.setLine(this);
@@ -81,23 +86,23 @@ public class HocrLine extends HocrElement {
 	}
 
 	/**
-	 * @return The parent <code>HocrParagraph</code> of this.
+	 * @return the {@link #paragraph} object.
 	 */
 	public HocrParagraph getParagraph() {
 		return paragraph;
 	}
 
 	/**
-	 * Set the parent <code>HocrParagraph</code> of this.
-	 * @param paragraph The parent <code>HocrParagraph</code> of this.
+	 * 
+	 * @param paragraph
+	 *            will be set.
 	 */
 	public void setParagraph(HocrParagraph paragraph) {
 		this.paragraph = paragraph;
 	}
 
 	/**
-	 * Build a <code>String</code> concatenating children words by space.
-	 * @return all words 
+	 * @return all words, concatenating children words with space.
 	 */
 	public String getText() {
 
@@ -106,7 +111,7 @@ public class HocrLine extends HocrElement {
 		boolean first = true;
 
 		/**
-		 * Iterate all children words and build a <code>String</code> concatenating children words by space.
+		 * Iterate all children words and build a <code>String</code> concatenating children words with space.
 		 */
 		for (HocrWord word : getWords()) {
 			if (first) {
@@ -120,11 +125,15 @@ public class HocrLine extends HocrElement {
 		return text.toString();
 	}
 
-
 	/**
-	 * Returns the informations of this element as a <code>String</code>.
-	 *
+	 * 
 	 * @return the informations of this element as a <code>String</code>.
+	 * 
+	 *         <pre>
+	 * {
+	 * 	return &quot;HocrLine{&quot; + super.toString() + &quot;, words=&quot; + words.size() + &quot;}&quot;;
+	 * }
+	 * </pre>
 	 */
 	@Override
 	public String toString() {
