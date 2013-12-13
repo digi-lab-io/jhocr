@@ -2,6 +2,13 @@
 
 = Roadmap =
 
+
+= v.0.1.1 = 
+
+  * PDF-Format
+    ** add support for custom font
+    ** add support for custom RGB-Profile
+
 = v.0.1.0 = 
 
   * add Q&A site
