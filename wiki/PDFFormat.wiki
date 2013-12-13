@@ -1,0 +1,16 @@
+#summary Support PDF-Formats by jhocr.
+
+= Introduction =
+
+
+The PDF conversion is beeing done with itext. [https://code.google.com/p/jhocr/source/browse/trunk/src/main/java/com/googlecode/jhocr/util/enums/PDFF.java Here] you can see the currently tested and supported formats by jhocr.
+
+= PDFA = 
+
+https://code.google.com/p/jhocr/source/browse/wiki/resources/documentation/2013-12-09_16_16_57-tess4j-jhocr-AdobeReader.png
+
+= PDF-X = 
+
+
+https://code.google.com/p/jhocr/source/browse/wiki/resources/documentation/2013-12-10_11_53_36-Dokumenteigenschaften.png
+
