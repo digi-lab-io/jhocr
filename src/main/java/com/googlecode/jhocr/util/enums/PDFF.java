@@ -24,10 +24,7 @@ import com.itextpdf.text.pdf.PdfWriter;
  */
 public enum PDFF {
 
-	/**
-	 * TODO add support for: PDF_A_1B(PdfAConformanceLevel.PDF_A_1B),
-	 */
-	PDF_A_1A, PDF_A_2A, PDF_A_2B, PDF_A_2U, PDF_A_3A, PDF_A_3B, PDF_A_3U,
+	PDF_A_1B, PDF_A_1A, PDF_A_2A, PDF_A_2B, PDF_A_2U, PDF_A_3A, PDF_A_3B, PDF_A_3U,
 
 	PDFX1A2001(PdfWriter.PDFX1A2001) {
 		@Override
