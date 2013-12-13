@@ -6,7 +6,7 @@
 
   * add Q&A site
   * add documentation
-  * {{{throw new BigPartyException()}}}
+  * {{{throw new BigPartyException()}}} [http://www.debratroxell.com/Intro%20to%20CS/handouts/Java/Party%20group/BigPartyException.java there it is.]
   * add examples
 
 = v.0.0.8 = 
