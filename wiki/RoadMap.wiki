@@ -1,0 +1,43 @@
+#summary Roadmap of the jhocr project.
+
+= Roadmap =
+
+= v.0.1.0 = 
+
+  * add Q&A site
+  * add documentation
+  * throw new BigPartyException()
+  * add examples
+
+= v.0.0.8 = 
+
+  * start fixing bugs
+  * add more junit tests and testcases
+
+= v.0.0.7 = 
+
+  * tbd ..
+  * add documentation
+  * add code analysis
+  * improve the code
+
+= v.0.0.6 = 
+
+  * tbd ...
+  * add documentation
+  * improve logging
+  * add [http://tess4j.sourceforge.net tess4j] & tesseract older version backwards support
+
+= v.0.0.5 = 
+
+  * add junit tests
+  * add documentation
+  * improve the 
+
+= v.0.0.4 = 
+
+  * add documentation
+  * add [Mavensupport Maven Support]
+  * add license file
+  * set and apply code format
+  * small bug fixes
