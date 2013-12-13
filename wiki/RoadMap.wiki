@@ -28,10 +28,10 @@
   * add documentation
   * add code analysis
   * improve the code
+  * try to convert formatted else without
 
 = v.0.0.6 = 
 
-  * tbd ...
   * add documentation
   * improve logging
   * add [http://tess4j.sourceforge.net tess4j] & tesseract older version backwards support
