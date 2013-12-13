@@ -11,6 +11,6 @@ hocr data into one document.
 
 = How it works =
 
-http://jhocr.googlecode.com/svn/wiki/resources/documentation/searchable-pdf-explained_01.png
+https://jhocr.googlecode.com/svn/wiki/resources/documentation/searchable-pdf-explained_01.png
 
 txt to be added soon ...
