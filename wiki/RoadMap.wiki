@@ -6,7 +6,7 @@
 
   * add Q&A site
   * add documentation
-  * throw new BigPartyException()
+  * {{{throw new BigPartyException()}}}
   * add examples
 
 = v.0.0.8 = 
