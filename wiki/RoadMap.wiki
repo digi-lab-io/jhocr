@@ -15,6 +15,7 @@
   * add documentation
   * {{{throw new BigPartyException()}}} [http://www.debratroxell.com/Intro%20to%20CS/handouts/Java/Party%20group/BigPartyException.java there it is.]
   * add examples
+  * dont create an outputstream, unless all required files can be loaded.
 
 = v.0.0.8 = 
 
