@@ -8,10 +8,9 @@ The PDF conversion is beeing done with itext. [https://code.google.com/p/jhocr/s
 = PDFA = 
 
 
-https://code.google.com/p/jhocr/source/browse/wiki/resources/documentation/tess4j-jhocr-AdobeReader.png
+https://jhocr.googlecode.com/svn/wiki/resources/documentation/2013-12-13_10_39_07-phototest_AdobeReader.png
 
 
 = PDF-X = 
 
-
-https://code.google.com/p/jhocr/source/browse/wiki/resources/documentation/2013-12-10_11_53_36-Dokumenteigenschaften.png
+https://jhocr.googlecode.com/svn/wiki/resources/documentation/2013-12-10_11_53_36-Dokumenteigenschaften.png
