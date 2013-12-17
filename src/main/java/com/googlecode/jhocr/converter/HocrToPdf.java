@@ -17,8 +17,6 @@
 
 package com.googlecode.jhocr.converter;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -26,11 +24,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.jhocr.element.HocrDocument;
 import com.googlecode.jhocr.element.HocrPage;
 import com.googlecode.jhocr.parser.HocrParser;
+import com.googlecode.jhocr.util.LoggUtilException;
 import com.googlecode.jhocr.util.enums.PDFF;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -53,7 +53,7 @@ public class HocrToPdf {
 	private boolean							useImageDpi				= true;
 	private PDFF							pdfFormat				= null;
 
-	private static Logger					log						= Logger.getLogger(HocrToPdf.class);
+	private final static Logger				logger					= LoggerFactory.getLogger(new LoggUtilException().toString());
 
 	private static final String				KEY_JHOCR_INFO			= "com-googlecode-jhocr-info";
 	private static final String				KEY_JHOCR_INFO_VALUE	= "This document were generated with jhocr, for more information visit: https://code.google.com/p/jhocr";
@@ -178,15 +178,15 @@ public class HocrToPdf {
 
 		} catch (UnsupportedOperationException e) {
 			document.close();
-			log.error(e);
+			logger.error("This operation is not yet implemented.", e);
 			result = false;
 		} catch (DocumentException e) {
 			document.close();
-			log.error(e);
+			logger.error("exception while genrating the PDF.", e);
 			result = false;
 		} catch (IOException e) {
 			document.close();
-			log.error(e);
+			logger.error("FileSystem I/O Exception, please check the log and file system persmissions.", e);
 			result = false;
 		}
 
@@ -253,15 +253,15 @@ public class HocrToPdf {
 
 		} catch (UnsupportedOperationException e) {
 			document.close();
+			logger.error("This operation is not yet implemented.", e);
 			result = false;
-			log.error(e);
 		} catch (DocumentException e) {
 			document.close();
-			log.error(e);
+			logger.error("exception while genrating the PDF.", e);
 			result = false;
 		} catch (IOException e) {
 			document.close();
-			log.error(e);
+			logger.error("FileSystem I/O Exception, please check the log and file system persmissions.", e);
 			result = false;
 		}
 
@@ -277,7 +277,12 @@ public class HocrToPdf {
 	private boolean convertToPDFA(PdfAConformanceLevel pdfConformanceLevel) {
 		boolean result = false;
 		Document document = new Document();
-		String profile = "src/main/resources/sRGB.profile";
+
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+
+		if (classLoader == null) {
+			classLoader = Class.class.getClassLoader();
+		}
 
 		try {
 			PdfAWriter writer = PdfAWriter.getInstance(document, getOutputStream(), pdfConformanceLevel);
@@ -320,7 +325,9 @@ public class HocrToPdf {
 				writer.setOutlines(outlines);
 			}
 
-			ICC_Profile icc = ICC_Profile.getInstance(new FileInputStream(profile));
+			InputStream is = this.getClass().getResourceAsStream("/sRGB.profile");
+
+			ICC_Profile icc = ICC_Profile.getInstance(is);
 			writer.setOutputIntents(KEY_JHOCR_INFO, KEY_JHOCR_INFO_VALUE, "http://www.color.org", "sRGB IEC61966-2.1", icc);
 
 			/**
@@ -332,19 +339,15 @@ public class HocrToPdf {
 
 		} catch (UnsupportedOperationException e) {
 			document.close();
-			log.error(e);
+			logger.error("This operation is not yet implemented.", e);
 			result = false;
 		} catch (DocumentException e) {
 			document.close();
-			log.error(e);
-			result = false;
-		} catch (FileNotFoundException e) {
-			document.close();
-			log.error(e);
+			logger.error("exception while genrating the PDF.", e);
 			result = false;
 		} catch (IOException e) {
 			document.close();
-			log.error(e);
+			logger.error("FileSystem I/O Exception, please check the log and file system persmissions.", e);
 			result = false;
 		}
 

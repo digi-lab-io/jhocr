@@ -27,7 +27,8 @@ import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.jhocr.attribute.BBox;
 import com.googlecode.jhocr.attribute.ParagraphDirection;
@@ -37,6 +38,7 @@ import com.googlecode.jhocr.element.HocrLine;
 import com.googlecode.jhocr.element.HocrPage;
 import com.googlecode.jhocr.element.HocrParagraph;
 import com.googlecode.jhocr.element.HocrWord;
+import com.googlecode.jhocr.util.LoggUtilException;
 
 /**
  * TODO add documentation
@@ -44,24 +46,24 @@ import com.googlecode.jhocr.element.HocrWord;
  */
 public class HocrParser {
 
-	private static Logger	log						= Logger.getLogger(HocrParser.class);
+	private final static Logger	logger					= LoggerFactory.getLogger(new LoggUtilException().toString());
 
-	private static String	ATTRIBUTE_ID			= "id";
-	private static String	ATTRIBUTE_CLASS			= "class";
-	private static String	ATTRIBUTE_TITLE			= "title";
-	private static String	ATTRIBUTE_DIR			= "dir";
-	private static String	TAG_STRONG				= "strong";
+	private static String		ATTRIBUTE_ID			= "id";
+	private static String		ATTRIBUTE_CLASS			= "class";
+	private static String		ATTRIBUTE_TITLE			= "title";
+	private static String		ATTRIBUTE_DIR			= "dir";
+	private static String		TAG_STRONG				= "strong";
 
 	/**
 	 * TODO implement unit tests for the patterns
 	 * TODO add documentation
 	 */
-	private Pattern			PATTERN_IMAGE			= Pattern.compile("image\\s+([^;]+)");
-	private Pattern			PATTERN_BBOX			= Pattern.compile("bbox(\\s+-?\\d+){4}");
-	private Pattern			PATTERN_BBOX_COORDINATE	= Pattern.compile("(-?\\d+)\\s+(-?\\d+)\\s+(-?\\d+)\\s+(-?\\d+)");
+	private final Pattern		PATTERN_IMAGE			= Pattern.compile("image\\s+([^;]+)");
+	private final Pattern		PATTERN_BBOX			= Pattern.compile("bbox(\\s+-?\\d+){4}");
+	private final Pattern		PATTERN_BBOX_COORDINATE	= Pattern.compile("(-?\\d+)\\s+(-?\\d+)\\s+(-?\\d+)\\s+(-?\\d+)");
 
-	private InputStream		inputStream;
-	private HocrDocument	document;
+	private final InputStream	inputStream;
+	private HocrDocument		document;
 
 	/**
 	 * TODO add documentation
@@ -128,7 +130,7 @@ public class HocrParser {
 			return document;
 
 		} catch (IOException e) {
-			log.error("It was not possible to convert the document, returning null.", e);
+			logger.error("It was not possible to convert the document, returning null.", e);
 			return null;
 		}
 	}
@@ -138,8 +140,9 @@ public class HocrParser {
 	 * Element example: {@code <div class='ocr_page' id='page_1' title='image "phototest.tif"; bbox 0 0 640 480'>}
 	 * 
 	 * TODO add better logging
-	 *   
-	 * @param pageTag The "ocr_page" tag 
+	 * 
+	 * @param pageTag
+	 *            The "ocr_page" tag
 	 * @return an instance of {@link HocrPage}.
 	 */
 	private HocrPage parsePageTag(StartTag pageTag) {
@@ -171,7 +174,8 @@ public class HocrParser {
 	 * Performs parse "ocr_carea" element and their children.<br/>
 	 * Element example: {@code <div class='ocr_carea' id='block_1_1' title="bbox 36 90 619 363">}
 	 * 
-	 * @param careaTag The "ocr_carea" tag.
+	 * @param careaTag
+	 *            The "ocr_carea" tag.
 	 * @return an instance of {@link HocrCarea}.
 	 */
 	private HocrCarea parseCareaTag(StartTag careaTag) {
@@ -196,7 +200,8 @@ public class HocrParser {
 	 * Performs parse "ocr_par" element and their children.<br/>
 	 * Element example: {@code <p class='ocr_par' dir='ltr' id='par_1' title="bbox 36 92 618 184">}
 	 * 
-	 * @param paragraphTag The "ocr_par" tag.
+	 * @param paragraphTag
+	 *            The "ocr_par" tag.
 	 * @return an instance of {@link HocrParagraph}.
 	 */
 	private HocrParagraph parseParagraphTag(StartTag paragraphTag) {
@@ -207,7 +212,7 @@ public class HocrParser {
 		String dir = element.getAttributeValue(ATTRIBUTE_DIR);
 		BBox bbox = parseAttributeBBox(element);
 
-		HocrParagraph paragraph = new HocrParagraph(id, bbox, (dir != null ? ParagraphDirection.valueOf(dir.toUpperCase()) : ParagraphDirection.LTR));
+		HocrParagraph paragraph = new HocrParagraph(id, bbox, dir != null ? ParagraphDirection.valueOf(dir.toUpperCase()) : ParagraphDirection.LTR);
 
 		List<StartTag> lineTags = element.getAllStartTagsByClass(HocrLine.CLASSNAME);
 
@@ -221,8 +226,9 @@ public class HocrParser {
 	/**
 	 * Performs parse "ocr_line" element and their children.<br/>
 	 * Element example: {@code <span class='ocr_line' id='line_1' title="bbox 36 92 580 122">}
-	 *
-	 * @param lineTag The "ocr_line" tag.
+	 * 
+	 * @param lineTag
+	 *            The "ocr_line" tag.
 	 * @return an instance of {@link HocrLine}.
 	 */
 	private HocrLine parseLineTag(StartTag lineTag) {
@@ -233,16 +239,16 @@ public class HocrParser {
 		BBox bbox = parseAttributeBBox(element);
 
 		HocrLine line = new HocrLine(id, bbox);
-		
+
 		/**
 		 * Tesseract change class name of element HocrWord in version 3.02.
-		 * From: ocr_word, To: ocrx_word 
+		 * From: ocr_word, To: ocrx_word
 		 */
 		List<StartTag> wordTags = element.getAllStartTagsByClass(HocrWord.CLASSNAME_X);
 
 		if (wordTags == null || wordTags.isEmpty()) {
 			wordTags = element.getAllStartTagsByClass(HocrWord.CLASSNAME);
-		} 
+		}
 
 		for (StartTag wordTag : wordTags) {
 			line.addWord(parseWordTag(wordTag));
@@ -254,8 +260,9 @@ public class HocrParser {
 	/**
 	 * Performs parse "ocr_word" element and their children.<br/>
 	 * Element example: {@code <span class='ocr_word' id='word_1' title="bbox 36 92 96 116">This</span>}
-	 *
-	 * @param lineTag The "ocr_word" tag.
+	 * 
+	 * @param lineTag
+	 *            The "ocr_word" tag.
 	 * @return an instance of {@link HocrWord}.
 	 */
 	private HocrWord parseWordTag(StartTag wordTag) {
@@ -267,7 +274,7 @@ public class HocrParser {
 
 		List<StartTag> strongTags = element.getAllStartTags(TAG_STRONG);
 
-		boolean strong = (strongTags.size() > 0);
+		boolean strong = strongTags.size() > 0;
 
 		String text = element.getContent().getTextExtractor().toString();
 
@@ -310,10 +317,10 @@ public class HocrParser {
 				throw new Exception();
 			}
 
-			return new BBox(Integer.parseInt((bboxCoordinateMatcher.group(1))), Integer.parseInt((bboxCoordinateMatcher.group(2))), Integer.parseInt((bboxCoordinateMatcher.group(3))), Integer.parseInt((bboxCoordinateMatcher.group(4))));
+			return new BBox(Integer.parseInt(bboxCoordinateMatcher.group(1)), Integer.parseInt(bboxCoordinateMatcher.group(2)), Integer.parseInt(bboxCoordinateMatcher.group(3)), Integer.parseInt(bboxCoordinateMatcher.group(4)));
 
 		} catch (Exception e) {
-			log.error("Error when performing file parser hOCR, It was not possible to parse the bbox attribute");
+			logger.error("Error when performing file parser hOCR, It was not possible to parse the bbox attribute");
 			return null;
 		}
 
