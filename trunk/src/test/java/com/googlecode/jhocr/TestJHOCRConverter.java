@@ -37,6 +37,7 @@ import org.slf4j.LoggerFactory;
 
 import com.googlecode.jhocr.converter.HocrToPdf;
 import com.googlecode.jhocr.util.JHOCRUtil;
+import com.googlecode.jhocr.util.LoggUtilException;
 import com.googlecode.jhocr.util.enums.FExt;
 import com.googlecode.jhocr.util.enums.PDFF;
 
@@ -66,7 +67,7 @@ public class TestJHOCRConverter {
 	private String				testFileName		= "";
 	private static String		testFileResultsPath	= "src/test/resources/test-results";
 	private static String		testFilesSrcPath	= "src/test/resources/test-data";
-	private final static Logger	logger				= LoggerFactory.getLogger(TestJHOCRConverter.class.getName());
+	private final static Logger	logger				= LoggerFactory.getLogger(new LoggUtilException().toString());
 
 	/**
 	 * TODO add documentation
@@ -103,7 +104,7 @@ public class TestJHOCRConverter {
 
 			HocrToPdf hocrToPdf = new HocrToPdf(os);
 			hocrToPdf.addHocrDocument(new FileInputStream(htmlOcrAbsFileName), new FileInputStream(imageAbsFileName));
-			hocrToPdf.setPdfFormat(PDFF.PDF_A_3U);
+			hocrToPdf.setPdfFormat(PDFF.PDF_A_1B);
 			hocrToPdf.convert();
 
 			os.close();

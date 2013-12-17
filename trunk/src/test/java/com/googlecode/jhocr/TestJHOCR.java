@@ -44,6 +44,7 @@ import com.googlecode.jhocr.converter.HocrToPdf;
 import com.googlecode.jhocr.element.HocrDocument;
 import com.googlecode.jhocr.parser.HocrParser;
 import com.googlecode.jhocr.util.JHOCRUtil;
+import com.googlecode.jhocr.util.LoggUtilException;
 import com.googlecode.jhocr.util.UtilRunCmd;
 import com.googlecode.jhocr.util.enums.FExt;
 import com.googlecode.jhocr.util.enums.PDFF;
@@ -80,7 +81,7 @@ public class TestJHOCR {
 	private static String		testFileResultsPath	= "src/test/resources/test-results";
 	private static String		testFilesSrcPath	= "src/test/resources/test-data";
 
-	private final static Logger	logger				= LoggerFactory.getLogger(TestJHOCR.class.getName());
+	private final static Logger	logger				= LoggerFactory.getLogger(new LoggUtilException().toString());
 
 	/**
 	 * Test setup and preparation.
@@ -97,6 +98,7 @@ public class TestJHOCR {
 	 */
 	@Rule
 	public MethodRule	watchman	= new TestWatchman() {
+										@Override
 										public void starting(FrameworkMethod method) {
 											logger.info("* {} being run for '{}'.", method.getName(), testFileName);
 										}
@@ -151,6 +153,7 @@ public class TestJHOCR {
 
 			HocrToPdf hocrToPdf = new HocrToPdf(os);
 			hocrToPdf.addHocrDocument(new FileInputStream(htmlOcrAbsFileName), new FileInputStream(imageAbsFileName));
+			hocrToPdf.setPdfFormat(PDFF.PDF_A_3B);
 			hocrToPdf.convert();
 
 			os.close();

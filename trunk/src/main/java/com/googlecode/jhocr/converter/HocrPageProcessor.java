@@ -20,11 +20,14 @@ package com.googlecode.jhocr.converter;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.jhocr.element.HocrLine;
 import com.googlecode.jhocr.element.HocrPage;
 import com.googlecode.jhocr.element.HocrWord;
+import com.googlecode.jhocr.util.LoggUtilException;
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
@@ -32,7 +35,6 @@ import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.CMYKColor;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -49,16 +51,18 @@ public class HocrPageProcessor {
 	 * TODO add documentation, for example why exactly 300
 	 */
 	private static final int	DPI_DEFAULT	= 300;
-	private static Logger		log			= Logger.getLogger(HocrPageProcessor.class);
 
-	private HocrPage			hocrPage;
+	private final static Logger	logger		= LoggerFactory.getLogger(new LoggUtilException().toString());
+
+	private final HocrPage		hocrPage;
 	private float				dotsPerPointX;
 	private float				dotsPerPointY;
-	private Font				font;
 	private Image				image;
 	private Rectangle			imageRectangle;
-	private boolean				useImageDpi;
+	private final boolean		useImageDpi;
 	private volatile boolean	initialized	= false;
+	private Font				font		= null;
+	private BaseFont			baseFont	= null;
 
 	/**
 	 * 
@@ -71,6 +75,7 @@ public class HocrPageProcessor {
 	 *            determines if the dpi of the image should be used.
 	 */
 	public HocrPageProcessor(HocrPage hocrPage, InputStream imageInputStream, boolean useImageDpi) {
+
 		this.hocrPage = hocrPage;
 		this.useImageDpi = useImageDpi;
 
@@ -96,10 +101,21 @@ public class HocrPageProcessor {
 	 */
 	private boolean init(InputStream imageInputStream) {
 
-		boolean result = true;
+		boolean result = false;
 
 		try {
-			font = FontFactory.getFont("src//main/resources//fonts//Sansation_Regular.ttf", BaseFont.CP1252, BaseFont.EMBEDDED, Font.UNDEFINED, Font.UNDEFINED, new CMYKColor(255, 255, 0, 0));
+
+			/**
+			 * fontname the name of the font
+			 * encoding the encoding of the font
+			 * embedded true if the font is to be embedded in the PDF
+			 * size the size of this font
+			 * style the style of this font
+			 * color the BaseColor of this font.
+			 */
+			font = FontFactory.getFont("/fonts/Sansation_Regular.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 0.8f, Font.NORMAL, BaseColor.BLACK);
+			baseFont = font.getBaseFont();
+			logger.trace("Loaded font: '{}'.", baseFont.getPostscriptFontName());
 
 			byte[] bytes = new byte[imageInputStream.available()];
 
@@ -136,15 +152,17 @@ public class HocrPageProcessor {
 			 */
 			this.imageRectangle = new Rectangle(getHocrPage().getBbox().getWidth() / getDotsPerPointX(), getHocrPage().getBbox().getHeight() / getDotsPerPointY());
 
-			return result;
+			result = true;
 
 		} catch (DocumentException e) {
-			log.error("Error while processing the document, please check th elog for more information.", e);
-			return result;
+			logger.error("Error while processing the document, please check th elog for more information.", e);
+			result = false;
 		} catch (IOException e) {
-			log.error("Error while processing the document, please check th elog for more information.", e);
-			return result;
+			logger.error("Error while processing the document, please check th elog for more information.", e);
+			result = false;
 		}
+
+		return result;
 
 	}
 
@@ -223,7 +241,7 @@ public class HocrPageProcessor {
 			return true;
 
 		} catch (DocumentException e) {
-			log.error("Document could not be processed.", e);
+			logger.error("Document could not be processed.", e);
 			return false;
 		}
 	}
@@ -245,9 +263,9 @@ public class HocrPageProcessor {
 
 		float textWidthPt = cb.getEffectiveStringWidth(hocrWord.getText(), false);
 
-		log.debug("hocrWord: " + hocrWord.getId());
-		log.debug("box width: " + wordWidthPt);
-		log.debug("text width: " + textWidthPt);
+		logger.debug("hocrWord: " + hocrWord.getId());
+		logger.debug("box width: " + wordWidthPt);
+		logger.debug("text width: " + textWidthPt);
 
 		if (textWidthPt > wordWidthPt) {
 			while (textWidthPt > wordWidthPt) {
@@ -269,13 +287,6 @@ public class HocrPageProcessor {
 	}
 
 	/**
-	 * @return the {@link #font} object.
-	 */
-	public Font getFont() {
-		return font;
-	}
-
-	/**
 	 * TODO add documentation describing what this method does actually do.
 	 * 
 	 * @see https://code.google.com/p/jhocr/issues/detail?id=4
@@ -283,50 +294,59 @@ public class HocrPageProcessor {
 	 *            TODO describe this parameter &/ it's purpose.
 	 * @param hocrLine
 	 *            is used to process the {@link com.itextpdf.text.pdf.PdfContentByte}
+	 * @throws IOException
+	 * @throws DocumentException
 	 */
 	private void processHocrLine(PdfContentByte cb, HocrLine hocrLine) {
 
-		String lineText = hocrLine.getText();
-
-		/**
-		 * TODO add documentation
-		 */
-		if (!lineText.isEmpty()) {
-
-			float lineHeightPt = hocrLine.getBbox().getHeight() / getDotsPerPointY();
-
-			float fontSize = Math.round(lineHeightPt) - 0.8f; // Coloquei para o limite de erro
-
-			if (fontSize == 0) {
-				fontSize = 0.5f;
-			}
-
-			cb.beginText();
-			cb.setFontAndSize(getFont().getBaseFont(), fontSize);
-			cb.setTextRenderingMode(PdfContentByte.TEXT_RENDER_MODE_INVISIBLE);
-
-			int t = hocrLine.getWords().size();
+		try {
+			String lineText = hocrLine.getText();
 
 			/**
 			 * TODO add documentation
-			 * 
-			 * @see <a>https://code.google.com/p/jhocr/issues/detail?id=4</a>
 			 */
-			for (int i = 0; i < t; i++) {
+			if (!lineText.isEmpty()) {
 
-				HocrWord hocrWord = hocrLine.getWords().get(i);
+				float lineHeightPt = hocrLine.getBbox().getHeight() / getDotsPerPointY();
 
-				float wordWidthPt = hocrWord.getBbox().getWidth() / getDotsPerPointX();
+				float fontSize = Math.round(lineHeightPt) - 0.8f; // Coloquei para o limite de erro
 
-				processHocrWordCharacterSpacing(cb, hocrWord, wordWidthPt);
+				if (fontSize == 0) {
+					fontSize = 0.5f;
+				}
 
-				float y = (getHocrPage().getBbox().getHeight() + (lineHeightPt / 2) - hocrLine.getBbox().getBottom()) / dotsPerPointY;
-				float x = hocrWord.getBbox().getLeft() / getDotsPerPointX();
+				cb.setFontAndSize(baseFont, fontSize);
+				cb.setTextRenderingMode(PdfContentByte.TEXT_RENDER_MODE_INVISIBLE);
+				cb.beginText();
 
-				cb.showTextAligned(PdfContentByte.ALIGN_LEFT, hocrWord.getText(), x, y, 0);
+				int t = hocrLine.getWords().size();
+
+				/**
+				 * TODO add documentation
+				 * 
+				 * @see <a>https://code.google.com/p/jhocr/issues/detail?id=4</a>
+				 */
+				for (int i = 0; i < t; i++) {
+
+					HocrWord hocrWord = hocrLine.getWords().get(i);
+
+					float wordWidthPt = hocrWord.getBbox().getWidth() / getDotsPerPointX();
+
+					processHocrWordCharacterSpacing(cb, hocrWord, wordWidthPt);
+
+					float y = (getHocrPage().getBbox().getHeight() + lineHeightPt / 2 - hocrLine.getBbox().getBottom()) / dotsPerPointY;
+					float x = hocrWord.getBbox().getLeft() / getDotsPerPointX();
+
+					cb.showTextAligned(PdfContentByte.ALIGN_LEFT, hocrWord.getText(), x, y, 0);
+				}
+
+				cb.endText();
+
 			}
 
-			cb.endText();
+		} catch (Exception e) {
+			// TODO log error
+			e.printStackTrace();
 		}
 	}
 

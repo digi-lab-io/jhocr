@@ -15,7 +15,7 @@ public class JHOCRUtil {
 
 	private static JHOCRUtil	instance	= null;
 	private static String		OS			= System.getProperty("os.name").toLowerCase();
-	private final static Logger	logger		= LoggerFactory.getLogger(JHOCRUtil.class.getName());
+	private final static Logger	logger		= LoggerFactory.getLogger(new LoggUtilException().toString());
 
 	public static JHOCRUtil getInstance() {
 		if (instance == null) {
@@ -26,25 +26,25 @@ public class JHOCRUtil {
 
 	public boolean isWindows() {
 
-		return (OS.indexOf("win") >= 0);
+		return OS.indexOf("win") >= 0;
 
 	}
 
 	public boolean isMac() {
 
-		return (OS.indexOf("mac") >= 0);
+		return OS.indexOf("mac") >= 0;
 
 	}
 
 	public boolean isUnix() {
 
-		return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0);
+		return OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0;
 
 	}
 
 	public boolean isSolaris() {
 
-		return (OS.indexOf("sunos") >= 0);
+		return OS.indexOf("sunos") >= 0;
 
 	}
 
@@ -59,7 +59,7 @@ public class JHOCRUtil {
 	 * 
 	 */
 	public boolean testGeneratedPDF(String word, String pdfFileName) {
-		boolean result = true;
+		boolean result = false;
 		ArrayList<String> pagesTextResult = new ArrayList<String>();
 
 		try {
@@ -83,20 +83,24 @@ public class JHOCRUtil {
 			} else {
 
 				for (String page : pagesTextResult) {
-					if (!page.contains(word)) {
-						result = false;
-						logger.error("The word '{}' could not be found in the PDF '{}'.", word, pdfFileName);
+					if (page.contains(word)) {
+						result = true;
 					}
 				}
 			}
 
-			logger.info("The word '{}' could be found in the PDF '{}'.", word, pdfFileName);
-			return result;
+			if (result) {
+				logger.info("The word '{}' could be found in the PDF '{}'.", word, pdfFileName);
+			} else {
+				logger.error("The word '{}' could not be found in the PDF '{}'.", word, pdfFileName);
+			}
 
 		} catch (IOException e) {
 			logger.error("The PDF is empty or corrupted or not accessible.", e);
-			return false;
+			result = false;
 		}
+
+		return result;
 
 	}
 
