@@ -16,16 +16,46 @@
  */
 package com.googlecode.jhocr.util.enums;
 
+import com.itextpdf.text.pdf.PdfAConformanceLevel;
 import com.itextpdf.text.pdf.PdfWriter;
 
 /**
+ * TODO: add support for PDF_A_1A, PDF_A_2A, PDF_A_3A,
  * Supported PDF formats JHOCR.
  * 
  */
 public enum PDFF {
 
-	PDF_A_1B, PDF_A_1A, PDF_A_2A, PDF_A_2B, PDF_A_2U, PDF_A_3A, PDF_A_3B, PDF_A_3U,
-
+	PDF_A_3U(PdfAConformanceLevel.PDF_A_3U) {
+		@Override
+		public Object getValue() {
+			return PdfAConformanceLevel.PDF_A_3U;
+		};
+	},
+	PDF_A_3B(PdfAConformanceLevel.PDF_A_3B) {
+		@Override
+		public Object getValue() {
+			return PdfAConformanceLevel.PDF_A_3B;
+		};
+	},
+	PDF_A_2U(PdfAConformanceLevel.PDF_A_2U) {
+		@Override
+		public Object getValue() {
+			return PdfAConformanceLevel.PDF_A_2U;
+		};
+	},
+	PDF_A_2B(PdfAConformanceLevel.PDF_A_2B) {
+		@Override
+		public Object getValue() {
+			return PdfAConformanceLevel.PDF_A_2B;
+		};
+	},
+	PDF_A_1B(PdfAConformanceLevel.PDF_A_1B) {
+		@Override
+		public Object getValue() {
+			return PdfAConformanceLevel.PDF_A_1B;
+		};
+	},
 	PDFX1A2001(PdfWriter.PDFX1A2001) {
 		@Override
 		public Object getValue() {
@@ -41,11 +71,12 @@ public enum PDFF {
 
 	private Object	obj;
 
-	private PDFF() {
+	private PDFF(PdfAConformanceLevel cl) {
+		this.obj = cl;
 	}
 
-	private PDFF(int o) {
-		this.obj = o;
+	private PDFF(int i) {
+		this.obj = i;
 	}
 
 	public Object getValue() {

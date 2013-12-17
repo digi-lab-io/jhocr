@@ -105,6 +105,7 @@ public class TestJHOCRConverter {
 			hocrToPdf.addHocrDocument(new FileInputStream(htmlOcrAbsFileName), new FileInputStream(imageAbsFileName));
 			hocrToPdf.setPdfFormat(PDFF.PDF_A_3U);
 			hocrToPdf.convert();
+
 			os.close();
 
 			if (!JHOCRUtil.getInstance().testGeneratedPDF(word, pdfAbsFileName.getAbsolutePath())) {
