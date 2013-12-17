@@ -47,8 +47,8 @@ import com.itextpdf.text.pdf.PdfWriter;
  */
 public class HocrToPdf {
 	public static float						POINTS_PER_INCH			= 72.0f;
-	private OutputStream					outputStream;
-	private List<HocrDocumentItem>			items					= new ArrayList<HocrDocumentItem>();
+	private final OutputStream				outputStream;
+	private final List<HocrDocumentItem>	items					= new ArrayList<HocrDocumentItem>();
 	private List<HashMap<String, Object>>	outlines				= new ArrayList<HashMap<String, Object>>();
 	private boolean							useImageDpi				= true;
 	private PDFF							pdfFormat				= null;
@@ -103,7 +103,8 @@ public class HocrToPdf {
 
 				} else if (pdff instanceof PDFF) {
 
-					result = convertToPDFA((PdfAConformanceLevel) pdff.getValue());
+					PdfAConformanceLevel pdfCL = (PdfAConformanceLevel) pdff.getValue();
+					result = convertToPDFA(pdfCL);
 
 				}
 
@@ -279,7 +280,7 @@ public class HocrToPdf {
 		String profile = "src/main/resources/sRGB.profile";
 
 		try {
-			PdfAWriter writer = PdfAWriter.getInstance(document, getOutputStream(), PdfAConformanceLevel.PDF_A_1B);
+			PdfAWriter writer = PdfAWriter.getInstance(document, getOutputStream(), pdfConformanceLevel);
 			writer.createXmpMetadata();
 
 			document.open();
