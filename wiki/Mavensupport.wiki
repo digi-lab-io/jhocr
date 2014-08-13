@@ -1,4 +1,5 @@
 #summary Maven artifact information.
+#labels Featured,Phase-Implementation
 #sidebar TableOfContents
 
 {{{
