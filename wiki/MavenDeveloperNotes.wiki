@@ -14,10 +14,10 @@ Since version 0.0.5, this project is hosted on *[http://oss.sonatype.org/ Nexus 
 </dependency>
 }}}
 
-http://search.maven.org/#browse%7C1318237209
+
+[http://search.maven.org/#browse%7C1318237209 Search JHOCR on The Central Repository]
 
 The [https://oss.sonatype.org/content/repositories/releases/com/googlecode/jhocr/jhocr/ Nexus OSS Release Repository] contains released versions and requires no additionnal configuration.
-
 
 If you want use snapshot versions, refer to the [https://oss.sonatype.org/content/repositories/snapshots/com/googlecode/jhocr/ Nexus OSS Snapshot Repository] with this configuration:
 
