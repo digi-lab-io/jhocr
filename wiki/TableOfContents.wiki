@@ -9,4 +9,5 @@ http://jhocr.googlecode.com/svn/wiki/resources/design/com.googlecode.jhocr_logo.
     * [HowItWorks How java hocr works]
       * [HowToUse How to use it]
   * [Mavensupport Maven support]
+      * [MavenDeveloperNotes Maven Developer Notes]
   * [RoadMap Roadmap]
