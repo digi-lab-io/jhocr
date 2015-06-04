@@ -1,27 +1,32 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.googlecode.jhocr</groupId>
+    <groupId>com.github.ossdevs.jhocr</groupId>
     <artifactId>jhocr</artifactId>
-    <version>0.0.8-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>com.googlecode.jhocr</name>
+    <name>com.github.ossdevs.jhocr</name>
     <description>Library to parse and perform conversion from hocr files to pdf, merging the image files and mapping the
         hocr data into one document.
     </description>
-    <url>http://code.google.com/p/jhocr/</url>
+    <url>https://github.com/ossdevs/jhocr</url>
 
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
-        <version>7</version>
+        <version>9</version>
     </parent>
 
     <scm>
-        <connection>scm:svn:https://jhocr.googlecode.com/svn/trunk/</connection>
-        <developerConnection>scm:svn:https://jhocr.googlecode.com/svn/trunk/</developerConnection>
-        <url>https://jhocr.googlecode.com/svn/trunk/</url>
+        <connection>scm:git:git://github.com/ossdevs/jhocr.git</connection>
+        <developerConnection>scm:git:git@github.com:ossdevs/jhocr.git</developerConnection>
+        <url>https://github.com/ossdevs/jhocr</url>
+        <tag>HEAD</tag>
     </scm>
+
+    <issueManagement>
+        <url>https://github.com/ossdevs/jhocr/issues</url>
+    </issueManagement>
 
     <licenses>
         <license>
@@ -42,10 +47,7 @@
             </roles>
             <timezone>-6</timezone>
         </developer>
-    </developers>
-
-    <contributors>
-        <contributor>
+        <developer>
             <name>O.J. Sousa Rodrigues</name>
             <email>osoriojaques@gmail.com</email>
             <roles>
@@ -53,8 +55,8 @@
                 <role>contributor</role>
             </roles>
             <timezone>+1</timezone>
-        </contributor>
-    </contributors>
+        </developer>
+    </developers>
 
 
     <properties>
@@ -76,9 +78,8 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
+            <scope>test</scope>
         </dependency>
-
-        <!-- Parser HTML -->
         <dependency>
             <groupId>net.htmlparser.jericho</groupId>
             <artifactId>jericho-html</artifactId>
@@ -102,7 +103,6 @@
     </dependencies>
 
     <build>
-
         <plugins>
             <plugin>
                 <groupId>com.soebes.maven.plugins.mlv</groupId>
@@ -141,12 +141,6 @@
                 </executions>
             </plugin>
         </plugins>
-
     </build>
-
-    <issueManagement>
-        <url>http://code.google.com/p/jhocr/issues/list</url>
-    </issueManagement>
-
 
 </project>
