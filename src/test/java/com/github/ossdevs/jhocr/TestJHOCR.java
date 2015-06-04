@@ -52,15 +52,12 @@ import com.github.ossdevs.jhocr.util.UtilRunCmd;
 /**
  * TODO implement here all tests around jhocr and the tesseract binaries.
  * For more information, visit: <li>https://code.google.com/p/jhocr/wiki/HowToUse</li>
- *
  */
 @RunWith(value = Parameterized.class)
 public class TestJHOCR {
 
     /**
-     *
-     * @param testFileName
-     *            without the file extension.
+     * @param testFileName without the file extension.
      */
     public TestJHOCR(String testFileName) {
         this.testFileName = testFileName;
@@ -73,7 +70,7 @@ public class TestJHOCR {
      */
     @Parameters
     public static Collection<String[]> data() {
-        String[][] data = new String[][]{{"eurotext_tesseract_bin"}, {"eurotext"}, {"phototest"}, {"eurotext_tess4j"}};
+        String[][] data = new String[][]{{"eurotext"}, {"phototest"}, {"eurotext_tess4j"}};
         return Arrays.asList(data);
     }
 
@@ -86,7 +83,6 @@ public class TestJHOCR {
     /**
      * Test setup and preparation.
      * TODO delete all files inside the <code>testFileResultsPath</code>.
-     *
      */
     @Before
     public void setUp() {
@@ -107,8 +103,7 @@ public class TestJHOCR {
     /**
      * This will test the manual generated test-files from an tesseract-bin.
      *
-     * @param testFileName
-     *            without the file extension.
+     * @param testFileName without the file extension.
      */
     @Test
     public void testManualGeneratedTestFiles() {
