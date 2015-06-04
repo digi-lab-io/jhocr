@@ -123,22 +123,37 @@
                 </configuration>
             </plugin>
             <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.5.4</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
                 <configuration>
-                    <appendAssemblyId>false</appendAssemblyId>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
+                    <archive>
+                        <addMavenDescriptor>true</addMavenDescriptor>
+                        <compress>true</compress>
+                        <forced>true</forced>
+                        <index>true</index>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <Implementation-URL>${project.url}</Implementation-URL>
+                            <Built-By>${url}</Built-By>
+                        </manifestEntries>
+                        <manifestSections>
+                            <manifestSection>
+                                <name>Build-Information</name>
+                                <manifestEntries>
+                                    <Maven-Version>${maven.version}</Maven-Version>
+                                    <Java-Version>${java.version}</Java-Version>
+                                    <Java-Vendor>${java.vendor}</Java-Vendor>
+                                    <Built-By>${url}</Built-By>
+                                    <Os-Name>${os.name}</Os-Name>
+                                </manifestEntries>
+                            </manifestSection>
+                        </manifestSections>
+                    </archive>
                 </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
