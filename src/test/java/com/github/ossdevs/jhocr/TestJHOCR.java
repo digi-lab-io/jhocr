@@ -17,17 +17,11 @@
 
 package com.github.ossdevs.jhocr;
 
-import static org.junit.Assert.fail;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.MessageFormat;
-import java.util.Arrays;
-import java.util.Collection;
-
+import com.github.ossdevs.jhocr.converter.HocrToPdf;
+import com.github.ossdevs.jhocr.element.HocrDocument;
+import com.github.ossdevs.jhocr.parser.HocrParser;
+import com.github.ossdevs.jhocr.util.JHOCRUtil;
+import com.github.ossdevs.jhocr.util.LoggUtilException;
 import com.github.ossdevs.jhocr.util.enums.FExt;
 import com.github.ossdevs.jhocr.util.enums.PDFF;
 import org.junit.Before;
@@ -42,12 +36,11 @@ import org.junit.runners.model.FrameworkMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.ossdevs.jhocr.converter.HocrToPdf;
-import com.github.ossdevs.jhocr.element.HocrDocument;
-import com.github.ossdevs.jhocr.parser.HocrParser;
-import com.github.ossdevs.jhocr.util.JHOCRUtil;
-import com.github.ossdevs.jhocr.util.LoggUtilException;
-import com.github.ossdevs.jhocr.util.UtilRunCmd;
+import java.io.*;
+import java.util.Arrays;
+import java.util.Collection;
+
+import static org.junit.Assert.fail;
 
 /**
  * TODO implement here all tests around jhocr and the tesseract binaries.
@@ -55,6 +48,21 @@ import com.github.ossdevs.jhocr.util.UtilRunCmd;
  */
 @RunWith(value = Parameterized.class)
 public class TestJHOCR {
+
+    private final static Logger logger = LoggerFactory.getLogger(new LoggUtilException().toString());
+    private static String testFileResultsPath = "src/test/resources/test-results";
+    private static String testFilesSrcPath = "src/test/resources/test-data";
+    private String testFileName = "";
+    /**
+     * This method will be called whenever a test method is entered, helping to log the information and to know which test is currently running.
+     */
+    @Rule
+    public MethodRule watchman = new TestWatchman() {
+        @Override
+        public void starting(FrameworkMethod method) {
+            logger.info("* {} being run for '{}'.", method.getName(), testFileName);
+        }
+    };
 
     /**
      * @param testFileName without the file extension.
@@ -74,12 +82,6 @@ public class TestJHOCR {
         return Arrays.asList(data);
     }
 
-    private String testFileName = "";
-    private static String testFileResultsPath = "src/test/resources/test-results";
-    private static String testFilesSrcPath = "src/test/resources/test-data";
-
-    private final static Logger logger = LoggerFactory.getLogger(new LoggUtilException().toString());
-
     /**
      * Test setup and preparation.
      * TODO delete all files inside the <code>testFileResultsPath</code>.
@@ -88,17 +90,6 @@ public class TestJHOCR {
     public void setUp() {
 
     }
-
-    /**
-     * This method will be called whenever a test method is entered, helping to log the information and to know which test is currently running.
-     */
-    @Rule
-    public MethodRule watchman = new TestWatchman() {
-        @Override
-        public void starting(FrameworkMethod method) {
-            logger.info("* {} being run for '{}'.", method.getName(), testFileName);
-        }
-    };
 
     /**
      * This will test the manual generated test-files from an tesseract-bin.

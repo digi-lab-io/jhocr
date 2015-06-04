@@ -17,16 +17,11 @@
 
 package com.github.ossdevs.jhocr;
 
-import static org.junit.Assert.fail;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-
+import com.github.ossdevs.jhocr.converter.HocrToPdf;
+import com.github.ossdevs.jhocr.util.JHOCRUtil;
+import com.github.ossdevs.jhocr.util.LoggUtilException;
+import com.github.ossdevs.jhocr.util.enums.FExt;
+import com.github.ossdevs.jhocr.util.enums.PDFF;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,24 +30,26 @@ import org.junit.runners.Parameterized.Parameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.ossdevs.jhocr.converter.HocrToPdf;
-import com.github.ossdevs.jhocr.util.JHOCRUtil;
-import com.github.ossdevs.jhocr.util.LoggUtilException;
-import com.github.ossdevs.jhocr.util.enums.FExt;
-import com.github.ossdevs.jhocr.util.enums.PDFF;
+import java.io.*;
+import java.util.Arrays;
+import java.util.Collection;
+
+import static org.junit.Assert.fail;
 
 /**
  * TODO add documentation
  * TODO implement tests for all supported formats
- *
  */
 @RunWith(value = Parameterized.class)
 public class TestJHOCRConverter {
 
+    private final static Logger logger = LoggerFactory.getLogger(new LoggUtilException().toString());
+    private static String testFileResultsPath = "src/test/resources/test-results";
+    private static String testFilesSrcPath = "src/test/resources/test-data";
+    private String testFileName = "";
+
     /**
-     *
-     * @param testFileName
-     *            without the file extension.
+     * @param testFileName without the file extension.
      */
     public TestJHOCRConverter(String testFileName) {
         this.testFileName = testFileName;
@@ -63,11 +60,6 @@ public class TestJHOCRConverter {
         String[][] data = new String[][]{{"eurotext"}, {"phototest"}, {"eurotext_tess4j"}};
         return Arrays.asList(data);
     }
-
-    private String testFileName = "";
-    private static String testFileResultsPath = "src/test/resources/test-results";
-    private static String testFilesSrcPath = "src/test/resources/test-data";
-    private final static Logger logger = LoggerFactory.getLogger(new LoggUtilException().toString());
 
     /**
      * TODO add documentation
@@ -87,7 +79,6 @@ public class TestJHOCRConverter {
      * TODO re-implemt this test to not only create an PDF with metadata such as bookmarks, but also to test against it if those were really added to the PDF.
      *
      * @throws FileNotFoundException
-     *
      * @throws Throwable
      */
     @Test
