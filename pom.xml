@@ -51,8 +51,8 @@
             <name>O.J. Sousa Rodrigues</name>
             <email>osoriojaques@gmail.com</email>
             <roles>
+                <role>owner</role>
                 <role>developer</role>
-                <role>contributor</role>
             </roles>
             <timezone>+1</timezone>
         </developer>
