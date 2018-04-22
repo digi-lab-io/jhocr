@@ -39,6 +39,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.github.ossdevs.jhocr.converter.HocrToPdf;
+import com.github.ossdevs.jhocr.element.HocrCarea;
+import com.github.ossdevs.jhocr.element.HocrDocument;
+import com.github.ossdevs.jhocr.element.HocrLine;
+import com.github.ossdevs.jhocr.element.HocrPage;
+import com.github.ossdevs.jhocr.element.HocrParagraph;
+import com.github.ossdevs.jhocr.element.HocrWord;
 import com.github.ossdevs.jhocr.parser.HocrParser;
 import com.github.ossdevs.jhocr.util.JHOCRUtil;
 import com.github.ossdevs.jhocr.util.LoggUtilException;
@@ -144,7 +150,26 @@ public class TestJHOCR {
 
 	    File htmlOcrAbsFileName = new File(testFilesSrcPath, String.format("%s.%s", testFileName, FExt.HTML));
 	    HocrParser parser = new HocrParser(new FileInputStream(htmlOcrAbsFileName));
+
+	    HocrDocument document = parser.parse();
 	    logger.info("TODO re-implement this test, printing it out is pretty ugly and does not test anything.");
+
+	    String pre = "-- ";
+	    for (HocrPage page : document.getPages()) {
+		logger.info(pre + page);
+		for (HocrCarea carea : page.getCareas()) {
+		    logger.info(pre + pre + carea);
+		    for (HocrParagraph paragraph : carea.getParagraphs()) {
+			logger.info(pre + pre + pre + paragraph);
+			for (HocrLine line : paragraph.getLines()) {
+			    logger.info(pre + pre + pre + pre + line);
+			    for (HocrWord word : line.getWords()) {
+				logger.info(pre + pre + pre + pre + pre + word);
+			    }
+			}
+		    }
+		}
+	    }
 
 	} catch (FileNotFoundException e) {
 	    logger.error(

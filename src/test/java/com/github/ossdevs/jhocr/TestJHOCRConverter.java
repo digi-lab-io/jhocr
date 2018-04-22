@@ -17,12 +17,16 @@
 
 package com.github.ossdevs.jhocr;
 
-import com.github.ossdevs.jhocr.converter.HocrToPdf;
-import com.github.ossdevs.jhocr.util.JHOCRUtil;
-import com.github.ossdevs.jhocr.util.LoggUtilException;
-import com.github.ossdevs.jhocr.util.enums.FExt;
-import com.github.ossdevs.jhocr.util.enums.PDFF;
-import org.junit.Before;
+import static org.junit.Assert.fail;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -30,15 +34,14 @@ import org.junit.runners.Parameterized.Parameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
-import java.util.Arrays;
-import java.util.Collection;
-
-import static org.junit.Assert.fail;
+import com.github.ossdevs.jhocr.converter.HocrToPdf;
+import com.github.ossdevs.jhocr.util.JHOCRUtil;
+import com.github.ossdevs.jhocr.util.LoggUtilException;
+import com.github.ossdevs.jhocr.util.enums.FExt;
+import com.github.ossdevs.jhocr.util.enums.PDFF;
 
 /**
- * TODO add documentation
- * TODO implement tests for all supported formats
+ * TODO add documentation TODO implement tests for all supported formats
  */
 @RunWith(value = Parameterized.class)
 public class TestJHOCRConverter {
@@ -49,34 +52,23 @@ public class TestJHOCRConverter {
     private String testFileName = "";
 
     /**
-     * @param testFileName without the file extension.
+     * @param testFileName
+     *            without the file extension.
      */
     public TestJHOCRConverter(String testFileName) {
-        this.testFileName = testFileName;
+	this.testFileName = testFileName;
     }
 
     @Parameters
     public static Collection<String[]> data() {
-        String[][] data = new String[][]{{"eurotext"}, {"phototest"}, {"eurotext_tess4j"}};
-        return Arrays.asList(data);
+	String[][] data = new String[][] { { "eurotext" }, { "phototest" }, { "eurotext_tess4j" } };
+	return Arrays.asList(data);
     }
 
     /**
-     * TODO add documentation
-     *
-     * @throws Exception
-     */
-    @Before
-    public void setUp() throws Exception {
-
-        String packageFolder = "src/test/resources/test-results";
-        String fileName = "tess4j-jhocr-pdf.pdf";
-
-    }
-
-    /**
-     * TODO add documentation
-     * TODO re-implemt this test to not only create an PDF with metadata such as bookmarks, but also to test against it if those were really added to the PDF.
+     * TODO add documentation TODO re-implemt this test to not only create an PDF
+     * with metadata such as bookmarks, but also to test against it if those were
+     * really added to the PDF.
      *
      * @throws FileNotFoundException
      * @throws Throwable
@@ -84,29 +76,29 @@ public class TestJHOCRConverter {
     @Test
     public void test() {
 
-        File htmlOcrAbsFileName = new File(testFilesSrcPath, String.format("%s.%s", testFileName, FExt.HTML));
-        File imageAbsFileName = new File(testFilesSrcPath, String.format("%s.%s", testFileName, FExt.TIF));
-        File pdfAbsFileName = new File(testFileResultsPath, String.format("%s.%s", testFileName, FExt.PDF));
+	File htmlOcrAbsFileName = new File(testFilesSrcPath, String.format("%s.%s", testFileName, FExt.HTML));
+	File imageAbsFileName = new File(testFilesSrcPath, String.format("%s.%s", testFileName, FExt.TIF));
+	File pdfAbsFileName = new File(testFileResultsPath, String.format("%s.%s", testFileName, FExt.PDF));
 
-        String word = "a";
+	String word = "a";
 
-        try {
-            FileOutputStream os = new FileOutputStream(pdfAbsFileName);
+	try {
+	    FileOutputStream os = new FileOutputStream(pdfAbsFileName);
 
-            HocrToPdf hocrToPdf = new HocrToPdf(os);
-            hocrToPdf.addHocrDocument(new FileInputStream(htmlOcrAbsFileName), new FileInputStream(imageAbsFileName));
-            hocrToPdf.setPdfFormat(PDFF.PDF_A_1B);
-            hocrToPdf.convert();
+	    HocrToPdf hocrToPdf = new HocrToPdf(os);
+	    hocrToPdf.addHocrDocument(new FileInputStream(htmlOcrAbsFileName), new FileInputStream(imageAbsFileName));
+	    hocrToPdf.setPdfFormat(PDFF.PDF_A_1B);
+	    hocrToPdf.convert();
 
-            os.close();
+	    os.close();
 
-            if (!JHOCRUtil.getInstance().testGeneratedPDF(word, pdfAbsFileName.getAbsolutePath())) {
-                fail("The PDF is not searchable, see the log for more information.");
-            }
+	    if (!JHOCRUtil.getInstance().testGeneratedPDF(word, pdfAbsFileName.getAbsolutePath())) {
+		fail("The PDF is not searchable, see the log for more information.");
+	    }
 
-        } catch (IOException e) {
-            logger.error("I/O error, please check the log for more information.", e);
-        }
+	} catch (IOException e) {
+	    logger.error("I/O error, please check the log for more information.", e);
+	}
 
     }
 }
